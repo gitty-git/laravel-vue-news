@@ -13,8 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia\Inertia::render('Home', ['foo' => 'hello']);
+});
+
+Route::get('/politics', function () {
+    return Inertia\Inertia::render('Politics', ['foo' => 'hello']);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
