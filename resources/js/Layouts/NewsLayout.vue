@@ -1,7 +1,8 @@
 <template>
     <main>
         <header>
-            <inertia-link href="politics">Politics</inertia-link>
+            <inertia-link href="/">Home</inertia-link>
+            <inertia-link href="/politics">Politics</inertia-link>
         </header>
 
         <article>

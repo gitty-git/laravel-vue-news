@@ -1,7 +1,7 @@
 <template>
     <NewsLayout>
         <div>
-            HYello
+            Politics
         </div>
     </NewsLayout>
 </template>

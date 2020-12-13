@@ -1,6 +1,6 @@
 <template>
     <NewsLayout>
-        <div>hello</div>
+        <div>{{ msg }}</div>
     </NewsLayout>
 </template>
 
@@ -12,7 +12,7 @@ export default {
         NewsLayout,
     },
     name: "Home",
-    props: ['foo']
+    props: ['msg']
 }
 </script>
 

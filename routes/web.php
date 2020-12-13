@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/', function () {
-    return Inertia\Inertia::render('Home', ['foo' => 'hello']);
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('/politics', function () {
     return Inertia\Inertia::render('Politics', ['foo' => 'hello']);

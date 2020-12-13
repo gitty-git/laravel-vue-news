@@ -3101,6 +3101,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewsLayout"
 });
@@ -3494,7 +3495,7 @@ __webpack_require__.r(__webpack_exports__);
     NewsLayout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "Home",
-  props: ['foo']
+  props: ['msg']
 });
 
 /***/ }),
@@ -46951,7 +46952,9 @@ var render = function() {
     _c(
       "header",
       [
-        _c("inertia-link", { attrs: { href: "politics" } }, [
+        _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+        _vm._v(" "),
+        _c("inertia-link", { attrs: { href: "/politics" } }, [
           _vm._v("Politics")
         ])
       ],
@@ -47733,7 +47736,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("NewsLayout", [_c("div", [_vm._v("hello")])])
+  return _c("NewsLayout", [_c("div", [_vm._v(_vm._s(_vm.msg))])])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47757,7 +47760,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("NewsLayout", [_c("div", [_vm._v("\n        HYello\n    ")])])
+  return _c("NewsLayout", [_c("div", [_vm._v("\n        Politics\n    ")])])
 }
 var staticRenderFns = []
 render._withStripped = true
