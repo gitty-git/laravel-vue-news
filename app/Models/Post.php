@@ -12,7 +12,7 @@ class Post extends Model
     protected $guarded = [];
 
     public function category() {
-        return $this->belongsTo('App\Model\Category');
+        return $this->belongsTo('App\Models\Category');
     }
 
     public function user() {

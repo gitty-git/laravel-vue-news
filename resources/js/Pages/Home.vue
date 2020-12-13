@@ -1,18 +1,21 @@
 <template>
-    <NewsLayout>
-        <div>{{ msg }}</div>
-    </NewsLayout>
+    <main>
+        <header>
+            <inertia-link href="/">Home</inertia-link>
+            <inertia-link v-for="cat in categories" :href="cat.name.toLowerCase()">{{ cat.name }}</inertia-link>
+        </header>
+
+        <article>
+            <slot/>
+        </article>
+    </main>
 </template>
 
 <script>
-import NewsLayout from '@/Layouts/NewsLayout'
 
 export default {
-    components: {
-        NewsLayout,
-    },
     name: "Home",
-    props: ['msg']
+    props: ['categories']
 }
 </script>
 
