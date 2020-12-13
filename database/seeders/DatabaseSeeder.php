@@ -18,7 +18,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->create();
-        Role::factory(3)->create();
+//        Role::factory(3)->create();
+
+        $roles = ['admin', 'redactor', 'user'];
+        foreach ($roles as $role) {
+            Role::factory()->create([
+                'role' => $role,
+            ]);
+        }
 
         $roles = Role::all();
         User::all()->each(function ($user) use ($roles) {
@@ -27,16 +34,15 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-//        $roles = ['admin', 'redactor', 'user'];
-//
-//        foreach ($roles as $role) {
-//            Category::factory()->create([
-//                'name' => $role,
-//                'slug' => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $role))),
-//            ]);
-//        }
+        $categories = ['Politics', 'World', 'Health', 'Business', 'Entertainment', 'Arts', 'Games'];
+        foreach ($categories as $cat) {
+            Category::factory()->create([
+                'name' => $cat,
+                'slug' => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $cat)))
+            ]);
+        }
 
-        Category::factory(10)->create();
+//        Category::factory(10)->create();
         Post::factory(100)->create();
     }
 }
