@@ -13,7 +13,7 @@ class GamesController extends Controller
     {
         $posts = Post::query()->whereHas('category', function ($query) {
             $query->where('name', 'Games');
-        })->latest()->get();
+        })->latest()->paginate(20);
 
         $categories = Category::query()->pluck('name', 'id');
 

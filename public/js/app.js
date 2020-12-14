@@ -3426,8 +3426,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -3453,8 +3470,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -3520,8 +3554,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -3547,8 +3598,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -3574,8 +3642,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -3602,9 +3687,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
-  props: ['categories']
+  props: ['categories', 'primaryPosts', 'categoriesPosts']
 });
 
 /***/ }),
@@ -3618,8 +3713,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -4462,8 +4555,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -47801,17 +47912,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )
@@ -47847,17 +47977,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )
@@ -47952,17 +48101,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )
@@ -47998,17 +48166,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )
@@ -48044,17 +48231,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )
@@ -48081,25 +48287,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", [
-    _c(
-      "header",
-      [
-        _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
-        _vm._v(" "),
-        _vm._l(_vm.categories, function(cat) {
-          return _c(
-            "inertia-link",
-            { attrs: { href: cat.name.toLowerCase() } },
-            [_vm._v(_vm._s(cat.name))]
-          )
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("article", [_vm._t("default")], 2)
-  ])
+  return _c(
+    "main",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.primaryPosts, function(primaryPost) {
+        return _c("div", [
+          _vm._v("\n        " + _vm._s(primaryPost.title) + "\n    ")
+        ])
+      }),
+      _c("br"),
+      _vm._v(" "),
+      _vm._l(_vm.categoriesPosts, function(posts) {
+        return _c(
+          "div",
+          [
+            _vm._l(posts, function(post) {
+              return _c("div", [
+                _vm._v("\n            " + _vm._s(post.title) + "\n        ")
+              ])
+            }),
+            _c("br")
+          ],
+          2
+        )
+      }),
+      _vm._v(" "),
+      _c("article", [_vm._t("default")], 2)
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48132,9 +48364,11 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
@@ -48153,7 +48387,7 @@ var render = function() {
             {
               staticClass: "p-2",
               class: { "text-red-500": item.active === true },
-              attrs: { href: item.url }
+              attrs: { href: item.url || "#" }
             },
             [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
           )
@@ -49471,17 +49705,36 @@ var render = function() {
           _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _vm._l(_vm.categories, function(cat) {
-            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
-              _vm._v(_vm._s(cat))
-            ])
+            return _c(
+              "inertia-link",
+              { staticClass: "mx-6", attrs: { href: cat.toLowerCase() } },
+              [_vm._v(_vm._s(cat))]
+            )
           })
         ],
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url || "#" }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )

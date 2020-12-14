@@ -13,7 +13,7 @@ class BusinessController extends Controller
     {
         $posts = Post::query()->whereHas('category', function ($query) {
             $query->where('name', 'Business');
-        })->latest()->get();
+        })->latest()->paginate(20);
 
         $categories = Category::query()->pluck('name', 'id');
 

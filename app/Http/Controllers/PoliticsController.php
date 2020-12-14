@@ -13,7 +13,7 @@ class PoliticsController extends Controller
     {
         $posts = Post::query()->whereHas('category', function ($query) {
             $query->where('name', 'Politics');
-        })->latest()->paginate(4);
+        })->latest()->paginate(20);
 
         $categories = Category::query()->pluck('name', 'id');
 
