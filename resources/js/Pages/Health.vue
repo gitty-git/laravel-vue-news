@@ -1,9 +1,8 @@
 <template>
-    <div>
-        <header>
-            <inertia-link href="/">Home</inertia-link>
-            <inertia-link class="mx-6" v-for="cat in categories" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
-        </header>
+    <NewsLayout>
+        <div class="flex justify-center">
+            <inertia-link class="mx-6" v-for="cat in categories" :key="cat.id" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
+        </div>
 
         <div v-for="post in posts.data">
             {{ post.title }}
@@ -12,6 +11,7 @@
         <div class="flex flex-row">
             <inertia-link :class="{'text-red-500' : item.active === true}"
                           v-for="item in posts.links"
+                          :key="item.id"
                           :href="item.url || '#'"
                           class="p-2"
             >
@@ -19,12 +19,14 @@
             </inertia-link>
         </div>
 
-    </div>
+    </NewsLayout>
 </template>
 
 <script>
 
+import NewsLayout from "@/Layouts/NewsLayout";
 export default {
+    components: {NewsLayout},
     props: ["posts", "categories"],
     computed: {
         logg() {
