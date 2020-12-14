@@ -2,24 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Post;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class PoliticsController extends Controller
+class PrimaryPostController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $posts = Post::query()->whereHas('category', function ($query) {
-            $query->where('name', 'Politics');
-        })->latest()->paginate(4);
-
-        $categories = Category::query()->pluck('name', 'id');
-
-        return Inertia::render('Politics',
-            compact('posts', 'categories')
-        );
+        //
     }
 
     /**

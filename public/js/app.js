@@ -3630,8 +3630,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", "categories"]
+  props: ["posts", "categories"],
+  computed: {
+    logg: function logg() {
+      return console.log(this.posts);
+    }
+  }
 });
 
 /***/ }),
@@ -48122,9 +48140,26 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.posts.data, function(post) {
         return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-row" },
+        _vm._l(_vm.posts.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              staticClass: "p-2",
+              class: { "text-red-500": item.active === true },
+              attrs: { href: item.url }
+            },
+            [_c("div", { domProps: { innerHTML: _vm._s(item.label) } })]
+          )
+        }),
+        1
+      )
     ],
     2
   )

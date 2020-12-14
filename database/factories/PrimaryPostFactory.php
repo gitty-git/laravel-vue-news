@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\Post;
+use App\Models\PrimaryPost;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostFactory extends Factory
+class PrimaryPostFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Post::class;
+    protected $model = PrimaryPost::class;
 
     /**
      * Define the model's default state.
@@ -28,13 +28,11 @@ class PostFactory extends Factory
         return [
             'title' => $title,
             'brief' => $this->faker->text(200),
-            'image' => 'http://127.0.0.1:8000/img/pic-('. rand(25, 29) . ').jpg',
-//            'image' => 'https://source.unsplash.com/random',
+            'image' => 'http://127.0.0.1:8000/img/pic-('. rand(25, 49) . ').jpg',
             'body' => $this->faker->paragraph,
             'slug' => $slug,
             'is_published' => 1,
             'user_id' => rand(1, count(User::all())),
-            'category_id' => rand(1, count(Category::all())),
         ];
     }
 }
