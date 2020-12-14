@@ -3414,7 +3414,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3423,12 +3422,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -3442,7 +3441,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3451,12 +3449,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -3510,7 +3508,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3519,12 +3516,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -3538,7 +3535,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3547,12 +3543,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -3566,7 +3562,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3575,12 +3570,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -3623,7 +3618,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -3632,12 +3626,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -4438,7 +4432,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Home */ "./resources/js/Pages/Home.vue");
 //
 //
 //
@@ -4447,12 +4440,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Home: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ["posts"]
+  props: ["posts", "categories"]
 });
 
 /***/ }),
@@ -47782,11 +47775,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -47812,11 +47821,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -47901,11 +47926,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -47931,11 +47972,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -47961,11 +48018,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -48033,11 +48106,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -49339,11 +49428,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "Home",
-    _vm._l(_vm.posts, function(post) {
-      return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
-    }),
-    0
+    "div",
+    [
+      _c(
+        "header",
+        [
+          _c("inertia-link", { attrs: { href: "/" } }, [_vm._v("Home")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(cat) {
+            return _c("inertia-link", { attrs: { href: cat.toLowerCase() } }, [
+              _vm._v(_vm._s(cat))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

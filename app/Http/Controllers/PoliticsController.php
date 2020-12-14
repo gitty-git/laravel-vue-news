@@ -11,11 +11,14 @@ class PoliticsController extends Controller
 {
     public function index()
     {
-        $posts = Post::whereHas('category', function ($query) {
+        $posts = Post::query()->whereHas('category', function ($query) {
             $query->where('name', 'Politics');
         })->latest()->get();
+
+        $categories = Category::query()->pluck('name', 'id');
+
         return Inertia::render('Politics',
-            compact('posts')
+            compact('posts', 'categories')
         );
     }
 

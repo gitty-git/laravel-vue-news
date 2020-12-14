@@ -11,6 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::query()->get();
+
         return Inertia::render('Home',
             compact('categories')
         );

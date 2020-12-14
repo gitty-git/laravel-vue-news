@@ -1,19 +1,19 @@
 <template>
-    <Home>
+    <div>
+        <header>
+            <inertia-link href="/">Home</inertia-link>
+            <inertia-link v-for="cat in categories" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
+        </header>
         <div v-for="post in posts">
             {{ post.title }}
         </div>
-    </Home>
+    </div>
 </template>
 
 <script>
-import Home from '@/Pages/Home'
 
 export default {
-    components: {
-        Home,
-    },
-    props: ["posts"],
+    props: ["posts", "categories"],
 }
 </script>
 

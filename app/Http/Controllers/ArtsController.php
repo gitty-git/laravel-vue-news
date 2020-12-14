@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,11 +11,14 @@ class ArtsController extends Controller
 {
     public function index()
     {
-        $posts = Post::whereHas('category', function ($query) {
+        $posts = Post::query()->whereHas('category', function ($query) {
             $query->where('name', 'Arts');
         })->latest()->get();
+
+        $categories = Category::query()->pluck('name', 'id');
+
         return Inertia::render('Arts',
-            compact('posts')
+            compact('posts', 'categories')
         );
     }
 
