@@ -16,11 +16,11 @@ class HomeController extends Controller
 
         $primaryPosts = PrimaryPost::query()->limit(4)->get();
 
-        $cats = ['arts', 'business', 'entertainment', 'games', 'health', 'politics', 'world'];
+        $cats = ['politics', 'world', 'business', 'health', 'arts',  'entertainment', 'games'];
         foreach ($cats as $cat) {
             $categoriesPosts[$cat] = Post::query()->whereHas('category', function ($query) use ($cat) {
                 $query->where('name', ucfirst($cat));
-            })->latest()->limit(5)->get();
+            })->latest()->limit(5)->with('category')->get();
         }
 
         return Inertia::render('Home',

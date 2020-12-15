@@ -2,7 +2,7 @@
     <div class="flex justify-center">
         <div class="w-2/3">
             <header class="flex justify-center my-6 items-center">
-                <inertia-link href="/">Chelyabinsk</inertia-link>
+                <inertia-link href="/" class="text-5xl uppercase">Chelyabinsk</inertia-link>
             </header>
 
             <slot/>

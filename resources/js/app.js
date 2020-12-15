@@ -12,6 +12,7 @@ Vue.mixin({ methods: { route } });
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
+Vue.component('top-menu', require('./Components/TopMenu').default)
 
 const app = document.getElementById('app');
 

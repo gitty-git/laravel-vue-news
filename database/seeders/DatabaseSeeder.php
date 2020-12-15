@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\PrimaryCategoryPost;
 use App\Models\PrimaryPost;
 use App\Models\Role;
 use App\Models\User;
@@ -44,5 +45,6 @@ class DatabaseSeeder extends Seeder
 
         Post::factory(300)->create();
         PrimaryPost::factory(20)->create();
+        PrimaryCategoryPost::factory(60)->create();
     }
 }

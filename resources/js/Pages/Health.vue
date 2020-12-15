@@ -1,8 +1,8 @@
 <template>
     <NewsLayout>
-        <div class="flex justify-center">
-            <inertia-link class="mx-6" v-for="cat in categories" :key="cat.id" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
-        </div>
+        <top-menu v-slot:links>
+            <inertia-link class="mx-6" :key="cat.id" v-for="cat in categories" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
+        </top-menu>
 
         <div v-for="post in posts.data">
             {{ post.title }}
