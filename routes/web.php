@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtsController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\HealthController;
@@ -28,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/category/{slug}', [HomeController::class, 'category']);
 Route::get('/post/{slug}', [HomeController::class, 'post']);
+
+//Route::get('/categories', CategoriesController::class);
 
 Route::resource('/politics', PoliticsController::class);
 Route::resource('/world', WorldController::class);

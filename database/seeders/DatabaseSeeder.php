@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\NumberOfPrimaryPost;
 use App\Models\Post;
 use App\Models\PrimaryCategoryPost;
 use App\Models\PrimaryPost;

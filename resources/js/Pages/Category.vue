@@ -1,7 +1,11 @@
 <template>
     <NewsLayout>
         <top-menu v-slot:links>
-            <inertia-link class="mx-6" :key="cat.id" v-for="cat in categories" :href="cat.toLowerCase()">{{ cat }}</inertia-link>
+            <inertia-link class="mr-3 pr-3 border-r-2 border-gray-200 last-child"
+                          :key="cat.id" v-for="cat in categories"
+                          :href="cat.slug">
+                {{ cat.name }}
+            </inertia-link>
         </top-menu>
 
         <div v-for="post in posts.data">
@@ -27,7 +31,7 @@
 import NewsLayout from "@/Layouts/NewsLayout";
 export default {
     components: {NewsLayout},
-    props: ["posts", "categories"],
+    props: ["posts", "categories", "category"],
     computed: {
         logg() {
             return console.log(this.posts)

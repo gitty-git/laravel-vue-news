@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Post');
     }
+
+    public function primaryCategoryPosts()
+    {
+        return $this->hasMany('App\Models\PrimaryCategoryPost');
+    }
 }
