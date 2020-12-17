@@ -3210,6 +3210,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewsLayout"
 });
@@ -3579,12 +3608,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     NewsLayout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["posts", "categories", "category"],
+  props: ["posts", "primaryPosts", "categories", "category"],
   computed: {
     logg: function logg() {
       return console.log(this.posts);
@@ -3693,10 +3730,18 @@ var _this = undefined;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
-  props: ['categories', 'primaryPosts', 'primaryCategoryPosts', 'primaryCategoriesPosts'],
+  props: ['categories', 'frontPagePosts', 'categoryPosts', 'primaryCategoryPosts'],
   data: function data() {
     return {
       cats: _this.categories
@@ -3707,13 +3752,13 @@ var _this = undefined;
   },
   computed: {
     firstPrimaryPost: function firstPrimaryPost() {
-      return this.primaryPosts[0];
+      return this.frontPagePosts[0];
     },
     secondPrimaryPost: function secondPrimaryPost() {
-      return this.primaryPosts[1];
+      return this.frontPagePosts[1];
     },
     restPrimaryPosts: function restPrimaryPosts() {
-      return this.primaryPosts.splice(2);
+      return this.frontPagePosts.splice(2);
     },
     firstTwoPosts: function firstTwoPosts() {
       console.log(this.categoriesPosts);
@@ -45647,7 +45692,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "border-t-4 w-full my-3" })
+    _c("div", { staticClass: "border-t-4 border-gray-400 w-full my-3" })
   ])
 }
 var staticRenderFns = []
@@ -47968,21 +48013,65 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "bg-blue-200 w-full" }, [
-      _c("div", { staticClass: "w-1200" }, [
-        _c("div", { staticClass: "w-1/3" }, [
-          _vm._v("\n                About\n            ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/3" }, [
-          _vm._v("\n                Contact Us\n            ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/3" }, [
-          _vm._v("\n                In Social Media\n            ")
+    return _c(
+      "footer",
+      { staticClass: "bg-gray-100 w-full flex justify-center mt-3" },
+      [
+        _c("div", { staticClass: "w-1200 flex my-6" }, [
+          _c("div", { staticClass: "w-2/3 flex border-r-2 border-gray-200" }, [
+            _c(
+              "div",
+              { staticClass: "w-1/2 pr-3 border-r-2 border-gray-200 mb-3" },
+              [
+                _c("div", { staticClass: "font-bold mb-3" }, [
+                  _vm._v(
+                    "\n                        About\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._v(
+                    "\n                        Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea. Voluptatem atque perspiciatis velit ut quia optio repellat consequuntur.\n                    "
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/2 px-3 pb-3" }, [
+              _c("div", { staticClass: "font-bold mb-3" }, [
+                _vm._v(
+                  "\n                        Contact Us\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _vm._v("\n                        Email:\n                    ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "font-bold text-gray-400" }, [
+                _vm._v(
+                  "\n                        example@mail.com\n                    "
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/3 pl-3 last-child" }, [
+            _c("div", { staticClass: "font-bold mb-3" }, [
+              _vm._v("\n                    In Social Media\n                ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _vm._v("\n                    Twitter\n                ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _vm._v("\n                    Facebook\n                ")
+            ])
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -48723,8 +48812,20 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
+      _vm._l(_vm.primaryPosts, function(post) {
+        return _c("div", [
+          _c("div", { staticClass: "font-bold" }, [
+            _vm._v("\n            " + _vm._s(post.title) + "\n        ")
+          ])
+        ])
+      }),
+      _vm._v(" "),
       _vm._l(_vm.posts.data, function(post) {
-        return _c("div", [_vm._v("\n        " + _vm._s(post.title) + "\n    ")])
+        return _c("div", [
+          _c("div", [
+            _vm._v("\n            " + _vm._s(post.title) + "\n        ")
+          ])
+        ])
       }),
       _vm._v(" "),
       _c(

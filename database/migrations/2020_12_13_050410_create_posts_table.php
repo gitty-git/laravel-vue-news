@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->text('body');
             $table->string('slug')->unique();
             $table->enum('is_published', [1, 0])->default(1);
+            $table->enum('type', ['post', 'primary_post', 'front_page_post'])->default('post');
 
             $table->unsignedBigInteger('category_id')->index();
             $table->foreign('category_id')->references('id')->on('categories');

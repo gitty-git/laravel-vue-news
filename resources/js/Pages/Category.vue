@@ -8,8 +8,16 @@
             </inertia-link>
         </top-menu>
 
+        <div v-for="post in primaryPosts">
+            <div class="font-bold">
+                {{ post.title }}
+            </div>
+        </div>
+
         <div v-for="post in posts.data">
-            {{ post.title }}
+            <div>
+                {{ post.title }}
+            </div>
         </div>
 
         <div class="flex flex-row">
@@ -31,7 +39,7 @@
 import NewsLayout from "@/Layouts/NewsLayout";
 export default {
     components: {NewsLayout},
-    props: ["posts", "categories", "category"],
+    props: ["posts", "primaryPosts", "categories", "category"],
     computed: {
         logg() {
             return console.log(this.posts)

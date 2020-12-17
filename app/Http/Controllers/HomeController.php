@@ -15,42 +15,48 @@ class HomeController extends Controller
     {
         $categories = Category::query()->get();
 
-        $primaryPosts = PrimaryPost::query()->where('is_published', 1)->latest()->limit(3)->get();
+        $frontPagePosts = Post::query()->where('is_published', 1)->where('type', 'front_page_post')->latest()->limit(3)->get();
 
-//        $categoryPrimaryPosts = PrimaryCategoryPost::query()->limit(2)->get();
+//        foreach ($categories as $cat) {
+//            $primaryCategoriesPosts[$cat->name] = PrimaryCategoryPost::query()->whereHas('category', function ($query) use ($cat) {
+//                $query->where('name', ucfirst($cat));
+//            })->where('is_published', 1)->latest()->limit(2)->with('category')->get();
+//
+//            Post::query()->whereHas('category', function ($query) use ($cat) {
+//                $query->where('name', ucfirst($cat));
+//            })->where('is_published', 1)->latest()->limit(2)->get();
+//        }
 
-//        $cats = ['politics', 'world', 'business', 'health', 'arts',  'entertainment', 'games'];
+//        $types = ['post', 'primary_post', 'first_page_post'];
+//        $rand_keys = array_rand($types);
+//        echo $types[$rand_keys[0]];
+//        dd($types[$rand_keys[1]]);
 
-//        $posts = Category::query()->with('posts', );
-
-        foreach ($categories as $cat) {
-            $primaryCategoriesPosts[$cat->name] = PrimaryCategoryPost::query()->whereHas('category', function ($query) use ($cat) {
-                $query->where('name', ucfirst($cat));
-            })->where('is_published', 1)->latest()->limit(2)->with('category')->get();
-
-            Post::query()->whereHas('category', function ($query) use ($cat) {
-                $query->where('name', ucfirst($cat));
-            })->where('is_published', 1)->latest()->limit(2)->get();
-        }
+//        foreach ($categories as $cat) {
+//            $categoryPosts[$cat->name] = $cat->primaryCategoryPosts()->latest()->where('is_published', 1)->limit(2)->get();
+//
+//            $categoryPosts[$cat->name] = $cat->posts()->latest()->where('is_published', 1)->limit(2)->get();
+//        }
 
         return Inertia::render('Home',
-            compact('categories','primaryPosts', 'primaryCategoriesPosts')
+            compact('categories', 'frontPagePosts')
         );
     }
 
-    public function category($slug)
-    {
-        $categories = Category::query()->get();
-        $category = Category::query()->where('slug', $slug)->first();
-
-        if ($category) {
-            $posts = $category->posts()->latest()->where('is_published', 1)->paginate(20);
-            return Inertia::render('Category',
-                compact('category', 'posts', 'categories')
-            );
-        }
-        else {
-            return Inertia::render('Error.404', 404);
-        }
-    }
+//    public function category($slug)
+//    {
+//        $categories = Category::query()->get();
+//        $category = Category::query()->where('slug', $slug)->first();
+//
+//        if ($category) {
+//            $primaryPosts = $category->posts()->latest()->where('is_published', 1)->limit(2)->get();
+//            $posts = $category->posts()->latest()->where('is_published', 1)->paginate(20);
+//            return Inertia::render('Category',
+//                compact('category', 'posts', 'primaryPosts', 'categories')
+//            );
+//        }
+//        else {
+//            return Inertia::render('Error.404', 404);
+//        }
+//    }
 }

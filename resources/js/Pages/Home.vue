@@ -9,7 +9,7 @@
                 </inertia-link>
             </top-menu>
 
-            <!--PRIMARY NEWS-->
+            <!--PRIMARY POSTS-->
             <div class="flex items-start">
                 <div class="w-2/3 my-3 pr-3 border-r-2 border-gray-200">
                     <div class="text-2xl font-bold mb-3 text-center">{{firstPrimaryPost.title}}</div>
@@ -32,11 +32,19 @@
                     </div>
                 </div>
             </div>
-            <!--END PRIMARY NEWS-->
 
-<!--            {{ Object.getOwnPropertyNames(primaryCategoriesPosts) }}-->
+            <!--CATEGORIES POSTS-->
+<!--            <div v-for="primaryCategoryPost in primaryCategoryPosts">-->
+<!--                {{primaryCategoryPost}}-->
+<!--            </div>-->
 
-
+<!--            <div v-for="categories in categoryPosts">-->
+<!--&lt;!&ndash;                {{Object.getOwnPropertyNames(categoryPosts)}}&ndash;&gt;-->
+<!--&lt;!&ndash;                {{categories}}&ndash;&gt;-->
+<!--                <div v-for="post in categories">-->
+<!--                    {{post.title}}-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div>
                 <slot/>
@@ -50,7 +58,7 @@ import NewsLayout from '@/Layouts/NewsLayout'
 
 export default {
     name: "Home",
-    props: ['categories', 'primaryPosts', 'primaryCategoryPosts', 'primaryCategoriesPosts'],
+    props: ['categories', 'frontPagePosts', 'categoryPosts', 'primaryCategoryPosts'],
     data: () => ({
         cats: this.categories
     }),
@@ -59,15 +67,15 @@ export default {
     },
     computed: {
         firstPrimaryPost() {
-            return this.primaryPosts[0];
+            return this.frontPagePosts[0];
         },
 
         secondPrimaryPost() {
-            return this.primaryPosts[1];
+            return this.frontPagePosts[1];
         },
 
         restPrimaryPosts() {
-            return this.primaryPosts.splice(2)
+            return this.frontPagePosts.splice(2)
         },
 
         firstTwoPosts() {

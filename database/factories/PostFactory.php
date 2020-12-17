@@ -23,16 +23,18 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+
         $title = $this->faker->text(100);
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
+        $types = ['post', 'primary_post', 'front_page_post'];
         return [
             'title' => $title,
             'brief' => $this->faker->text(200),
             'image' => 'http://127.0.0.1:8000/img/pic-('. rand(25, 29) . ').jpg',
-//            'image' => 'https://source.unsplash.com/random',
             'body' => $this->faker->paragraph,
             'slug' => $slug,
             'is_published' => 1,
+            'type' => $types[array_rand($types, 1)],
             'user_id' => rand(1, count(User::all())),
             'category_id' => rand(1, count(Category::all())),
         ];

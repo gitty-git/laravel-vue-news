@@ -45,7 +45,5 @@ class DatabaseSeeder extends Seeder
         }
 
         Post::factory(300)->create();
-        PrimaryPost::factory(20)->create();
-        PrimaryCategoryPost::factory(60)->create();
     }
 }

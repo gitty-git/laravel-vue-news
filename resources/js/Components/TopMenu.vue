@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="border-t-4 w-full my-3"></div>
+    <div class="border-t-4 border-gray-400 w-full my-3"></div>
 </div>
 </template>
 
