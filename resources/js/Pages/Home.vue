@@ -34,17 +34,17 @@
             </div>
 
             <!--CATEGORIES POSTS-->
-<!--            <div v-for="primaryCategoryPost in primaryCategoryPosts">-->
-<!--                {{primaryCategoryPost}}-->
+<!--            <div v-for="(categoryPosts, index) in posts">-->
+<!--                {{index}}{{categoryPosts}}-->
+<!--                <div v-for="post in categoryPosts">-->
+<!--                    {{post.type}}-->
+<!--                </div>-->
+<!--                <br>-->
 <!--            </div>-->
 
-<!--            <div v-for="categories in categoryPosts">-->
-<!--&lt;!&ndash;                {{Object.getOwnPropertyNames(categoryPosts)}}&ndash;&gt;-->
-<!--&lt;!&ndash;                {{categories}}&ndash;&gt;-->
-<!--                <div v-for="post in categories">-->
-<!--                    {{post.title}}-->
-<!--                </div>-->
-<!--            </div>-->
+            <div v-for="post in posts">
+                {{post}}
+            </div>
 
             <div>
                 <slot/>
@@ -58,7 +58,7 @@ import NewsLayout from '@/Layouts/NewsLayout'
 
 export default {
     name: "Home",
-    props: ['categories', 'frontPagePosts', 'categoryPosts', 'primaryCategoryPosts'],
+    props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts',],
     data: () => ({
         cats: this.categories
     }),

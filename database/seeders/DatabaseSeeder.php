@@ -44,6 +44,8 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Post::factory(300)->create();
+        Post::factory(10)->create(['type' => 'front_page_post']);
+        Post::factory(50)->create(['type' => 'primary_post']);
+        Post::factory(400)->create(['type' => 'post']);
     }
 }

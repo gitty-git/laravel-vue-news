@@ -3741,7 +3741,7 @@ var _this = undefined;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
-  props: ['categories', 'frontPagePosts', 'categoryPosts', 'primaryCategoryPosts'],
+  props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts'],
   data: function data() {
     return {
       cats: _this.categories
@@ -49027,9 +49027,15 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _vm._l(_vm.posts, function(post) {
+          return _c("div", [
+            _vm._v("\n                " + _vm._s(post) + "\n            ")
+          ])
+        }),
+        _vm._v(" "),
         _c("div", [_vm._t("default")], 2)
       ],
-      1
+      2
     )
   ])
 }
