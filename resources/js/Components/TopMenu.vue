@@ -2,7 +2,7 @@
 <div>
     <div class="flex justify-between text-red-500 w-full text-sm">
         <div class="w-1/4 flex items-center">
-            <svg class="mr-1 mt-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
+            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
                 <g id="Ellipse_1" data-name="Ellipse 1" fill="#fff" stroke="#a9a9a9" stroke-width="2">
                     <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
                     <circle cx="4.5" cy="4.5" r="3.5" fill="none"/>

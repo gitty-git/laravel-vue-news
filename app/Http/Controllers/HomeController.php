@@ -15,7 +15,7 @@ class HomeController extends Controller
 
         $frontPagePosts = Post::query()->where('is_published', 1)
             ->where('type', 'front_page_post')
-            ->latest()->limit(3)->get();
+            ->latest()->limit(4)->get();
 
         foreach ($categories as $cat) {
             $primaryPosts[$cat->name] = $cat->posts()->latest()
@@ -23,7 +23,7 @@ class HomeController extends Controller
                 ->get();
 
             $posts[$cat->name] = $cat->posts()->latest()
-                ->where('type', 'post')->limit(2)
+                ->where('type', 'post')->limit(3)
                 ->get();
         }
 
@@ -44,6 +44,21 @@ class HomeController extends Controller
             $posts = $category->posts()->latest()->where('is_published', 1)->where('type', 'post')->with('user')->paginate(20);
             return Inertia::render('Category',
                 compact('category', 'posts', 'primaryPosts', 'categories')
+            );
+        }
+        else {
+            return Inertia::render('Error.404', 404);
+        }
+    }
+
+    public function post($slug)
+    {
+        $categories = Category::query()->get();
+        $post = Post::query()->where('slug', $slug)->with('category')->with('user')->first();
+
+        if ($post) {
+            return Inertia::render('Post',
+                compact('post', 'categories')
             );
         }
         else {
