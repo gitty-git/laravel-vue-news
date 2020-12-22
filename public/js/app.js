@@ -49601,7 +49601,7 @@ var render = function() {
                 [
                   _c(
                     "div",
-                    { staticClass: "text-2xl font-bold mb-1 text-center" },
+                    { staticClass: "text-3xl font-bold mb-1 text-center" },
                     [_vm._v(_vm._s(_vm.firstPrimaryPost.title))]
                   ),
                   _vm._v(" "),
@@ -49631,7 +49631,7 @@ var render = function() {
                     "div",
                     { staticClass: "my-4 pb-4 border-b-2 border-gray-200" },
                     [
-                      _c("div", { staticClass: "text-lg mb-1 font-bold" }, [
+                      _c("div", { staticClass: "text-2xl mb-1 font-bold" }, [
                         _vm._v(_vm._s(_vm.secondPrimaryPost.title))
                       ]),
                       _vm._v(" "),
@@ -49665,7 +49665,7 @@ var render = function() {
                         [
                           _c(
                             "div",
-                            { staticClass: "text-sm mb-2 font-bold " },
+                            { staticClass: "text-2xl mb-2 font-bold " },
                             [_vm._v(_vm._s(primaryPost.title))]
                           ),
                           _vm._v(" "),
@@ -49847,9 +49847,11 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "w-full mt-4 flex justify-center" }, [
         _c("div", { staticClass: "w-720" }, [
-          _c("div", { staticClass: "font-serif font-bold text-4xl mb-4" }, [
-            _vm._v(_vm._s(_vm.post.title))
-          ]),
+          _c(
+            "div",
+            { staticClass: "font-serif font-bold text-4xl mb-4 text-center" },
+            [_vm._v(_vm._s(_vm.post.title))]
+          ),
           _vm._v(" "),
           _c(
             "div",

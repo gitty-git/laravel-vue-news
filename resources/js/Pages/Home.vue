@@ -13,7 +13,7 @@
             <div class="flex font-serif">
                 <div class="w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200">
                     <inertia-link :href="'/post/' + firstPrimaryPost.slug">
-                        <div class="text-2xl font-bold mb-1 text-center">{{firstPrimaryPost.title}}</div>
+                        <div class="text-3xl font-bold mb-1 text-center">{{firstPrimaryPost.title}}</div>
                         <div class="text-13 text-gray-600">{{firstPrimaryPost.brief}}</div>
                         <img class="mt-4" :src="firstPrimaryPost.image" alt="">
                     </inertia-link>
@@ -22,7 +22,7 @@
                 <div class="w-1/3">
                     <inertia-link :href="'/post/' + secondPrimaryPost.slug">
                         <div class="my-4 pb-4 border-b-2 border-gray-200">
-                            <div class="text-lg mb-1 font-bold">{{secondPrimaryPost.title}}</div>
+                            <div class="text-2xl mb-1 font-bold">{{secondPrimaryPost.title}}</div>
                             <div class="text-13 text-gray-600">{{secondPrimaryPost.brief}}</div>
                             <img class="mt-4" :src="secondPrimaryPost.image" alt="">
                         </div>
@@ -31,7 +31,7 @@
                     <div>
                         <div class="mt-4 border-b-2 mb-4 border-gray-200 last-child" v-for="primaryPost in restPrimaryPosts" :key="primaryPost.id">
                             <inertia-link :href="'/post/' + primaryPost.slug">
-                                <div class="text-sm mb-2 font-bold ">{{primaryPost.title}}</div>
+                                <div class="text-2xl mb-2 font-bold ">{{primaryPost.title}}</div>
                                 <div class="text-13 mb-4 text-gray-600">{{primaryPost.brief}}</div>
                             </inertia-link>
                         </div>

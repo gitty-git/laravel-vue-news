@@ -15,7 +15,7 @@ class HomeController extends Controller
 
         $frontPagePosts = Post::query()->where('is_published', 1)
             ->where('type', 'front_page_post')
-            ->latest()->limit(4)->get();
+            ->latest()->limit(3)->get();
 
         foreach ($categories as $cat) {
             $primaryPosts[$cat->name] = $cat->posts()->latest()

@@ -12,7 +12,7 @@
 
         <div class="w-full mt-4 flex justify-center">
             <div class="w-720">
-                <div class="font-serif font-bold text-4xl mb-4">{{post.title}}</div>
+                <div class="font-serif font-bold text-4xl mb-4 text-center">{{post.title}}</div>
 
                 <div class="font-serif text-xl leading-9 text-gray-700 my-8">{{post.brief}}</div>
 
