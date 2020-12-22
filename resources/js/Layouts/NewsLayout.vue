@@ -2,50 +2,50 @@
     <div class="flex flex-col items-center justify-center">
         <div class="w-1200">
             <header class="flex justify-center my-3 items-center">
-                <inertia-link href="/" class="text-6xl uppercase font-logo font-light">Chelyabinsk</inertia-link>
+                <inertia-link href="/" class="text-6xl uppercase font-logo font-light">News Portal</inertia-link>
             </header>
 
             <slot/>
         </div>
 
-        <footer class="bg-gray-100 w-full flex justify-center mt-3">
+        <footer class="bg-gray-100 w-full flex justify-center mt-4">
             <div class="w-1200 flex my-6">
-                <div class="w-2/3 -ml-3 mr-3 px-3 flex border-r-2 border-gray-200">
+                <div class="w-2/3 -ml-4 mr-4 px-4 flex border-r-2 border-gray-200">
                     <div class="w-1/2 pr-3 border-r-2 border-gray-200 mb-3">
-                        <div class="font-bold mb-3">
+                        <div class="sans-bold text-sm mb-3">
                             About
                         </div>
 
-                        <div class="font-serif text-sm">
-                            Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea. Voluptatem atque perspiciatis velit ut quia optio repellat consequuntur.
+                        <div class="font-serif text-sm text-gray-700">
+                            Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea.
                         </div>
                     </div>
 
-                    <div class="w-1/2 pb-3 px-3">
-                        <div class="font-bold mb-3">
+                    <div class="w-1/2 pb-2 px-4">
+                        <div class="sans-bold text-sm mb-3">
                             Contact Us
                         </div>
 
-                        <div class="mb-3 font-serif">
+                        <div class="mb-2 font-serif text-sm text-gray-700">
                             Email:
                         </div>
 
-                        <div class="font-bold text-gray-400 font-serif text-sm">
+                        <div class="sans-bold text-sm text-gray-400 font-sans">
                             example@mail.com
                         </div>
                     </div>
                 </div>
 
                 <div class="w-1/3 last-child ">
-                    <div class="font-bold mb-3">
+                    <div class="sans-bold text-sm mb-2">
                         In Social Media
                     </div>
 
-                    <div class="mb-3 font-serif text-sm">
+                    <div class="mb-2 font-serif text-sm text-gray-700">
                         Twitter
                     </div>
 
-                    <div class="mb-3 font-serif text-sm">
+                    <div class="mb-2 font-serif text-sm text-gray-700">
                         Facebook
                     </div>
                 </div>

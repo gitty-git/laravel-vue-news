@@ -31,7 +31,7 @@ module.exports = {
         },
 
         fontFamily: {
-            'sans': ['Lato', "sans-serif"],
+            'sans': ['Nanum Gothic', "sans-serif"],
             'serif': ['Libre Baskerville', "serif"],
             'logo': ['Cormorant Garamond', "serif"],
         }
