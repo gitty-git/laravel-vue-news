@@ -30,7 +30,7 @@ class PostFactory extends Factory
         return [
             'title' => $title,
             'brief' => $this->faker->text(200),
-            'image' => 'http://127.0.0.1:8000/img/pic-('. rand(25, 29) . ').jpg',
+            'image' => 'http://127.0.0.1:8000/img/pic-('. rand(25, 49) . ').jpg',
             'body' => $this->faker->paragraph,
             'slug' => $slug,
             'is_published' => 1,
