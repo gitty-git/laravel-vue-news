@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\PrimaryCategoryPost;
-use App\Models\PrimaryPost;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,33 +17,20 @@ class HomeController extends Controller
             ->where('type', 'front_page_post')
             ->latest()->limit(3)->get();
 
-//        $posts = Post::query()
-//            ->where('type', 'post')
-//            ->orWhere('type', 'primary_post')
-//            ->get();
-
-//        dd($posts);
-
         foreach ($categories as $cat) {
-            $posts[$cat->name] = $cat->posts()->latest()
-                ->where('type', 'post')->limit(14)
+            $primaryPosts[$cat->name] = $cat->posts()->latest()
+                ->where('type', 'primary_post')->limit(2)
                 ->get();
 
-            $primaryPosts[$cat->name] = $cat->posts()->latest()
-                ->where('type', 'post')->limit(100)
-                ->orWhere('type', 'post')->limit(100)
+            $posts[$cat->name] = $cat->posts()->latest()
+                ->where('type', 'post')->limit(2)
                 ->get();
         }
 
-        $a = $primaryPosts + $posts;
-
-//        foreach ($posts as $post) {
-//            $post->groupBy('type');
-//        }
-        dd($a);
+//        dd($posts, $primaryPosts);
 
         return Inertia::render('Home',
-            compact('categories', 'frontPagePosts', 'posts')
+            compact('categories', 'frontPagePosts', 'posts', 'primaryPosts')
         );
     }
 

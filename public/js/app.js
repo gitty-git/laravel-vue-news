@@ -3681,8 +3681,20 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
-var _this = undefined;
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3742,11 +3754,6 @@ var _this = undefined;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
   props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts'],
-  data: function data() {
-    return {
-      cats: _this.categories
-    };
-  },
   components: {
     NewsLayout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3759,9 +3766,6 @@ var _this = undefined;
     },
     restPrimaryPosts: function restPrimaryPosts() {
       return this.frontPagePosts.splice(2);
-    },
-    firstTwoPosts: function firstTwoPosts() {
-      console.log(this.categoriesPosts);
     }
   }
 });
@@ -4567,7 +4571,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".w-1200 {\n  width: 1200px;\n}\n.last-child:last-child {\n  border: none;\n  padding-right: 0;\n  margin-right: 0;\n}\n", ""]);
+exports.push([module.i, ".w-1200 {\n  width: 1200px;\n}\n.last-child:last-child {\n  border: none;\n  padding-right: 0;\n  margin-right: 0;\n  margin-bottom: 0;\n  padding-bottom: 0;\n}\n.first-child:first-child {\n  padding-left: 0;\n  margin-left: 0;\n  margin-top: 0;\n  padding-top: 0;\n}\n", ""]);
 
 // exports
 
@@ -45680,7 +45684,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "flex justify-between w-full" }, [
+    _c("div", { staticClass: "flex justify-between w-full text-sm" }, [
       _c("div", { staticClass: "w-1/4" }, [
         _vm._v("\n            Search\n        ")
       ]),
@@ -47988,11 +47992,14 @@ var render = function() {
         [
           _c(
             "header",
-            { staticClass: "flex justify-center my-6 items-center" },
+            { staticClass: "flex justify-center my-3 items-center" },
             [
               _c(
                 "inertia-link",
-                { staticClass: "text-5xl uppercase", attrs: { href: "/" } },
+                {
+                  staticClass: "text-6xl uppercase font-logo font-light",
+                  attrs: { href: "/" }
+                },
                 [_vm._v("Chelyabinsk")]
               )
             ],
@@ -48018,54 +48025,67 @@ var staticRenderFns = [
       { staticClass: "bg-gray-100 w-full flex justify-center mt-3" },
       [
         _c("div", { staticClass: "w-1200 flex my-6" }, [
-          _c("div", { staticClass: "w-2/3 flex border-r-2 border-gray-200" }, [
-            _c(
-              "div",
-              { staticClass: "w-1/2 pr-3 border-r-2 border-gray-200 mb-3" },
-              [
+          _c(
+            "div",
+            {
+              staticClass:
+                "w-2/3 -ml-3 mr-3 px-3 flex border-r-2 border-gray-200"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "w-1/2 pr-3 border-r-2 border-gray-200 mb-3" },
+                [
+                  _c("div", { staticClass: "font-bold mb-3" }, [
+                    _vm._v(
+                      "\n                        About\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "font-serif text-sm" }, [
+                    _vm._v(
+                      "\n                        Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea. Voluptatem atque perspiciatis velit ut quia optio repellat consequuntur.\n                    "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-1/2 pb-3 px-3" }, [
                 _c("div", { staticClass: "font-bold mb-3" }, [
                   _vm._v(
-                    "\n                        About\n                    "
+                    "\n                        Contact Us\n                    "
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", [
+                _c("div", { staticClass: "mb-3 font-serif" }, [
                   _vm._v(
-                    "\n                        Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea. Voluptatem atque perspiciatis velit ut quia optio repellat consequuntur.\n                    "
+                    "\n                        Email:\n                    "
                   )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/2 px-3 pb-3" }, [
-              _c("div", { staticClass: "font-bold mb-3" }, [
-                _vm._v(
-                  "\n                        Contact Us\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _vm._v("\n                        Email:\n                    ")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "font-bold text-gray-400" }, [
-                _vm._v(
-                  "\n                        example@mail.com\n                    "
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "font-bold text-gray-400 font-serif text-sm" },
+                  [
+                    _vm._v(
+                      "\n                        example@mail.com\n                    "
+                    )
+                  ]
                 )
               ])
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "w-1/3 pl-3 last-child" }, [
+          _c("div", { staticClass: "w-1/3 last-child " }, [
             _c("div", { staticClass: "font-bold mb-3" }, [
               _vm._v("\n                    In Social Media\n                ")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
+            _c("div", { staticClass: "mb-3 font-serif text-sm" }, [
               _vm._v("\n                    Twitter\n                ")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
+            _c("div", { staticClass: "mb-3 font-serif text-sm" }, [
               _vm._v("\n                    Facebook\n                ")
             ])
           ])
@@ -48945,14 +48965,14 @@ var render = function() {
                     {
                       key: cat.id,
                       staticClass:
-                        "mr-3 pr-3 border-r-2 border-gray-200 last-child",
+                        "mr-3 text-sm pr-3 border-r-2 border-gray-200 last-child",
                       attrs: { href: "category/" + cat.slug }
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                " +
                           _vm._s(cat.name) +
-                          "\n                "
+                          "\n            "
                       )
                     ]
                   )
@@ -48963,10 +48983,13 @@ var render = function() {
           ])
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "flex items-start" }, [
+        _c("div", { staticClass: "flex font-serif text-gray-700" }, [
           _c(
             "div",
-            { staticClass: "w-2/3 my-3 pr-3 border-r-2 border-gray-200" },
+            {
+              staticClass:
+                "w-2/3 my-3 -ml-3 mr-3 px-3 border-r-2 border-gray-200"
+            },
             [
               _c(
                 "div",
@@ -48974,7 +48997,7 @@ var render = function() {
                 [_vm._v(_vm._s(_vm.firstPrimaryPost.title))]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
+              _c("div", { staticClass: "mb-3 text-sm" }, [
                 _vm._v(_vm._s(_vm.firstPrimaryPost.brief))
               ]),
               _vm._v(" "),
@@ -48983,23 +49006,19 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "w-1/3" }, [
-            _c(
-              "div",
-              { staticClass: "ml-3 my-3 pb-3 border-b-2 border-gray-200" },
-              [
-                _c("div", { staticClass: "text-lg mb-3 font-bold" }, [
-                  _vm._v(_vm._s(_vm.secondPrimaryPost.title))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3" }, [
-                  _vm._v(_vm._s(_vm.secondPrimaryPost.brief))
-                ]),
-                _vm._v(" "),
-                _c("img", {
-                  attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
-                })
-              ]
-            ),
+            _c("div", { staticClass: "my-3 pb-3 border-b-2 border-gray-200" }, [
+              _c("div", { staticClass: "text-lg mb-3 font-bold" }, [
+                _vm._v(_vm._s(_vm.secondPrimaryPost.title))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3 text-sm" }, [
+                _vm._v(_vm._s(_vm.secondPrimaryPost.brief))
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
+              })
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -49008,15 +49027,14 @@ var render = function() {
                   "div",
                   {
                     key: primaryPost.id,
-                    staticClass:
-                      "ml-3 mt-3 border-b-2 border-gray-200 last-child"
+                    staticClass: "mt-3 border-b-2 border-gray-200 last-child"
                   },
                   [
                     _c("div", { staticClass: "text-lg font-bold mb-3" }, [
                       _vm._v(_vm._s(primaryPost.title))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "mb-3" }, [
+                    _c("div", { staticClass: "mb-3 text-sm" }, [
                       _vm._v(_vm._s(primaryPost.brief))
                     ])
                   ]
@@ -49027,15 +49045,83 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._l(_vm.posts, function(post) {
-          return _c("div", [
-            _vm._v("\n                " + _vm._s(post) + "\n            ")
-          ])
-        }),
+        _c(
+          "div",
+          { staticClass: "items-start" },
+          _vm._l(_vm.categories, function(cat, id) {
+            return _c("div", [
+              _c("div", {
+                staticClass: "border-t-4 border-gray-400 w-full my-3"
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "font-bold mb-3" }, [
+                _vm._v(_vm._s(cat.name))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex pb-3 font-serif text-gray-700" }, [
+                _c(
+                  "div",
+                  { staticClass: "flex w-2/3" },
+                  _vm._l(Object.values(_vm.primaryPosts)[id], function(post) {
+                    return _c("div", { staticClass: "w-1/2" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "border-r-2 -ml-3 mr-3 px-3 border-gray-200"
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "mb-3 w-full",
+                            attrs: { src: post.image, alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "font-bold text-lg mb-3" }, [
+                            _vm._v(_vm._s(post.title))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-sm" }, [
+                            _vm._v(_vm._s(post.brief))
+                          ])
+                        ]
+                      )
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-1/3 font-serif text-gray-700" },
+                  _vm._l(Object.values(_vm.posts)[id], function(post) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "border-b-2 border-gray-200 last-child pb-3 mb-3"
+                      },
+                      [
+                        _c("div", { staticClass: "font-bold text-lg mb-3" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-sm" }, [
+                          _vm._v(_vm._s(post.brief))
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          }),
+          0
+        ),
         _vm._v(" "),
         _c("div", [_vm._t("default")], 2)
       ],
-      2
+      1
     )
   ])
 }

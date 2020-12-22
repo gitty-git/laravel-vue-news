@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="flex justify-between w-full">
+    <div class="flex justify-between w-full text-sm">
         <div class="w-1/4">
             Search
         </div>

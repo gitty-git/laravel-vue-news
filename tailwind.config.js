@@ -28,6 +28,12 @@ module.exports = {
                 '800': '#262626',
                 '900': '#171717',
             }
+        },
+
+        fontFamily: {
+            'sans': ['Lato', "sans-serif"],
+            'serif': ['Libre Baskerville', "serif"],
+            'logo': ['Cormorant Garamond', "serif"],
         }
     },
 
