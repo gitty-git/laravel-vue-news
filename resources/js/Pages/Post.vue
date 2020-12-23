@@ -14,10 +14,10 @@
             <div class="w-720">
                 <div class="font-serif font-bold text-3xl mb-4 text-center">{{post.title}}</div>
 
-                <div class="font-serif text-xl leading-9 text-gray-700 my-8">{{post.brief}}</div>
+                <div class="font-serif text-xl leading-9 text-gray-700 mt-8 mb-2">{{post.brief}}</div>
 
                 <!--CREATED AT-->
-                <div class="flex justify-end items-end sans uppercase text-gray-400">
+                <div class="flex sans uppercase text-gray-400">
                     <div class="text-xs">
                         {{
                             `${new Date(post.created_at).toLocaleString('default', {month: 'long'})} ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}`
@@ -26,7 +26,10 @@
                     <div class="text-xs">&nbsp;by {{ post.user.name }}</div>
                 </div>
 
-                <img class="my-8" :src="post.image" alt="">
+                <div class="my-8">
+                    <img class="mb-2" :src="post.image" alt="">
+                    <div class="w-full font-serif text-xs text-gray-400 text-right">{{ post.image_description }}</div>
+                </div>
 
                 <div class="font-serif text-xl leading-9 text-gray-700 my-8">{{ post.body }}</div>
             </div>

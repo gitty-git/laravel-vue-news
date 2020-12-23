@@ -3699,6 +3699,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3841,6 +3843,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
@@ -3873,6 +3887,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
+//
+//
+//
 //
 //
 //
@@ -49239,39 +49256,32 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass:
-                          "flex h-full justify-end items-end sans uppercase text-gray-400"
+                        staticClass: "flex h-full sans uppercase text-gray-400"
                       },
                       [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "flex flex-wrap justify-end items-end"
-                          },
-                          [
-                            _c("div", { staticClass: "text-xs" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(
-                                    new Date(
-                                      post.created_at
-                                    ).toLocaleString("default", {
-                                      month: "long"
-                                    }) +
-                                      " " +
-                                      new Date(post.created_at).getDate() +
-                                      ", " +
-                                      new Date(post.created_at).getFullYear()
-                                  ) +
-                                  " \n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "text-xs" }, [
-                              _vm._v("by " + _vm._s(post.user.name))
-                            ])
-                          ]
-                        )
+                        _c("div", { staticClass: "flex flex-wrap" }, [
+                          _c("div", { staticClass: "text-xs" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
+                                  new Date(
+                                    post.created_at
+                                  ).toLocaleString("default", {
+                                    month: "long"
+                                  }) +
+                                    " " +
+                                    new Date(post.created_at).getDate() +
+                                    ", " +
+                                    new Date(post.created_at).getFullYear()
+                                ) +
+                                " \n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-xs" }, [
+                            _vm._v("by " + _vm._s(post.user.name))
+                          ])
+                        ])
                       ]
                     )
                   ])
@@ -49328,43 +49338,36 @@ var render = function() {
                               "div",
                               {
                                 staticClass:
-                                  "flex h-full justify-end items-end sans uppercase text-gray-400"
+                                  "flex h-full sans uppercase text-gray-400"
                               },
                               [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "flex flex-wrap justify-end items-end"
-                                  },
-                                  [
-                                    _c("div", { staticClass: "text-xs" }, [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(
+                                _c("div", { staticClass: "flex flex-wrap" }, [
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(
+                                          new Date(
+                                            post.created_at
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                            " " +
                                             new Date(
                                               post.created_at
-                                            ).toLocaleString("default", {
-                                              month: "long"
-                                            }) +
-                                              " " +
-                                              new Date(
-                                                post.created_at
-                                              ).getDate() +
-                                              ", " +
-                                              new Date(
-                                                post.created_at
-                                              ).getFullYear()
-                                          ) +
-                                          " \n                                    "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "text-xs" }, [
-                                      _vm._v("by " + _vm._s(post.user.name))
-                                    ])
-                                  ]
-                                )
+                                            ).getDate() +
+                                            ", " +
+                                            new Date(
+                                              post.created_at
+                                            ).getFullYear()
+                                        ) +
+                                        " \n                                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v("by " + _vm._s(post.user.name))
+                                  ])
+                                ])
                               ]
                             )
                           ])
@@ -49419,31 +49422,35 @@ var render = function() {
                               "div",
                               {
                                 staticClass:
-                                  "flex h-full justify-end items-end sans uppercase text-gray-400"
+                                  "flex h-full sans uppercase text-gray-400"
                               },
                               [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(
-                                        new Date(
-                                          post.created_at
-                                        ).toLocaleString("default", {
-                                          month: "long"
-                                        }) +
-                                          " " +
-                                          new Date(post.created_at).getDate() +
-                                          ", " +
+                                _c("div", { staticClass: "flex flex-wrap" }, [
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(
                                           new Date(
                                             post.created_at
-                                          ).getFullYear()
-                                      ) +
-                                      "\n                                "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(" by " + _vm._s(post.user.name))
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                            " " +
+                                            new Date(
+                                              post.created_at
+                                            ).getDate() +
+                                            ", " +
+                                            new Date(
+                                              post.created_at
+                                            ).getFullYear()
+                                        ) +
+                                        " \n                                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v("by " + _vm._s(post.user.name))
+                                  ])
                                 ])
                               ]
                             )
@@ -49586,9 +49593,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                " +
+                        "\n                    " +
                           _vm._s(cat.name) +
-                          "\n            "
+                          "\n                "
                       )
                     ]
                   )
@@ -49624,19 +49631,20 @@ var render = function() {
                     _vm._v(_vm._s(_vm.firstPrimaryPost.brief))
                   ]),
                   _vm._v(" "),
-                  _c("img", {
-                    staticClass: "mt-4",
-                    attrs: { src: _vm.firstPrimaryPost.image, alt: "" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "mt-2 w-full text-xs text-gray-400 text-right"
-                    },
-                    [_vm._v("Photo Description goes here")]
-                  )
+                  _c("div", { staticClass: "mt-4" }, [
+                    _c("img", {
+                      attrs: { src: _vm.firstPrimaryPost.image, alt: "" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "mt-2 w-full text-xs text-gray-400 text-right"
+                      },
+                      [_vm._v(_vm._s(_vm.firstPrimaryPost.image_description))]
+                    )
+                  ])
                 ]
               )
             ],
@@ -49665,19 +49673,24 @@ var render = function() {
                         _vm._v(_vm._s(_vm.secondPrimaryPost.brief))
                       ]),
                       _vm._v(" "),
-                      _c("img", {
-                        staticClass: "mt-4",
-                        attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "mt-2 w-full text-xs text-gray-400 text-right"
-                        },
-                        [_vm._v("Photo Description goes here")]
-                      )
+                      _c("div", { staticClass: "mt-4" }, [
+                        _c("img", {
+                          attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "mt-2 w-full text-xs text-gray-400 text-right"
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.secondPrimaryPost.image_description)
+                            )
+                          ]
+                        )
+                      ])
                     ]
                   )
                 ]
@@ -49753,19 +49766,12 @@ var render = function() {
                                   "border-r-2 -ml-4 mr-4 px-4 border-gray-200"
                               },
                               [
-                                _c("img", {
-                                  staticClass: "w-full",
-                                  attrs: { src: post.image, alt: "" }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "mt-2 mb-4 w-full text-xs text-gray-400 text-right"
-                                  },
-                                  [_vm._v("Photo Description goes here")]
-                                ),
+                                _c("div", { staticClass: "mb-4" }, [
+                                  _c("img", {
+                                    staticClass: "w-full",
+                                    attrs: { src: post.image, alt: "" }
+                                  })
+                                ]),
                                 _vm._v(" "),
                                 _c(
                                   "div",
@@ -49897,43 +49903,50 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "font-serif text-xl leading-9 text-gray-700 my-8" },
+            {
+              staticClass:
+                "font-serif text-xl leading-9 text-gray-700 mt-8 mb-2"
+            },
             [_vm._v(_vm._s(_vm.post.brief))]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "flex justify-end items-end sans uppercase text-gray-400"
-            },
-            [
-              _c("div", { staticClass: "text-xs" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(
-                      new Date(_vm.post.created_at).toLocaleString("default", {
-                        month: "long"
-                      }) +
-                        " " +
-                        new Date(_vm.post.created_at).getDate() +
-                        ", " +
-                        new Date(_vm.post.created_at).getFullYear()
-                    ) +
-                    "\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "text-xs" }, [
-                _vm._v(" by " + _vm._s(_vm.post.user.name))
-              ])
-            ]
-          ),
+          _c("div", { staticClass: "flex sans uppercase text-gray-400" }, [
+            _c("div", { staticClass: "text-xs" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(
+                    new Date(_vm.post.created_at).toLocaleString("default", {
+                      month: "long"
+                    }) +
+                      " " +
+                      new Date(_vm.post.created_at).getDate() +
+                      ", " +
+                      new Date(_vm.post.created_at).getFullYear()
+                  ) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-xs" }, [
+              _vm._v(" by " + _vm._s(_vm.post.user.name))
+            ])
+          ]),
           _vm._v(" "),
-          _c("img", {
-            staticClass: "my-8",
-            attrs: { src: _vm.post.image, alt: "" }
-          }),
+          _c("div", { staticClass: "my-8" }, [
+            _c("img", {
+              staticClass: "mb-2",
+              attrs: { src: _vm.post.image, alt: "" }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "w-full font-serif text-xs text-gray-400 text-right"
+              },
+              [_vm._v(_vm._s(_vm.post.image_description))]
+            )
+          ]),
           _vm._v(" "),
           _c(
             "div",

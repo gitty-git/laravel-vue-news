@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 100);
             $table->string('brief', 200);
             $table->string('image');
+            $table->string('image_description')->nullable();
             $table->text('body');
             $table->string('slug')->unique();
             $table->enum('is_published', [1, 0])->default(1);

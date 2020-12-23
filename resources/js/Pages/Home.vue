@@ -13,20 +13,28 @@
             <div class="flex font-serif">
                 <div class="w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200">
                     <inertia-link :href="'/post/' + firstPrimaryPost.slug">
-                        <div class="text-3xl font-bold mb-2 text-center leading-10">{{firstPrimaryPost.title}}</div>
-                        <div class="text-13 text-gray-700">{{firstPrimaryPost.brief}}</div>
-                        <img class="mt-4" :src="firstPrimaryPost.image" alt="">
-                        <div class="mt-2 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
+                        <div class="text-3xl font-bold mb-2 text-center leading-10">{{ firstPrimaryPost.title }}</div>
+
+                        <div class="text-13 text-gray-700">{{ firstPrimaryPost.brief }}</div>
+
+                        <div class="mt-4">
+                            <img :src="firstPrimaryPost.image" alt="">
+                            <div class="mt-2 w-full text-xs text-gray-400 text-right">{{ firstPrimaryPost.image_description }}</div>
+                        </div>
                     </inertia-link>
                 </div>
 
                 <div class="w-1/3">
                     <inertia-link :href="'/post/' + secondPrimaryPost.slug">
                         <div class="my-4 pb-4 border-b-2 border-gray-200">
-                            <div class="text-2xl mb-2 font-bold leading-8">{{secondPrimaryPost.title}}</div>
-                            <div class="text-13 text-gray-700">{{secondPrimaryPost.brief}}</div>
-                            <img class="mt-4" :src="secondPrimaryPost.image" alt="">
-                            <div class="mt-2 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
+                            <div class="text-2xl mb-2 font-bold leading-8">{{ secondPrimaryPost.title }}</div>
+
+                            <div class="text-13 text-gray-700">{{ secondPrimaryPost.brief }}</div>
+
+                            <div class="mt-4">
+                                <img :src="secondPrimaryPost.image" alt="">
+                                <div class="mt-2 w-full text-xs text-gray-400 text-right">{{ secondPrimaryPost.image_description }}</div>
+                            </div>
                         </div>
                     </inertia-link>
 
@@ -52,9 +60,13 @@
                             <div class="w-1/2" v-for="post in Object.values(primaryPosts)[id]">
                                 <inertia-link :href="'/post/' + post.slug">
                                     <div class="border-r-2 -ml-4 mr-4 px-4 border-gray-200">
-                                        <img :src="post.image" alt="" class="w-full">
-                                        <div class="mt-2 mb-4 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
+                                        <div class="mb-4">
+                                            <img :src="post.image" alt="" class="w-full">
+<!--                                            <div class="mt-2 w-full text-xs text-gray-400 text-right">{{ post.image_description }}</div>-->
+                                        </div>
+
                                         <div class="font-bold text-lg mb-2">{{ post.title }}</div>
+
                                         <div class="text-13 text-gray-700">{{ post.brief }}</div>
                                     </div>
                                 </inertia-link>
