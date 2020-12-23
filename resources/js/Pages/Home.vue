@@ -13,26 +13,28 @@
             <div class="flex font-serif">
                 <div class="w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200">
                     <inertia-link :href="'/post/' + firstPrimaryPost.slug">
-                        <div class="text-3xl font-bold mb-1 text-center">{{firstPrimaryPost.title}}</div>
-                        <div class="text-13 text-gray-600">{{firstPrimaryPost.brief}}</div>
+                        <div class="text-3xl font-bold mb-2 text-center leading-10">{{firstPrimaryPost.title}}</div>
+                        <div class="text-13 text-gray-700">{{firstPrimaryPost.brief}}</div>
                         <img class="mt-4" :src="firstPrimaryPost.image" alt="">
+                        <div class="mt-2 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
                     </inertia-link>
                 </div>
 
                 <div class="w-1/3">
                     <inertia-link :href="'/post/' + secondPrimaryPost.slug">
                         <div class="my-4 pb-4 border-b-2 border-gray-200">
-                            <div class="text-2xl mb-1 font-bold">{{secondPrimaryPost.title}}</div>
-                            <div class="text-13 text-gray-600">{{secondPrimaryPost.brief}}</div>
+                            <div class="text-2xl mb-2 font-bold leading-8">{{secondPrimaryPost.title}}</div>
+                            <div class="text-13 text-gray-700">{{secondPrimaryPost.brief}}</div>
                             <img class="mt-4" :src="secondPrimaryPost.image" alt="">
+                            <div class="mt-2 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
                         </div>
                     </inertia-link>
 
                     <div>
                         <div class="mt-4 border-b-2 mb-4 border-gray-200 last-child" v-for="primaryPost in restPrimaryPosts" :key="primaryPost.id">
                             <inertia-link :href="'/post/' + primaryPost.slug">
-                                <div class="text-2xl mb-2 font-bold ">{{primaryPost.title}}</div>
-                                <div class="text-13 mb-4 text-gray-600">{{primaryPost.brief}}</div>
+                                <div class="text-xl mb-2 font-bold">{{primaryPost.title}}</div>
+                                <div class="text-13 mb-4 text-gray-700">{{primaryPost.brief}}</div>
                             </inertia-link>
                         </div>
                     </div>
@@ -50,9 +52,10 @@
                             <div class="w-1/2" v-for="post in Object.values(primaryPosts)[id]">
                                 <inertia-link :href="'/post/' + post.slug">
                                     <div class="border-r-2 -ml-4 mr-4 px-4 border-gray-200">
-                                        <img :src="post.image" alt="" class="mb-4 w-full">
+                                        <img :src="post.image" alt="" class="w-full">
+                                        <div class="mt-2 mb-4 w-full text-xs text-gray-400 text-right">Photo Description goes here</div>
                                         <div class="font-bold text-lg mb-2">{{ post.title }}</div>
-                                        <div class="text-13 text-gray-600">{{ post.brief }}</div>
+                                        <div class="text-13 text-gray-700">{{ post.brief }}</div>
                                     </div>
                                 </inertia-link>
                             </div>
@@ -62,7 +65,7 @@
                             <div v-for="post in Object.values(posts)[id]" class="border-b-2 border-gray-200 last-child pb-4 mb-4">
                                 <inertia-link :href="'/post/' + post.slug">
                                     <div class="text-sm mb-2 font-bold ">{{ post.title }}</div>
-                                    <div class="text-13 text-gray-600">{{ post.brief }}</div>
+                                    <div class="text-13 text-gray-700">{{ post.brief }}</div>
                                 </inertia-link>
                             </div>
                         </div>

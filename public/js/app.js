@@ -3697,6 +3697,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3757,6 +3759,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
+//
+//
+//
 //
 //
 //
@@ -45976,7 +45981,7 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex justify-between text-red-500 w-full text-sm" },
+      { staticClass: "flex mb-2 justify-between text-red-500 w-full text-sm" },
       [
         _c("div", { staticClass: "w-1/4 flex items-center" }, [
           _c(
@@ -46037,7 +46042,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "border-t-4 border-gray-400 w-full my-2" })
+    _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
   ])
 }
 var staticRenderFns = [
@@ -48383,12 +48388,15 @@ var staticRenderFns = [
             "div",
             {
               staticClass:
-                "w-2/3 -ml-4 mr-4 px-4 flex border-r-2 border-gray-200"
+                "w-2/3 -ml-4 mr-4 px-4 flex border-r-2 h-full border-gray-300"
             },
             [
               _c(
                 "div",
-                { staticClass: "w-1/2 pr-3 border-r-2 border-gray-200 mb-3" },
+                {
+                  staticClass:
+                    "w-1/2 pr-3 border-r-2 border-gray-300 h-full mb-3"
+                },
                 [
                   _c("div", { staticClass: "sans-bold text-sm mb-3" }, [
                     _vm._v(
@@ -49198,6 +49206,10 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
+      _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
+        _vm._v(_vm._s(_vm.primaryPosts[0].category.name))
+      ]),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "flex border-b-2 py-4 mb-4 border-gray-200" },
@@ -49601,18 +49613,30 @@ var render = function() {
                 [
                   _c(
                     "div",
-                    { staticClass: "text-3xl font-bold mb-1 text-center" },
+                    {
+                      staticClass:
+                        "text-3xl font-bold mb-2 text-center leading-10"
+                    },
                     [_vm._v(_vm._s(_vm.firstPrimaryPost.title))]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "text-13 text-gray-600" }, [
+                  _c("div", { staticClass: "text-13 text-gray-700" }, [
                     _vm._v(_vm._s(_vm.firstPrimaryPost.brief))
                   ]),
                   _vm._v(" "),
                   _c("img", {
                     staticClass: "mt-4",
                     attrs: { src: _vm.firstPrimaryPost.image, alt: "" }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "mt-2 w-full text-xs text-gray-400 text-right"
+                    },
+                    [_vm._v("Photo Description goes here")]
+                  )
                 ]
               )
             ],
@@ -49631,18 +49655,29 @@ var render = function() {
                     "div",
                     { staticClass: "my-4 pb-4 border-b-2 border-gray-200" },
                     [
-                      _c("div", { staticClass: "text-2xl mb-1 font-bold" }, [
-                        _vm._v(_vm._s(_vm.secondPrimaryPost.title))
-                      ]),
+                      _c(
+                        "div",
+                        { staticClass: "text-2xl mb-2 font-bold leading-8" },
+                        [_vm._v(_vm._s(_vm.secondPrimaryPost.title))]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "text-13 text-gray-600" }, [
+                      _c("div", { staticClass: "text-13 text-gray-700" }, [
                         _vm._v(_vm._s(_vm.secondPrimaryPost.brief))
                       ]),
                       _vm._v(" "),
                       _c("img", {
                         staticClass: "mt-4",
                         attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "mt-2 w-full text-xs text-gray-400 text-right"
+                        },
+                        [_vm._v("Photo Description goes here")]
+                      )
                     ]
                   )
                 ]
@@ -49663,15 +49698,13 @@ var render = function() {
                         "inertia-link",
                         { attrs: { href: "/post/" + primaryPost.slug } },
                         [
-                          _c(
-                            "div",
-                            { staticClass: "text-2xl mb-2 font-bold " },
-                            [_vm._v(_vm._s(primaryPost.title))]
-                          ),
+                          _c("div", { staticClass: "text-xl mb-2 font-bold" }, [
+                            _vm._v(_vm._s(primaryPost.title))
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
-                            { staticClass: "text-13 mb-4 text-gray-600" },
+                            { staticClass: "text-13 mb-4 text-gray-700" },
                             [_vm._v(_vm._s(primaryPost.brief))]
                           )
                         ]
@@ -49721,9 +49754,18 @@ var render = function() {
                               },
                               [
                                 _c("img", {
-                                  staticClass: "mb-4 w-full",
+                                  staticClass: "w-full",
                                   attrs: { src: post.image, alt: "" }
                                 }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "mt-2 mb-4 w-full text-xs text-gray-400 text-right"
+                                  },
+                                  [_vm._v("Photo Description goes here")]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
@@ -49733,7 +49775,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "text-13 text-gray-600" },
+                                  { staticClass: "text-13 text-gray-700" },
                                   [_vm._v(_vm._s(post.brief))]
                                 )
                               ]
@@ -49770,7 +49812,7 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "text-13 text-gray-600" },
+                              { staticClass: "text-13 text-gray-700" },
                               [_vm._v(_vm._s(post.brief))]
                             )
                           ]
@@ -49841,7 +49883,7 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "uppercase sans-bold" }, [
+      _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
         _vm._v(_vm._s(_vm.post.category.name))
       ]),
       _vm._v(" "),
@@ -49849,7 +49891,7 @@ var render = function() {
         _c("div", { staticClass: "w-720" }, [
           _c(
             "div",
-            { staticClass: "font-serif font-bold text-4xl mb-4 text-center" },
+            { staticClass: "font-serif font-bold text-3xl mb-4 text-center" },
             [_vm._v(_vm._s(_vm.post.title))]
           ),
           _vm._v(" "),

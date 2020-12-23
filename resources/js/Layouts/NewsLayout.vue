@@ -10,8 +10,8 @@
 
         <footer class="bg-gray-100 w-full flex justify-center mt-4">
             <div class="w-1200 flex my-6">
-                <div class="w-2/3 -ml-4 mr-4 px-4 flex border-r-2 border-gray-200">
-                    <div class="w-1/2 pr-3 border-r-2 border-gray-200 mb-3">
+                <div class="w-2/3 -ml-4 mr-4 px-4 flex border-r-2 h-full border-gray-300">
+                    <div class="w-1/2 pr-3 border-r-2 border-gray-300 h-full mb-3">
                         <div class="sans-bold text-sm mb-3">
                             About
                         </div>

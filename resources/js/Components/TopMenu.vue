@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="flex justify-between text-red-500 w-full text-sm">
+    <div class="flex mb-2 justify-between text-red-500 w-full text-sm">
         <div class="w-1/4 flex items-center">
             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
                 <g id="Ellipse_1" data-name="Ellipse 1" fill="#fff" stroke="#a9a9a9" stroke-width="2">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="border-t-4 border-gray-400 w-full my-2"></div>
+    <div class="border-t-4 border-gray-400 w-full"></div>
 </div>
 </template>
 

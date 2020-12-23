@@ -8,11 +8,11 @@
             </inertia-link>
         </top-menu>
 
-        <div class="uppercase sans-bold">{{ post.category.name }}</div>
+        <div class="uppercase mt-2 sans-bold">{{ post.category.name }}</div>
 
         <div class="w-full mt-4 flex justify-center">
             <div class="w-720">
-                <div class="font-serif font-bold text-4xl mb-4 text-center">{{post.title}}</div>
+                <div class="font-serif font-bold text-3xl mb-4 text-center">{{post.title}}</div>
 
                 <div class="font-serif text-xl leading-9 text-gray-700 my-8">{{post.brief}}</div>
 
