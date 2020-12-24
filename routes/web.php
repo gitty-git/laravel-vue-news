@@ -1,14 +1,7 @@
 <?php
 
-use App\Http\Controllers\ArtsController;
-use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\EntertainmentController;
-use App\Http\Controllers\GamesController;
-use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PoliticsController;
-use App\Http\Controllers\WorldController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/category/{slug}', [HomeController::class, 'category']);
 Route::get('/post/{slug}', [HomeController::class, 'post']);
-
-//Route::get('/categories', CategoriesController::class);
+Route::get('/user/{id}', [HomeController::class, 'user']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');

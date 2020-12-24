@@ -17,10 +17,16 @@
             <slot name="links"/>
         </div>
 
+<!--        <div class="w-1/4 sans flex justify-end">-->
+<!--            <inertia-link :href="'/login'">Login</inertia-link>-->
+<!--            <div class="font-bold mx-1 text-gray-400">/</div>-->
+<!--            <inertia-link :href="'/register'">Register</inertia-link>-->
+<!--        </div>-->
+
         <div class="w-1/4 sans flex justify-end">
-            <div>Login</div>
+            <a href="/login">Login</a>
             <div class="font-bold mx-1 text-gray-400">/</div>
-            <div>Register</div>
+            <a :href="'/register'">Register</a>
         </div>
     </div>
 

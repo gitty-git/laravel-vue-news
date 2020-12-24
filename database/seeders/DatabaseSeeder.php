@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\NumberOfPrimaryPost;
+use App\Models\Comment;
+use App\Models\CommentReply;
 use App\Models\Post;
-use App\Models\PrimaryCategoryPost;
-use App\Models\PrimaryPost;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -20,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
+        User::factory(50)->create();
 
         $roles = ['admin', 'redactor', 'user'];
         foreach ($roles as $role) {
@@ -46,6 +45,9 @@ class DatabaseSeeder extends Seeder
 
         Post::factory(10)->create(['type' => 'front_page_post']);
         Post::factory(50)->create(['type' => 'primary_post']);
-        Post::factory(400)->create(['type' => 'post']);
+        Post::factory(200)->create(['type' => 'post']);
+
+        Comment::factory(600)->create();
+        CommentReply::factory(1000)->create();
     }
 }
