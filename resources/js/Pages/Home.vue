@@ -8,6 +8,7 @@
                 >
                     {{ cat.name }}
                 </inertia-link>
+                {{ user.name }}
             </top-menu>
 
             <!--PRIMARY POSTS-->
@@ -99,7 +100,7 @@ import NewsLayout from '@/Layouts/NewsLayout'
 
 export default {
     name: "Home",
-    props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts',],
+    props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts', 'user'],
     components: {
         NewsLayout,
     },

@@ -7,13 +7,16 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class HomeController extends Controller
+class WebsiteController extends Controller
 {
     public function index()
     {
         $categories = Category::query()->get();
+
+        $user = Auth::user();
 
         $frontPagePosts = Post::query()->where('is_published', 1)
             ->where('type', 'front_page_post')
@@ -32,7 +35,7 @@ class HomeController extends Controller
 //        dd($posts, $primaryPosts);
 
         return Inertia::render('Home',
-            compact('categories', 'frontPagePosts', 'posts', 'primaryPosts')
+            compact('categories', 'frontPagePosts', 'posts', 'primaryPosts', 'user')
         );
     }
 
@@ -61,7 +64,7 @@ class HomeController extends Controller
         $comments = Comment::query()->where('post_id', $post->id)->latest()
             ->with('comment_replies')
             ->with('comment_replies.user')
-            ->with('user')->get();
+            ->with('user')->paginate(1);
 //        $comments_replies = Comment::query()->where('post_id', $post->id)->get();
 
         if ($post) {
