@@ -15,24 +15,26 @@
             </div>
 
             <div class="sans">
-                <slot name="links"/>
+                <inertia-link class="mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child"
+                              :key="cat.id" v-for="cat in categories"
+                              :href="'/category/' + cat.slug"
+                >
+                    {{ cat.name }}
+                </inertia-link>
             </div>
-
-            <!--        <div class="w-1/4 sans flex justify-end">-->
-            <!--            <inertia-link :href="'/login'">Login</inertia-link>-->
-            <!--            <div class="font-bold mx-1 text-gray-400">/</div>-->
-            <!--            <inertia-link :href="'/register'">Register</inertia-link>-->
-            <!--        </div>-->
 
             <div class="w-1/4 sans flex justify-end">
-                <a href="/login">Log In</a>
-                <div class="font-bold mx-1 text-gray-400">/</div>
-                <a :href="'/register'">Sign In</a>
-                <slot name="user"></slot>
+                <div v-if="!user" class="flex">
+                    <a :href="'/login'">Log In</a>
+                    <div class="font-bold mx-1 text-gray-400">/</div>
+                    <a :href="'/register'">Sign In</a>
+                </div >
+
+                <a v-else :href="'/user/profile'">
+                    {{ user.name }}
+                </a>
             </div>
         </div>
-
-        {{user}}
 
         <div class="border-t-4 border-gray-400 w-full"></div>
     </div>
@@ -40,11 +42,8 @@
 
 <script>
 export default {
-    props: ["user"],
+    props: ['categories', 'user'],
     name: "TopMenu",
-    data: () => ({
-        user: ''
-    }),
 }
 </script>
 

@@ -5,6 +5,8 @@
                 <inertia-link href="/" class="text-6xl uppercase font-logo font-light">News Portal</inertia-link>
             </header>
 
+            <top-menu class="bg-white" v-bind:categories="categories" v-bind:user="user"/>
+
             <slot/>
         </div>
 
@@ -17,7 +19,8 @@
                         </div>
 
                         <div class="font-serif text-sm text-gray-700">
-                            Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium ea.
+                            Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium
+                            ea.
                         </div>
                     </div>
 
@@ -56,26 +59,35 @@
 
 <script>
 export default {
-name: "NewsLayout"
+    name: "NewsLayout",
+    data: () => ({
+        user: null,
+        categories: null,
+    }),
+    async mounted() {
+        await axios.get('/user').then(res => this.user = res.data)
+        await axios.get('/category').then(res => this.categories = res.data)
+    }
 }
 </script>
 
 <style>
-    .w-1200 {
-        width: 1200px;
-    }
-    .last-child:last-child {
-        border: none;
-        padding-right: 0;
-        margin-right: 0;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
+.w-1200 {
+    width: 1200px;
+}
 
-    .first-child:first-child {
-        padding-left: 0;
-        margin-left: 0;
-        margin-top: 0;
-        padding-top: 0;
-    }
+.last-child:last-child {
+    border: none;
+    padding-right: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.first-child:first-child {
+    padding-left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 0;
+}
 </style>

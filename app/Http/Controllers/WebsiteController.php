@@ -16,8 +16,6 @@ class WebsiteController extends Controller
     {
         $categories = Category::query()->get();
 
-        $user = Auth::user();
-
         $frontPagePosts = Post::query()->where('is_published', 1)
             ->where('type', 'front_page_post')
             ->latest()->limit(3)->get();
@@ -35,32 +33,18 @@ class WebsiteController extends Controller
 //        dd($posts, $primaryPosts);
 
         return Inertia::render('Home',
-            compact('categories', 'frontPagePosts', 'posts', 'primaryPosts', 'user')
+            compact('categories', 'frontPagePosts', 'posts', 'primaryPosts')
         );
-    }
-
-    public function category($slug)
-    {
-        $categories = Category::query()->get();
-        $category = Category::query()->where('slug', $slug)->first();
-
-        if ($category) {
-            $primaryPosts = $category->posts()->latest()->where('is_published', 1)->where('type', 'primary_post')
-                ->with('user')->with('category')->limit(2)->get();
-            $posts = $category->posts()->latest()->where('is_published', 1)->where('type', 'post')->with('user')->paginate(20);
-            return Inertia::render('Category',
-                compact('category', 'posts', 'primaryPosts', 'categories')
-            );
-        }
-        else {
-            return Inertia::render('Error.404', 404);
-        }
     }
 
     public function post($slug)
     {
+        $user = Auth::user();
+
         $categories = Category::query()->get();
+
         $post = Post::query()->where('slug', $slug)->with('category')->with('user')->first();
+
         $comments = Comment::query()->where('post_id', $post->id)->latest()
             ->with('comment_replies')
             ->with('comment_replies.user')
@@ -69,7 +53,7 @@ class WebsiteController extends Controller
 
         if ($post) {
             return Inertia::render('Post',
-                compact('post', 'categories', 'comments')
+                compact('post', 'categories', 'comments', 'user')
             );
         }
         else {

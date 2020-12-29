@@ -1,12 +1,5 @@
 <template>
     <NewsLayout>
-        <top-menu v-slot:links>
-            <inertia-link class="mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child"
-                          :key="cat.id" v-for="cat in categories"
-                          :href="'/category/' + cat.slug">
-                {{ cat.name }}
-            </inertia-link>
-        </top-menu>
 
         {{ user.name }}
 

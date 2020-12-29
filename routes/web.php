@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +22,18 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::get('/', [WebsiteController::class, 'index']);
-Route::get('/category/{slug}', [WebsiteController::class, 'category']);
-Route::get('/post/{slug}', [WebsiteController::class, 'post']);
-Route::get('/user/{id}', [WebsiteController::class, 'user']);
+//Route::get('/category/{slug}', [WebsiteController::class, 'category']);
+Route::get('/category', [CategoriesController::class, 'index']);
+Route::get('/category/{slug}', [CategoriesController::class, 'show']);
+
+Route::get('/post/{slug}', [PostsController::class, 'show']);
+
+Route::get('/user/{id}', [UsersController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');

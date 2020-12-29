@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Comment;
-use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class PostsController extends Controller
+class UsersController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -38,19 +41,15 @@ class PostsController extends Controller
     }
 
 
-    public function show($slug)
+    public function show($id)
     {
-        $post = Post::query()->where('slug', $slug)->with('category')->with('user')->first();
+        $user = User::query()->where('id', $id)->first();
+        $categories = Category::query()->get();
+        $posts = $user->posts()->latest()->where('is_published', 1)->where('type', 'post')->with('user')->paginate(20);
 
-        $comments = Comment::query()->where('post_id', $post->id)->latest()
-            ->with('comment_replies')
-            ->with('comment_replies.user')
-            ->with('user')->paginate(1);
-//        $comments_replies = Comment::query()->where('post_id', $post->id)->get();
-
-        if ($post) {
-            return Inertia::render('Post',
-                compact('post', 'comments',)
+        if ($user) {
+            return Inertia::render('User',
+                compact('user', 'categories', 'posts')
             );
         }
         else {
@@ -61,10 +60,10 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
         //
     }
@@ -73,10 +72,10 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -84,10 +83,10 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         //
     }

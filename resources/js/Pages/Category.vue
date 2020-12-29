@@ -1,20 +1,14 @@
 <template>
-    <NewsLayout>
-        <top-menu v-slot:links>
-            <inertia-link class="mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child"
-                          :key="cat.id" v-for="cat in categories"
-                          :href="'/category/' + cat.slug">
-                {{ cat.name }}
-            </inertia-link>
-        </top-menu>
-
+    <div>
         <div class="uppercase mt-2 sans-bold">{{ primaryPosts[0].category.name }}</div>
 
+        <!--PRIMARY POSTS-->
         <div class="flex border-b-2 py-4 mb-4 border-gray-200">
             <div v-for="post in primaryPosts" class="font-serif last-only w-1/2">
                 <inertia-link :href="'/post/' + post.slug">
                     <div class="flex">
                         <img class="w-1/2 mr-4 h-full" :src="post.image" alt="">
+
                         <div class="flex w-1/2 flex-col">
                             <div class="font-bold text-lg mb-2 w-full">{{ post.title }}</div>
 
@@ -24,10 +18,13 @@
                             <div class="flex h-full sans uppercase text-gray-400">
                                 <div class="flex flex-wrap">
                                     <div class="text-xs">
-                                        {{
-                                            `${new Date(post.created_at).toLocaleString('default', {month: 'long'})} ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}`
-                                        }}&nbsp;
+                                        {{ `
+                                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                                            ${new Date(post.created_at).getDate()},
+                                            ${new Date(post.created_at).getFullYear()}
+                                        ` }}&nbsp;
                                     </div>
+
                                     <div class="text-xs">by {{ post.user.name }}</div>
                                 </div>
                             </div>
@@ -37,13 +34,17 @@
             </div>
         </div>
 
+        <!--REST POSTS-->
         <div class="flex border-b-2 pb-4 border-gray-200 font-serif">
+            <!--LEFT-->
             <div class="w-1/2 mr-4">
                 <div v-for="post in posts.data.filter((x, i) => (i % 2 === 0))"
-                     class="border-gray-200 border-b-2 py-4 first-child last-child">
+                     class="border-gray-200 border-b-2 py-4 first-child last-child"
+                >
                     <inertia-link :href="'/post/' + post.slug">
                         <div class="flex">
                             <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+
                             <div class="flex w-2/3 flex-col">
                                 <div class="font-bold mb-2">{{ post.title }}</div>
 
@@ -57,6 +58,7 @@
                                                 `${new Date(post.created_at).toLocaleString('default', {month: 'long'})} ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}`
                                             }}&nbsp;
                                         </div>
+
                                         <div class="text-xs">by {{ post.user.name }}</div>
                                     </div>
                                 </div>
@@ -66,6 +68,7 @@
                 </div>
             </div>
 
+            <!--RIGHT-->
             <div class="w-1/2 pl-4 border-l-2 border-gray-200">
                 <div v-for="post in posts.data.filter((x, i) => (i % 2 !== 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child">
@@ -105,17 +108,14 @@
                 <div class="px-2" :class="{'bg-gray-200 rounded' : item.active === true}" v-html="item.label"/>
             </inertia-link>
         </div>
-
-    </NewsLayout>
+    </div>
 </template>
 
 <script>
-
 import NewsLayout from "@/Layouts/NewsLayout";
-
 export default {
-    components: {NewsLayout},
-    props: ["posts", "primaryPosts", "categories", "category"],
+    layout: NewsLayout,
+    props: ["posts", "primaryPosts", "category"],
 }
 </script>
 

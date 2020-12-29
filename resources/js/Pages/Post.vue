@@ -1,12 +1,6 @@
 <template>
-    <NewsLayout>
-        <top-menu v-slot:links>
-            <inertia-link class="mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child"
-                          :key="cat.id" v-for="cat in categories"
-                          :href="'/category/' + cat.slug">
-                {{ cat.name }}
-            </inertia-link>
-        </top-menu>
+    <div>
+<!--        <top-menu v-bind:categories="categories" v-bind:user="user"/>-->
 
         <div class="uppercase mt-2 sans-bold">{{ post.category.name }}</div>
 
@@ -125,16 +119,15 @@
 <!--                {{showComments.links}}-->
             </div>
         </div>
-
-    </NewsLayout>
+    </div>
 </template>
 
 <script>
 import NewsLayout from "@/Layouts/NewsLayout";
 export default {
-    components: {NewsLayout},
+    layout: NewsLayout,
     name: "Post",
-    props: ["post", "categories", "comments"],
+    props: ["post", "categories", "comments", "user"],
     data: () => ({
         renderedComments: ''
     }),
