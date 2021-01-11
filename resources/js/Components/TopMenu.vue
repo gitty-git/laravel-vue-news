@@ -42,8 +42,15 @@
 
 <script>
 export default {
-    props: ['categories', 'user'],
     name: "TopMenu",
+    data: () => ({
+        user: null,
+        categories: null,
+    }),
+    mounted() {
+        axios.get('/user').then(res => this.user = res.data)
+        axios.get('/category').then(res => this.categories = res.data)
+    }
 }
 </script>
 

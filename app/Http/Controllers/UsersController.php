@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,9 +15,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $request->user();
     }
 
     /**
@@ -41,20 +42,44 @@ class UsersController extends Controller
     }
 
 
-    public function show($id)
+    public function show($id, Request $request): \Inertia\Response
     {
         $user = User::query()->where('id', $id)->first();
-        $categories = Category::query()->get();
-        $posts = $user->posts()->latest()->where('is_published', 1)->where('type', 'post')->with('user')->paginate(20);
 
-        if ($user) {
-            return Inertia::render('User',
-                compact('user', 'categories', 'posts')
-            );
-        }
-        else {
-            return Inertia::render('Error.404', 404);
-        }
+//        $posts = Post::query()->offset(2)
+//            ->take(12);
+
+        $posts = $user->posts()->latest()->limit(6)->get();
+
+        $postsCounted = $user->posts()->count();
+
+        $comments = $user->comments()->latest()->with('post.user')->limit(5)->get();
+
+        $commentsCounted = $user->comments()->count();
+
+//        dd($comments);
+
+        return Inertia::render('User', compact('posts', 'comments', 'user', 'postsCounted', 'commentsCounted'));
+
+//        return Inertia::render('User', compact('posts', 'user', 'comments'));
+//        dd($request);
+
+//        $created_at = $request->sort ?: 'created_at';
+//        echo $request->sort;
+
+//        $user = User::query()->where('id', $id)->first();
+//        $posts = $user->posts()->withCount('comments')->orderByDesc('created_at')->limit(6)->get();
+////        $posts = $user->posts()->latest()->where('is_published', 1)->limit(6)->get();
+//        $comments = $user->comments()->latest()->with('post')->paginate(10);
+//
+//        if ($user) {
+//            return Inertia::render('User',
+//                compact('posts', 'comments')
+//            );
+//        }
+//        else {
+//            return Inertia::render('Error.404', 404);
+//        }
     }
 
     /**

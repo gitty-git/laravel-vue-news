@@ -1,9 +1,8 @@
 <template>
     <div>
-<!--        <top-menu v-bind:categories="categories" v-bind:user="user"/>-->
-
         <div class="uppercase mt-2 sans-bold">{{ post.category.name }}</div>
 
+        <!--POST-->
         <div class="w-full mt-4 flex justify-center">
             <div class="post-width">
                 <div class="font-serif font-bold text-3xl mb-4 text-center">{{post.title}}</div>
@@ -13,9 +12,10 @@
                 <!--CREATED AT-->
                 <div class="flex sans uppercase text-gray-400">
                     <div class="text-xs">
-                        {{
-                            `${new Date(post.created_at).toLocaleString('default', {month: 'long'})} ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}`
-                        }}
+                        {{`
+                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                            ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}
+                        ` }}
                     </div>
                     <inertia-link :href="'/user/' + post.user.id">
                         <div class="text-xs">&nbsp;by {{ post.user.name }}</div>
@@ -35,8 +35,11 @@
         <!--COMMENTS-->
         <div class="flex justify-center font-serif text-sm text-gray-600">
             <div class="post-width">
-                <div v-if="comments.length === 0" class="uppercase mb-4 sans-bold">No comments yet</div>
-                <div v-else class="uppercase mb-4 sans-bold">Comments:</div>
+                <div v-if="post.comments_count < 1" class="uppercase mb-4 sans-bold">No comments yet</div>
+
+                <div v-else-if="post.comments_count === 1" class="uppercase mb-4 sans-bold">{{ post.comments_count }} Comment:</div>
+
+                <div v-else class="uppercase mb-4 sans-bold">{{ post.comments_count }} Comments:</div>
 
                 <div class="" v-for="comment in comments.data" :key="comment.id">
                     <div class="py-4 border-t-2 border-gray-200 ">

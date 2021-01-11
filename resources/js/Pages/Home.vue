@@ -2,6 +2,7 @@
     <div>
         <!--PRIMARY POSTS-->
         <div class="flex font-serif">
+            <!--FIRST FIRST PAGE POST-->
             <div class="w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200">
                 <inertia-link :href="'/post/' + firstPrimaryPost.slug">
                     <div class="text-3xl font-bold mb-2 text-center leading-10">{{ firstPrimaryPost.title }}</div>
@@ -18,7 +19,9 @@
                 </inertia-link>
             </div>
 
+            <!--REST FIRST PAGE POSTS-->
             <div class="w-1/3">
+                <!--SECOND-->
                 <inertia-link :href="'/post/' + secondPrimaryPost.slug">
                     <div class="my-4 pb-4 border-b-2 border-gray-200">
                         <div class="text-2xl mb-2 font-bold leading-8">{{ secondPrimaryPost.title }}</div>
@@ -34,7 +37,7 @@
                         </div>
                     </div>
                 </inertia-link>
-
+                <!--REST-->
                 <div>
                     <div class="mt-4 border-b-2 mb-4 border-gray-200 last-child" v-for="primaryPost in restPrimaryPosts"
                          :key="primaryPost.id">
@@ -56,6 +59,7 @@
                 <div class="sans-bold mb-4 text-sm">{{ cat.name }}</div>
 
                 <div class="flex pb-4 font-serif">
+                    <!--PRIMARY POSTS-->
                     <div class="flex w-2/3">
                         <div class="w-1/2" v-for="post in Object.values(primaryPosts)[id]">
                             <inertia-link :href="'/post/' + post.slug">
@@ -72,7 +76,7 @@
                             </inertia-link>
                         </div>
                     </div>
-
+                    <!--POSTS-->
                     <div class="w-1/3 font-serif">
                         <div v-for="post in Object.values(posts)[id]"
                              class="border-b-2 border-gray-200 last-child pb-4 mb-4">
@@ -86,10 +90,6 @@
                 </div>
             </div>
         </div>
-
-        <div>
-            <slot/>
-        </div>
     </div>
 </template>
 
@@ -99,10 +99,7 @@ import NewsLayout from '@/Layouts/NewsLayout'
 export default {
     name: "Home",
     layout: NewsLayout,
-    props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts', 'user'],
-    // components: {
-    //     NewsLayout,
-    // },
+    props: ['categories', 'frontPagePosts', 'primaryPosts', 'posts'],
     computed: {
         firstPrimaryPost() {
             return this.frontPagePosts[0];

@@ -1,11 +1,11 @@
 <template>
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center h-screen justify-between">
         <div class="w-1200">
             <header class="flex justify-center my-3 items-center">
                 <inertia-link href="/" class="text-6xl uppercase font-logo font-light">News Portal</inertia-link>
             </header>
 
-            <top-menu class="bg-white" v-bind:categories="categories" v-bind:user="user"/>
+            <top-menu class="bg-white"/>
 
             <slot/>
         </div>
@@ -60,14 +60,7 @@
 <script>
 export default {
     name: "NewsLayout",
-    data: () => ({
-        user: null,
-        categories: null,
-    }),
-    async mounted() {
-        await axios.get('/user').then(res => this.user = res.data)
-        await axios.get('/category').then(res => this.categories = res.data)
-    }
+
 }
 </script>
 

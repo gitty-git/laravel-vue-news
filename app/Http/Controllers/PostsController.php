@@ -16,6 +16,15 @@ class PostsController extends Controller
 
     }
 
+//    public function index()
+//    {
+//        return Post::offset(request('offset'))
+//            ->take(12)
+//            ->with(['category'])
+//            ->orderBy('created_at', 'DESC')
+//            ->get(['id', 'title', 'preview_img', 'category_id']);
+//    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +49,11 @@ class PostsController extends Controller
 
     public function show($slug)
     {
-        $post = Post::query()->where('slug', $slug)->with('category')->with('user')->first();
+        $post = Post::query()->where('slug', $slug)
+            ->with('category')
+            ->with('user')
+            ->withCount('comments')
+            ->first();
 
         $comments = Comment::query()->where('post_id', $post->id)->latest()
             ->with('comment_replies')
