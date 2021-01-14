@@ -1,21 +1,74 @@
+<script>
+import NewsLayout from "@/Layouts/NewsLayout";
+export default {
+    name: "User",
+    layout: NewsLayout,
+    // data: () => ({
+    //     orderBy: 'created_at',
+    // }),
+    props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
+    computed: {
+        showComments() {
+            return this.comments
+        }
+    }
+}
+</script>
+
+<style scoped>
+.w-720 {
+    width: 720px;
+}
+
+.last-border-none:last-child {
+    border-bottom: none;
+}
+</style>
+
 <template>
     <div>
-        <div class="flex justify-between items-end sans">
+        <div class="flex pt-4 items-center">
+            <img :src="user.profile_photo_url" alt="">
+
+            <div class="flex-col ml-4">
+                <div class="flex items-center">
+                    <div class="sans font-bold uppercase mr-2">{{user.name}}</div>
+
+                    <div class="flex">
+                        <div v-for="role in user.roles">
+                            <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" v-if="role.role === 'admin' || role.role === 'redactor'">{{role.role}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sans text-xs uppercase text-gray-400">
+                    <span v-if="postsCounted > 1">{{ postsCounted }} posts,</span>
+                    <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
+                    <span v-else>No posts,</span>
+
+                    <span v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
+                    <span v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
+                    <span v-else>No comments.</span>
+                </div>
+            </div>
+        </div>
+
+<!--        <div class="border-t-4 border-gray-400 w-full mt-4"></div>-->
+
+        <div class="sans-bold mt-4 flex justify-between items-end">
             <div>
                 <div v-if="posts.length > 1"
-                     class="uppercase mt-2 sans">last {{ posts.length }} posts by
-                    <span class="sans-bold">{{ user.name }}</span>
+                     class="mt-2">Last {{ posts.length }} posts:
                 </div>
                 <div v-else-if="posts.length === 1"
-                     class="uppercase mt-2 sans">{{ posts.length }} post by
-                    <span class="sans-bold">{{ user.name }}</span>
+                     class="mt-2">{{ posts.length }} post:
                 </div>
-                <div v-else class="uppercase mt-2 sans-bold">No posts by {{ user.name }}</div>
+                <div v-else class="mt-2 ">No posts by {{ user.name }}</div>
             </div>
-            <div>
-                Sorted by:
-<!--                <inertia-link :href="'post?orderby=created_at'">dd</inertia-link>-->
-            </div>
+<!--            <div>-->
+<!--                Sorted by:-->
+<!--                &lt;!&ndash;                <inertia-link :href="'post?orderby=created_at'">dd</inertia-link>&ndash;&gt;-->
+<!--            </div>-->
         </div>
 
         <!--POSTS-->
@@ -39,9 +92,9 @@
                                     <div class="flex flex-wrap">
                                         <div class="text-xs">
                                             {{`
-                                                ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
-                                                ${new Date(post.created_at).getDate()},
-                                                ${new Date(post.created_at).getFullYear()}
+                                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                                            ${new Date(post.created_at).getDate()},
+                                            ${new Date(post.created_at).getFullYear()}
                                             ` }}
                                         </div>
                                     </div>
@@ -69,9 +122,9 @@
                                     <div class="flex flex-wrap">
                                         <div class="text-xs">
                                             {{`
-                                                ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
-                                                ${new Date(post.created_at).getDate()},
-                                                ${new Date(post.created_at).getFullYear()}
+                                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                                            ${new Date(post.created_at).getDate()},
+                                            ${new Date(post.created_at).getFullYear()}
                                             ` }}
                                         </div>
                                     </div>
@@ -83,93 +136,63 @@
             </div>
         </div>
 
-        <div class="flex justify-center mt-3 border-t-2 border-gray-200" v-if="postsCounted > 6">
-            <div class="sans mt-4 bg-gray-200 px-3 py-1 rounded">
+        <div class="flex justify-center" v-if="postsCounted > 6">
+            <div class="sans text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded">
                 <inertia-link href="posts">
                     See all {{postsCounted}} posts
                 </inertia-link>
             </div>
         </div>
 
-        <!--COMMENTS-->
-
         <div class="border-t-4 border-gray-400 w-full mt-4"></div>
 
-        <div class="flex justify-between sans">
+        <!--COMMENTS-->
+        <div class="flex justify-between sans-bold">
             <div>
                 <div v-if="comments.length > 1"
-                     class="uppercase mt-2 sans">last {{ comments.length }} comments by
-                    <span class="sans-bold">{{ user.name }}</span>
+                     class="mt-2 sans">Last {{ comments.length }} comments:
                 </div>
                 <div v-else-if="comments.length === 1"
-                     class="uppercase mt-2 sans">{{ comments.length }} post by
-                    <span class="sans-bold">{{ user.name }}</span>
+                     class="mt-2 sans">{{ comments.length }} comment:
                 </div>
-                <div v-else class="uppercase mt-2 sans-bold">No comments by {{ user.name }}</div>
-            </div>
-            <div>
-                Sorted by:
-                <!--                <inertia-link :href="'post?orderby=created_at'">dd</inertia-link>-->
+                <div v-else class="mt-2 sans-bold">No comments by {{ user.name }}</div>
             </div>
         </div>
 
-        <div class="border-gray-200 border-b-2 mt-4" v-for="comment in comments">
-            <div class="my-4 flex">
-
-                <div class="w-1/2 mr-4">
-                    <div class="sans text-xs uppercase text-gray-400 mb-2">
-                        {{`
+        <div>
+            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="comment in comments">
+                <div class="my-4 flex">
+                    <div class="w-1/2 mr-4">
+                        <div class="sans text-xs uppercase text-gray-400 mb-2">
+                            {{`
                         ${new Date(comment.created_at).toLocaleString('default', {month: 'long'})}
                         ${new Date(comment.created_at).getDate()}, ${new Date(comment.created_at).getFullYear()}
-                    `}}
-                        comment:
-                    </div>
-
-                    <div class="my-2 font-serif">"{{comment.text}}"</div>
-                </div>
-
-                <div class="w-1/2 pl-4 border-l-2 border-gray-200">
-                    <div class="my-2 flex">
-                        <img class="w-1/4 mr-4" :src="comment.post.image" alt="">
-                        <div>
-                            <div class="font-serif font-bold mb-2">{{comment.post.title}}</div>
-                            <div class="sans text-xs uppercase text-gray-400">by {{comment.post.user.name}}</div>
+                        `}}
+                            comment:
                         </div>
+
+                        <div class="my-2 font-serif">"{{comment.text}}"</div>
+                    </div>
+
+                    <div class="w-1/2 pl-4 border-l-2 border-gray-200">
+                        <inertia-link :href="'/post/' + comment.post.slug"  class="flex">
+                            <img class="w-1/4 mr-4" :src="comment.post.image" alt="">
+                            <div>
+                                <div class="font-serif font-bold mb-2">{{comment.post.title}}</div>
+                                <div class="sans text-xs uppercase text-gray-400">by {{comment.post.user.name}}</div>
+                            </div>
+                        </inertia-link>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div class="flex justify-center border-gray-200" v-if="commentsCounted > 6">
-            <div class="sans mt-4 bg-gray-200 px-3 py-1 rounded">
-                <inertia-link href="posts">
+        <div class="flex justify-center" v-if="commentsCounted > 6">
+            <div class="sans text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
+                <inertia-link href="comments">
                     See all {{commentsCounted}} comments
                 </inertia-link>
             </div>
         </div>
     </div>
 </template>
-
-<script>
-import NewsLayout from "@/Layouts/NewsLayout";
-export default {
-    name: "User",
-    layout: NewsLayout,
-    // data: () => ({
-    //     orderBy: 'created_at',
-    // }),
-    props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
-    computed: {
-        showComments() {
-            return this.comments
-        }
-    }
-}
-</script>
-
-<style scoped>
-.w-720 {
-    width: 720px;
-}
-</style>

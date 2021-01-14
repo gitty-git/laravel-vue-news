@@ -4046,6 +4046,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -4926,159 +4929,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "User",
@@ -5203,7 +5053,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".w-720[data-v-777c8574] {\n  width: 720px;\n}\n", ""]);
+exports.push([module.i, ".w-720[data-v-777c8574] {\n  width: 720px;\n}\n.last-border-none[data-v-777c8574]:last-child {\n  border-bottom: none;\n}\n", ""]);
 
 // exports
 
@@ -48822,7 +48672,7 @@ var render = function() {
                   staticClass: "text-6xl uppercase font-logo font-light",
                   attrs: { href: "/" }
                 },
-                [_vm._v("News Portal")]
+                [_vm._v("News Demo")]
               )
             ],
             1
@@ -50256,40 +50106,46 @@ var render = function() {
           [_vm._v(_vm._s(_vm.post.brief))]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "flex sans uppercase text-gray-400" },
-          [
-            _c("div", { staticClass: "text-xs" }, [
-              _vm._v(
-                "\n                        " +
-                  _vm._s(
+        _c("div", { staticClass: "flex sans uppercase text-gray-400" }, [
+          _c("div", { staticClass: "text-xs" }, [
+            _vm._v(
+              "\n                        " +
+                _vm._s(
+                  "\n                            " +
+                    new Date(_vm.post.created_at).toLocaleString("default", {
+                      month: "long"
+                    }) +
                     "\n                            " +
-                      new Date(_vm.post.created_at).toLocaleString("default", {
-                        month: "long"
-                      }) +
-                      "\n                            " +
-                      new Date(_vm.post.created_at).getDate() +
-                      ", " +
-                      new Date(_vm.post.created_at).getFullYear() +
-                      "\n                        "
-                  ) +
-                  "\n                    "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "inertia-link",
-              { attrs: { href: "/user/" + _vm.post.user.id } },
-              [
-                _c("div", { staticClass: "text-xs" }, [
-                  _vm._v(" by " + _vm._s(_vm.post.user.name))
-                ])
-              ]
+                    new Date(_vm.post.created_at).getDate() +
+                    ", " +
+                    new Date(_vm.post.created_at).getFullYear() +
+                    "\n                        "
+                ) +
+                "\n                    "
             )
-          ],
-          1
-        ),
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "div",
+              { staticClass: "text-xs" },
+              [
+                _vm._v(
+                  "\n                             by\n                            "
+                ),
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "font-bold",
+                    attrs: { href: "/user/" + _vm.post.user.id }
+                  },
+                  [_vm._v(_vm._s(_vm.post.user.name))]
+                )
+              ],
+              1
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "my-8" }, [
           _c("img", {
@@ -51794,339 +51650,370 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "flex justify-between items-end sans" }, [
+  return _c("div", [
+    _c("div", { staticClass: "flex pt-4 items-center" }, [
+      _c("img", { attrs: { src: _vm.user.profile_photo_url, alt: "" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex-col ml-4" }, [
+        _c("div", { staticClass: "flex items-center" }, [
+          _c("div", { staticClass: "sans font-bold uppercase mr-2" }, [
+            _vm._v(_vm._s(_vm.user.name))
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "flex" },
+            _vm._l(_vm.user.roles, function(role) {
+              return _c("div", [
+                role.role === "admin" || role.role === "redactor"
+                  ? _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
+                      },
+                      [_vm._v(_vm._s(role.role))]
+                    )
+                  : _vm._e()
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "sans text-xs uppercase text-gray-400" }, [
+          _vm.postsCounted > 1
+            ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
+            : _vm.postsCounted === 1
+            ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
+            : _c("span", [_vm._v("No posts,")]),
+          _vm._v(" "),
+          _vm.commentsCounted > 1
+            ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comments.")])
+            : _vm.commentsCounted === 1
+            ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comment.")])
+            : _c("span", [_vm._v("No comments.")])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "sans-bold mt-4 flex justify-between items-end" },
+      [
         _c("div", [
           _vm.posts.length > 1
-            ? _c("div", { staticClass: "uppercase mt-2 sans" }, [
+            ? _c("div", { staticClass: "mt-2" }, [
                 _vm._v(
-                  "last " +
+                  "Last " +
                     _vm._s(_vm.posts.length) +
-                    " posts by\n                    "
-                ),
-                _c("span", { staticClass: "sans-bold" }, [
-                  _vm._v(_vm._s(_vm.user.name))
-                ])
+                    " posts:\n                "
+                )
               ])
             : _vm.posts.length === 1
-            ? _c("div", { staticClass: "uppercase mt-2 sans" }, [
-                _vm._v(
-                  _vm._s(_vm.posts.length) + " post by\n                    "
-                ),
-                _c("span", { staticClass: "sans-bold" }, [
-                  _vm._v(_vm._s(_vm.user.name))
-                ])
+            ? _c("div", { staticClass: "mt-2" }, [
+                _vm._v(_vm._s(_vm.posts.length) + " post:\n                ")
               ])
-            : _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
+            : _c("div", { staticClass: "mt-2 " }, [
                 _vm._v("No posts by " + _vm._s(_vm.user.name))
               ])
-        ]),
-        _vm._v(" "),
-        _c("div", [_vm._v("\n                Sorted by:\n")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex pt-4 border-gray-200 font-serif" }, [
-        _c(
-          "div",
-          { staticClass: "w-1/2 mr-4" },
-          _vm._l(
-            _vm.posts.filter(function(x, i) {
-              return i % 2 === 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    { attrs: { href: "/post/" + post.slug } },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(
-                                        "\n                                                " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                                " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                                " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                            "
-                                      ) +
-                                      "\n                                        "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-          _vm._l(
-            _vm.posts.filter(function(x, i) {
-              return i % 2 !== 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    { attrs: { href: "/post/" + post.slug } },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(
-                                        "\n                                                " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                                " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                                " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                            "
-                                      ) +
-                                      "\n                                        "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _vm.postsCounted > 6
-        ? _c(
-            "div",
-            {
-              staticClass: "flex justify-center mt-3 border-t-2 border-gray-200"
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "sans mt-4 bg-gray-200 px-3 py-1 rounded" },
-                [
-                  _c("inertia-link", { attrs: { href: "posts" } }, [
-                    _vm._v(
-                      "\n                    See all " +
-                        _vm._s(_vm.postsCounted) +
-                        " posts\n                "
-                    )
-                  ])
-                ],
-                1
-              )
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "border-t-4 border-gray-400 w-full mt-4" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex justify-between sans" }, [
-        _c("div", [
-          _vm.comments.length > 1
-            ? _c("div", { staticClass: "uppercase mt-2 sans" }, [
-                _vm._v(
-                  "last " +
-                    _vm._s(_vm.comments.length) +
-                    " comments by\n                    "
-                ),
-                _c("span", { staticClass: "sans-bold" }, [
-                  _vm._v(_vm._s(_vm.user.name))
-                ])
-              ])
-            : _vm.comments.length === 1
-            ? _c("div", { staticClass: "uppercase mt-2 sans" }, [
-                _vm._v(
-                  _vm._s(_vm.comments.length) + " post by\n                    "
-                ),
-                _c("span", { staticClass: "sans-bold" }, [
-                  _vm._v(_vm._s(_vm.user.name))
-                ])
-              ])
-            : _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
-                _vm._v("No comments by " + _vm._s(_vm.user.name))
-              ])
-        ]),
-        _vm._v(" "),
-        _c("div", [_vm._v("\n                Sorted by:\n                ")])
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.comments, function(comment) {
-        return _c("div", { staticClass: "border-gray-200 border-b-2 mt-4" }, [
-          _c("div", { staticClass: "my-4 flex" }, [
-            _c("div", { staticClass: "w-1/2 mr-4" }, [
-              _c(
-                "div",
-                { staticClass: "sans text-xs uppercase text-gray-400 mb-2" },
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(
-                        "\n                        " +
-                          new Date(comment.created_at).toLocaleString(
-                            "default",
-                            { month: "long" }
-                          ) +
-                          "\n                        " +
-                          new Date(comment.created_at).getDate() +
-                          ", " +
-                          new Date(comment.created_at).getFullYear() +
-                          "\n                    "
-                      ) +
-                      "\n                        comment:\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "my-2 font-serif" }, [
-                _vm._v('"' + _vm._s(comment.text) + '"')
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-              [
-                _c("div", { staticClass: "my-2 flex" }, [
-                  _c("img", {
-                    staticClass: "w-1/4 mr-4",
-                    attrs: { src: comment.post.image, alt: "" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("div", { staticClass: "font-serif font-bold mb-2" }, [
-                      _vm._v(_vm._s(comment.post.title))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "sans text-xs uppercase text-gray-400" },
-                      [_vm._v("by " + _vm._s(comment.post.user.name))]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
         ])
-      }),
-      _vm._v(" "),
-      _vm.commentsCounted > 6
-        ? _c("div", { staticClass: "flex justify-center border-gray-200" }, [
-            _c(
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex pt-4 border-gray-200 font-serif" }, [
+      _c(
+        "div",
+        { staticClass: "w-1/2 mr-4" },
+        _vm._l(
+          _vm.posts.filter(function(x, i) {
+            return i % 2 === 0
+          }),
+          function(post) {
+            return _c(
               "div",
-              { staticClass: "sans mt-4 bg-gray-200 px-3 py-1 rounded" },
+              {
+                staticClass:
+                  "border-gray-200 border-b-2 py-4 first-child last-child"
+              },
               [
-                _c("inertia-link", { attrs: { href: "posts" } }, [
-                  _vm._v(
-                    "\n                    See all " +
-                      _vm._s(_vm.commentsCounted) +
-                      " comments\n                "
-                  )
+                _c("inertia-link", { attrs: { href: "/post/" + post.slug } }, [
+                  _c("div", { staticClass: "flex" }, [
+                    _c("img", {
+                      staticClass: "w-1/3 h-full mr-4 mb-4",
+                      attrs: { src: post.image, alt: "" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                      _c("div", { staticClass: "font-bold mb-2" }, [
+                        _vm._v(_vm._s(post.title))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
+                        _vm._v(_vm._s(post.brief))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex h-full sans uppercase text-gray-400"
+                        },
+                        [
+                          _c("div", { staticClass: "flex flex-wrap" }, [
+                            _c("div", { staticClass: "text-xs" }, [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(
+                                    "\n                                            " +
+                                      new Date(
+                                        post.created_at
+                                      ).toLocaleString("default", {
+                                        month: "long"
+                                      }) +
+                                      "\n                                            " +
+                                      new Date(post.created_at).getDate() +
+                                      ",\n                                            " +
+                                      new Date(post.created_at).getFullYear() +
+                                      "\n                                            "
+                                  ) +
+                                  "\n                                        "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               ],
               1
             )
-          ])
-        : _vm._e()
-    ],
-    2
-  )
+          }
+        ),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+        _vm._l(
+          _vm.posts.filter(function(x, i) {
+            return i % 2 !== 0
+          }),
+          function(post) {
+            return _c(
+              "div",
+              {
+                staticClass:
+                  "border-gray-200 border-b-2 py-4 first-child last-child"
+              },
+              [
+                _c("inertia-link", { attrs: { href: "/post/" + post.slug } }, [
+                  _c("div", { staticClass: "flex" }, [
+                    _c("img", {
+                      staticClass: "w-1/3 h-full mr-4 mb-4",
+                      attrs: { src: post.image, alt: "" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                      _c("div", { staticClass: "font-bold mb-2" }, [
+                        _vm._v(_vm._s(post.title))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
+                        _vm._v(_vm._s(post.brief))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex h-full sans uppercase text-gray-400"
+                        },
+                        [
+                          _c("div", { staticClass: "flex flex-wrap" }, [
+                            _c("div", { staticClass: "text-xs" }, [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(
+                                    "\n                                            " +
+                                      new Date(
+                                        post.created_at
+                                      ).toLocaleString("default", {
+                                        month: "long"
+                                      }) +
+                                      "\n                                            " +
+                                      new Date(post.created_at).getDate() +
+                                      ",\n                                            " +
+                                      new Date(post.created_at).getFullYear() +
+                                      "\n                                            "
+                                  ) +
+                                  "\n                                        "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ],
+              1
+            )
+          }
+        ),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm.postsCounted > 6
+      ? _c("div", { staticClass: "flex justify-center" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "sans text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded"
+            },
+            [
+              _c("inertia-link", { attrs: { href: "posts" } }, [
+                _vm._v(
+                  "\n                    See all " +
+                    _vm._s(_vm.postsCounted) +
+                    " posts\n                "
+                )
+              ])
+            ],
+            1
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "border-t-4 border-gray-400 w-full mt-4" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex justify-between sans-bold" }, [
+      _c("div", [
+        _vm.comments.length > 1
+          ? _c("div", { staticClass: "mt-2 sans" }, [
+              _vm._v(
+                "Last " +
+                  _vm._s(_vm.comments.length) +
+                  " comments:\n                "
+              )
+            ])
+          : _vm.comments.length === 1
+          ? _c("div", { staticClass: "mt-2 sans" }, [
+              _vm._v(
+                _vm._s(_vm.comments.length) + " comment:\n                "
+              )
+            ])
+          : _c("div", { staticClass: "mt-2 sans-bold" }, [
+              _vm._v("No comments by " + _vm._s(_vm.user.name))
+            ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      _vm._l(_vm.comments, function(comment) {
+        return _c(
+          "div",
+          { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
+          [
+            _c("div", { staticClass: "my-4 flex" }, [
+              _c("div", { staticClass: "w-1/2 mr-4" }, [
+                _c(
+                  "div",
+                  { staticClass: "sans text-xs uppercase text-gray-400 mb-2" },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(
+                          "\n                        " +
+                            new Date(
+                              comment.created_at
+                            ).toLocaleString("default", { month: "long" }) +
+                            "\n                        " +
+                            new Date(comment.created_at).getDate() +
+                            ", " +
+                            new Date(comment.created_at).getFullYear() +
+                            "\n                        "
+                        ) +
+                        "\n                            comment:\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "my-2 font-serif" }, [
+                  _vm._v('"' + _vm._s(comment.text) + '"')
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "flex",
+                      attrs: { href: "/post/" + comment.post.slug }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "w-1/4 mr-4",
+                        attrs: { src: comment.post.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "div",
+                          { staticClass: "font-serif font-bold mb-2" },
+                          [_vm._v(_vm._s(comment.post.title))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "sans text-xs uppercase text-gray-400"
+                          },
+                          [_vm._v("by " + _vm._s(comment.post.user.name))]
+                        )
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm.commentsCounted > 6
+      ? _c("div", { staticClass: "flex justify-center" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "sans text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+            },
+            [
+              _c("inertia-link", { attrs: { href: "comments" } }, [
+                _vm._v(
+                  "\n                    See all " +
+                    _vm._s(_vm.commentsCounted) +
+                    " comments\n                "
+                )
+              ])
+            ],
+            1
+          )
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

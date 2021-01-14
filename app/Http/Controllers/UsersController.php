@@ -44,7 +44,7 @@ class UsersController extends Controller
 
     public function show($id, Request $request): \Inertia\Response
     {
-        $user = User::query()->where('id', $id)->first();
+        $user = User::query()->where('id', $id)->with('roles')->first();
 
 //        $posts = Post::query()->offset(2)
 //            ->take(12);

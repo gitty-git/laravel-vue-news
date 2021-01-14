@@ -15,11 +15,14 @@
                         {{`
                             ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
                             ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}
-                        ` }}
+                        `}}
                     </div>
-                    <inertia-link :href="'/user/' + post.user.id">
-                        <div class="text-xs">&nbsp;by {{ post.user.name }}</div>
-                    </inertia-link>
+                    <div>
+                        <div class="text-xs">
+                            &nbsp;by
+                            <inertia-link class="font-bold" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
+                        </div>
+                    </div>
 
                 </div>
 
