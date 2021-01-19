@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -46,8 +47,33 @@ class PostsController extends Controller
         //
     }
 
+//    public function search(Request $request)
+//    {
+//        $search = $request->input('search');
+//
+//        $usersCounted = User::query()->where('name', 'LIKE', "%{$search}%")->count();
+//
+//        $postsCounted = Post::query()
+//            ->where('title', 'LIKE', "%{$search}%")
+//            ->orWhere('body', 'LIKE', "%{$search}%")
+//            ->count();
+//
+//        $posts = Post::query()
+//            ->latest()
+//            ->where('title', 'LIKE', "%{$search}%")
+//            ->orWhere('body', 'LIKE', "%{$search}%")
+//            ->paginate(12);
+//
+//        $users = User::query()
+//            ->where('name', 'LIKE', "%{$search}%")->get();
+//
+//        return Inertia::render('SearchPosts',
+//            compact('posts', 'users', 'postsCounted', 'usersCounted')
+//        );
+//    }
 
-    public function show($slug)
+
+    public function show($slug, Request $request)
     {
         $post = Post::query()->where('slug', $slug)
             ->with('category')
@@ -58,8 +84,11 @@ class PostsController extends Controller
         $comments = Comment::query()->where('post_id', $post->id)->latest()
             ->with('comment_replies')
             ->with('comment_replies.user')
-            ->with('user')->paginate(1);
-//        $comments_replies = Comment::query()->where('post_id', $post->id)->get();
+            ->with('user')->paginate(20);
+
+        if ($request->wantsJson()) {
+            return $comments;
+        }
 
         if ($post) {
             return Inertia::render('Post',

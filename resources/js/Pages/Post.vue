@@ -20,7 +20,7 @@
                     <div>
                         <div class="text-xs">
                             &nbsp;by
-                            <inertia-link class="font-bold" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
+                            <inertia-link class="font-bold hover:text-gray-600 duration-200" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
                         </div>
                     </div>
 
@@ -44,14 +44,14 @@
 
                 <div v-else class="uppercase mb-4 sans-bold">{{ post.comments_count }} Comments:</div>
 
-                <div class="" v-for="comment in comments.data" :key="comment.id">
-                    <div class="py-4 border-t-2 border-gray-200 ">
+                <div class="" v-for="comment in localComments.data" :key="comment.id">
+                    <div class="py-4 border-t-2 border-gray-200">
                         <div class="flex">
                             <img class="w-12 h-12 mr-4" :src="comment.user.profile_photo_url" alt="">
 
                             <div>
                                 <div class="mb-2">
-                                    <inertia-link class="font-bold" :href="`/user/${comment.user.id}` ">{{ comment.user.name }}</inertia-link>
+                                    <inertia-link class="font-bold hover:text-gray-400 duration-200" :href="`/user/${comment.user.id}` ">{{ comment.user.name }}</inertia-link>
                                     {{ time_ago(comment.created_at) }}
                                 </div>
 
@@ -66,27 +66,27 @@
                              @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
                         >
                             <div v-if="comment.comment_replies.length === 1">
-                                <div v-if="comment.active === 1">Hide reply</div>
-                                <div v-else>Show 1 reply</div>
+                                <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">Hide reply</div>
+                                <div class="hover:text-gray-400 duration-200" v-else>Show 1 reply</div>
                             </div>
 
                             <div v-else>
-                                <div v-if="comment.active === 1">Hide replies</div>
-                                <div v-else>Show {{ comment.comment_replies.length }} replies</div>
+                                <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">Hide replies</div>
+                                <div class="hover:text-gray-400 duration-200" v-else>Show {{ comment.comment_replies.length }} replies</div>
                             </div>
                         </div>
                     </div>
 
                     <!--COMMENT'S REPLIES-->
                     <div v-if="comment.active === 1" class="ml-12" v-for="reply in comment.comment_replies">
-                        <div class="py-4 border-t-2 border-gray-200 "
+                        <div class="py-4 border-t-2 border-gray-200"
                              :class="{'' : comment.comment_replies.length === 1}"
                         >
                             <div class="flex">
                                 <img class="w-12 h-12 mr-4" :src="reply.user.profile_photo_url" alt="">
                                 <div>
                                     <div class="mb-2">
-                                        <inertia-link class="font-bold" :href="`/user/${reply.user.id}` ">{{ reply.user.name }}</inertia-link>
+                                        <inertia-link class="font-bold hover:text-gray-400 duration-200" :href="`/user/${reply.user.id}` ">{{ reply.user.name }}</inertia-link>
                                         {{ time_ago(reply.created_at) }}
                                     </div>
 
@@ -98,31 +98,13 @@
                         </div>
                     </div>
                 </div>
-
-<!--                <div class="flex sans-bold pt-4 justify-center capitalize flex-row">-->
-<!--                    <inertia-link-->
-<!--                        v-for="item in showComments.links"-->
-<!--                        :key="item.id"-->
-<!--                        :href="item.url || '#'"-->
-<!--                    >-->
-<!--                        <div class="px-2" :class="{'bg-gray-200 rounded' : item.active === true}" v-html="item.label"/>-->
-<!--                    </inertia-link>-->
-<!--                </div>-->
-
-<!--                <div v-for="item in showComments.links">-->
-<!--                    <div v-if="item.label === 'Next &raquo;'">adsf</div>-->
-<!--                </div>-->
-
-<!--                <div @click="showMoreComments()">asdf</div>-->
-
-<!--                <inertia-link v-for="item in comments.links"-->
-<!--                              :href="item.url"-->
-<!--                >-->
-<!--                    more-->
-<!--                </inertia-link>-->
-
-
-<!--                {{showComments.links}}-->
+                <div class="flex justify-center" v-if="this.localComments.next_page_url">
+                    <div class="sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
+                        <div @click="loadMoreComments">
+                            Load More Comments
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -134,23 +116,24 @@ export default {
     layout: NewsLayout,
     name: "Post",
     props: ["post", "categories", "comments", "user"],
-    data: () => ({
-        renderedComments: ''
-    }),
-    // mounted() {
-    //     this.renderedCommentsthis = this.comments
-    // },
-    computed: {
-        showComments() {
-
-        },
-
-        showMoreComments() {
-
-            return this.comments + this.comments
+    data() {
+        return {
+            localComments: this.comments,
         }
     },
     methods: {
+        loadMoreComments() {
+            if (this.localComments.next_page_url) {
+                axios.get(this.localComments.next_page_url).then(response => {
+                    console.log(response)
+                    this.localComments = {
+                        ...response.data,
+                        data: [...this.localComments.data, ...response.data.data]
+                    }
+                })
+            }
+        },
+
         time_ago(time) {
             switch (typeof time) {
                 case 'number':

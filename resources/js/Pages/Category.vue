@@ -5,7 +5,7 @@
         <!--PRIMARY POSTS-->
         <div class="flex border-b-2 py-4 mb-4 border-gray-200">
             <div v-for="post in primaryPosts" class="font-serif last-only w-1/2">
-                <inertia-link :href="'/post/' + post.slug">
+                <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                     <div class="flex">
                         <img class="w-1/2 mr-4 h-full" :src="post.image" alt="">
 
@@ -41,7 +41,7 @@
                 <div v-for="post in posts.data.filter((x, i) => (i % 2 === 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child"
                 >
-                    <inertia-link :href="'/post/' + post.slug">
+                    <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
                             <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
 
@@ -72,7 +72,7 @@
             <div class="w-1/2 pl-4 border-l-2 border-gray-200">
                 <div v-for="post in posts.data.filter((x, i) => (i % 2 !== 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child">
-                    <inertia-link :href="'/post/' + post.slug">
+                    <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
                             <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
                             <div class="flex w-2/3 flex-col">

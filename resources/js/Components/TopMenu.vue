@@ -11,23 +11,28 @@
                           stroke="#a9a9a9" stroke-width="2"/>
                 </svg>
 
-                <div class="sans">Search</div>
+                <form method="get" action="/search/" class="flex">
+                    <input required name="search" v-model="searchInput"
+                           class="sans hover:bg-gray-100 duration-200 focus:bg-gray-100 px-2 rounded outline-none"
+                           placeholder="Search" type="text">
+<!--                    <div v-if="searchInput.length > 0">></div>-->
+                </form>
             </div>
 
-            <div class="sans">
-                <inertia-link class="mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child"
+            <div class="sans flex">
+                <inertia-link class="text-sm border-r-2 border-gray-200 last-child"
                               :key="cat.id" v-for="cat in categories"
                               :href="'/category/' + cat.slug"
                 >
-                    {{ cat.name }}
+                    <div class="hover:bg-gray-100 px-2 mx-1 rounded duration-200">{{ cat.name }}</div>
                 </inertia-link>
             </div>
 
             <div class="w-1/4 sans flex justify-end">
                 <div v-if="!user" class="flex">
-                    <a :href="'/login'">Log In</a>
-                    <div class="font-bold mx-1 text-gray-400">/</div>
-                    <a :href="'/register'">Sign In</a>
+                    <a class="hover:bg-gray-100 px-2 rounded duration-200" :href="'/login'">Log In</a>
+                    <div class="font-bold text-gray-400">/</div>
+                    <a class="hover:bg-gray-100 px-2 rounded duration-200" :href="'/register'">Sign In</a>
                 </div >
 
                 <a v-else :href="'/user/profile'">
@@ -46,11 +51,12 @@ export default {
     data: () => ({
         user: null,
         categories: null,
+        searchInput: ''
     }),
     mounted() {
         axios.get('/user').then(res => this.user = res.data)
         axios.get('/category').then(res => this.categories = res.data)
-    }
+    },
 }
 </script>
 

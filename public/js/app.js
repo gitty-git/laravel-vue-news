@@ -2035,12 +2035,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TopMenu",
   data: function data() {
     return {
       user: null,
-      categories: null
+      categories: null,
+      searchInput: ''
     };
   },
   mounted: function mounted() {
@@ -3919,24 +3925,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -4056,19 +4062,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   props: ["post", "categories", "comments", "user"],
   data: function data() {
     return {
-      renderedComments: ''
+      localComments: this.comments
     };
   },
-  // mounted() {
-  //     this.renderedCommentsthis = this.comments
-  // },
-  computed: {
-    showComments: function showComments() {},
-    showMoreComments: function showMoreComments() {
-      return this.comments + this.comments;
-    }
-  },
   methods: {
+    loadMoreComments: function loadMoreComments() {
+      var _this = this;
+
+      if (this.localComments.next_page_url) {
+        axios.get(this.localComments.next_page_url).then(function (response) {
+          console.log(response);
+          _this.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this.localComments.data), _toConsumableArray(response.data.data))
+          });
+        });
+      }
+    },
     time_ago: function time_ago(time) {
       switch (_typeof(time)) {
         case 'number':
@@ -4915,6 +4924,132 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
+  name: "SearchPosts",
+  props: ["posts", "users", "postsCounted", "usersCounted"]
 });
 
 /***/ }),
@@ -46321,24 +46456,63 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "sans" }, [_vm._v("Search")])
+          _c(
+            "form",
+            {
+              staticClass: "flex",
+              attrs: { method: "get", action: "/search/" }
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchInput,
+                    expression: "searchInput"
+                  }
+                ],
+                staticClass:
+                  "sans hover:bg-gray-100 duration-200 focus:bg-gray-100 px-2 rounded outline-none",
+                attrs: {
+                  required: "",
+                  name: "search",
+                  placeholder: "Search",
+                  type: "text"
+                },
+                domProps: { value: _vm.searchInput },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchInput = $event.target.value
+                  }
+                }
+              })
+            ]
+          )
         ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "sans" },
+          { staticClass: "sans flex" },
           _vm._l(_vm.categories, function(cat) {
             return _c(
               "inertia-link",
               {
                 key: cat.id,
-                staticClass:
-                  "mr-3 pr-2 text-sm border-r-2 border-gray-200 last-child",
+                staticClass: "text-sm border-r-2 border-gray-200 last-child",
                 attrs: { href: "/category/" + cat.slug }
               },
               [
-                _vm._v(
-                  "\n                " + _vm._s(cat.name) + "\n            "
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "hover:bg-gray-100 px-2 mx-1 rounded duration-200"
+                  },
+                  [_vm._v(_vm._s(cat.name))]
                 )
               ]
             )
@@ -46349,19 +46523,33 @@ var render = function() {
         _c("div", { staticClass: "w-1/4 sans flex justify-end" }, [
           !_vm.user
             ? _c("div", { staticClass: "flex" }, [
-                _c("a", { attrs: { href: "/login" } }, [_vm._v("Log In")]),
+                _c(
+                  "a",
+                  {
+                    staticClass: "hover:bg-gray-100 px-2 rounded duration-200",
+                    attrs: { href: "/login" }
+                  },
+                  [_vm._v("Log In")]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "font-bold mx-1 text-gray-400" }, [
+                _c("div", { staticClass: "font-bold text-gray-400" }, [
                   _vm._v("/")
                 ]),
                 _vm._v(" "),
-                _c("a", { attrs: { href: "/register" } }, [_vm._v("Sign In")])
+                _c(
+                  "a",
+                  {
+                    staticClass: "hover:bg-gray-100 px-2 rounded duration-200",
+                    attrs: { href: "/register" }
+                  },
+                  [_vm._v("Sign In")]
+                )
               ])
             : _c("a", { attrs: { href: "/user/profile" } }, [
                 _vm._v(
-                  "\n                " +
+                  "\n                    " +
                     _vm._s(_vm.user.name) +
-                    "\n            "
+                    "\n                "
                 )
               ])
         ])
@@ -49508,56 +49696,67 @@ var render = function() {
           "div",
           { staticClass: "font-serif last-only w-1/2" },
           [
-            _c("inertia-link", { attrs: { href: "/post/" + post.slug } }, [
-              _c("div", { staticClass: "flex" }, [
-                _c("img", {
-                  staticClass: "w-1/2 mr-4 h-full",
-                  attrs: { src: post.image, alt: "" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex w-1/2 flex-col" }, [
-                  _c("div", { staticClass: "font-bold text-lg mb-2 w-full" }, [
-                    _vm._v(_vm._s(post.title))
-                  ]),
+            _c(
+              "inertia-link",
+              {
+                staticClass: "hover:text-gray-600 duration-200",
+                attrs: { href: "/post/" + post.slug }
+              },
+              [
+                _c("div", { staticClass: "flex" }, [
+                  _c("img", {
+                    staticClass: "w-1/2 mr-4 h-full",
+                    attrs: { src: post.image, alt: "" }
+                  }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
-                    _vm._v(_vm._s(post.brief))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "flex h-full sans uppercase text-gray-400" },
-                    [
-                      _c("div", { staticClass: "flex flex-wrap" }, [
-                        _c("div", { staticClass: "text-xs" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(
-                                "\n                                        " +
-                                  new Date(
-                                    post.created_at
-                                  ).toLocaleString("default", {
-                                    month: "long"
-                                  }) +
+                  _c("div", { staticClass: "flex w-1/2 flex-col" }, [
+                    _c(
+                      "div",
+                      { staticClass: "font-bold text-lg mb-2 w-full" },
+                      [_vm._v(_vm._s(post.title))]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
+                      _vm._v(_vm._s(post.brief))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "flex h-full sans uppercase text-gray-400"
+                      },
+                      [
+                        _c("div", { staticClass: "flex flex-wrap" }, [
+                          _c("div", { staticClass: "text-xs" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
                                   "\n                                        " +
-                                  new Date(post.created_at).getDate() +
-                                  ",\n                                        " +
-                                  new Date(post.created_at).getFullYear() +
-                                  "\n                                    "
-                              ) +
-                              " \n                                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "text-xs" }, [
-                          _vm._v("by " + _vm._s(post.user.name))
+                                    new Date(
+                                      post.created_at
+                                    ).toLocaleString("default", {
+                                      month: "long"
+                                    }) +
+                                    "\n                                        " +
+                                    new Date(post.created_at).getDate() +
+                                    ",\n                                        " +
+                                    new Date(post.created_at).getFullYear() +
+                                    "\n                                    "
+                                ) +
+                                " \n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-xs" }, [
+                            _vm._v("by " + _vm._s(post.user.name))
+                          ])
                         ])
-                      ])
-                    ]
-                  )
+                      ]
+                    )
+                  ])
                 ])
-              ])
-            ])
+              ]
+            )
           ],
           1
         )
@@ -49586,7 +49785,10 @@ var render = function() {
                 [
                   _c(
                     "inertia-link",
-                    { attrs: { href: "/post/" + post.slug } },
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -49668,7 +49870,10 @@ var render = function() {
                 [
                   _c(
                     "inertia-link",
-                    { attrs: { href: "/post/" + post.slug } },
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -49841,7 +50046,8 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200"
+          staticClass:
+            "hover:text-gray-600 duration-200 w-2/3 my-4 -ml-4 mr-4 px-4 border-r-2 border-gray-200"
         },
         [
           _c(
@@ -49895,7 +50101,10 @@ var render = function() {
             [
               _c(
                 "div",
-                { staticClass: "my-4 pb-4 border-b-2 border-gray-200" },
+                {
+                  staticClass:
+                    "hover:text-gray-600 duration-200 my-4 pb-4 border-b-2 border-gray-200"
+                },
                 [
                   _c(
                     "div",
@@ -49944,7 +50153,10 @@ var render = function() {
                 [
                   _c(
                     "inertia-link",
-                    { attrs: { href: "/post/" + primaryPost.slug } },
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + primaryPost.slug }
+                    },
                     [
                       _c("div", { staticClass: "text-xl mb-2 font-bold" }, [
                         _vm._v(_vm._s(primaryPost.title))
@@ -49994,7 +50206,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "border-r-2 h-full -ml-4 mr-4 px-4 border-gray-200"
+                              "border-r-2 hover:text-gray-600 duration-200 h-full -ml-4 mr-4 px-4 border-gray-200"
                           },
                           [
                             _c("div", { staticClass: "mb-4" }, [
@@ -50039,7 +50251,10 @@ var render = function() {
                   [
                     _c(
                       "inertia-link",
-                      { attrs: { href: "/post/" + post.slug } },
+                      {
+                        staticClass: "hover:text-gray-600 duration-200",
+                        attrs: { href: "/post/" + post.slug }
+                      },
                       [
                         _c("div", { staticClass: "text-sm mb-2 font-bold " }, [
                           _vm._v(_vm._s(post.title))
@@ -50109,19 +50324,19 @@ var render = function() {
         _c("div", { staticClass: "flex sans uppercase text-gray-400" }, [
           _c("div", { staticClass: "text-xs" }, [
             _vm._v(
-              "\n                        " +
+              "\n                    " +
                 _vm._s(
-                  "\n                            " +
+                  "\n                        " +
                     new Date(_vm.post.created_at).toLocaleString("default", {
                       month: "long"
                     }) +
-                    "\n                            " +
+                    "\n                        " +
                     new Date(_vm.post.created_at).getDate() +
                     ", " +
                     new Date(_vm.post.created_at).getFullYear() +
-                    "\n                        "
+                    "\n                    "
                 ) +
-                "\n                    "
+                "\n                "
             )
           ]),
           _vm._v(" "),
@@ -50131,12 +50346,12 @@ var render = function() {
               { staticClass: "text-xs" },
               [
                 _vm._v(
-                  "\n                             by\n                            "
+                  "\n                         by\n                        "
                 ),
                 _c(
                   "inertia-link",
                   {
-                    staticClass: "font-bold",
+                    staticClass: "font-bold hover:text-gray-600 duration-200",
                     attrs: { href: "/user/" + _vm.post.user.id }
                   },
                   [_vm._v(_vm._s(_vm.post.user.name))]
@@ -50190,14 +50405,14 @@ var render = function() {
                   _vm._v(_vm._s(_vm.post.comments_count) + " Comments:")
                 ]),
             _vm._v(" "),
-            _vm._l(_vm.comments.data, function(comment) {
+            _vm._l(_vm.localComments.data, function(comment) {
               return _c(
                 "div",
                 { key: comment.id },
                 [
                   _c(
                     "div",
-                    { staticClass: "py-4 border-t-2 border-gray-200 " },
+                    { staticClass: "py-4 border-t-2 border-gray-200" },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -50216,15 +50431,16 @@ var render = function() {
                               _c(
                                 "inertia-link",
                                 {
-                                  staticClass: "font-bold",
+                                  staticClass:
+                                    "font-bold hover:text-gray-400 duration-200",
                                   attrs: { href: "/user/" + comment.user.id }
                                 },
                                 [_vm._v(_vm._s(comment.user.name))]
                               ),
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                " +
                                   _vm._s(_vm.time_ago(comment.created_at)) +
-                                  "\n                                "
+                                  "\n                            "
                               )
                             ],
                             1
@@ -50232,9 +50448,9 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "mb-2" }, [
                             _vm._v(
-                              "\n                                    " +
+                              "\n                                " +
                                 _vm._s(comment.text) +
-                                "\n                                "
+                                "\n                            "
                             )
                           ])
                         ])
@@ -50258,21 +50474,49 @@ var render = function() {
                               comment.comment_replies.length === 1
                                 ? _c("div", [
                                     comment.active === 1
-                                      ? _c("div", [_vm._v("Hide reply")])
-                                      : _c("div", [_vm._v("Show 1 reply")])
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "hover:text-gray-400 duration-200"
+                                          },
+                                          [_vm._v("Hide reply")]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "hover:text-gray-400 duration-200"
+                                          },
+                                          [_vm._v("Show 1 reply")]
+                                        )
                                   ])
                                 : _c("div", [
                                     comment.active === 1
-                                      ? _c("div", [_vm._v("Hide replies")])
-                                      : _c("div", [
-                                          _vm._v(
-                                            "Show " +
-                                              _vm._s(
-                                                comment.comment_replies.length
-                                              ) +
-                                              " replies"
-                                          )
-                                        ])
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "hover:text-gray-400 duration-200"
+                                          },
+                                          [_vm._v("Hide replies")]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "hover:text-gray-400 duration-200"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Show " +
+                                                _vm._s(
+                                                  comment.comment_replies.length
+                                                ) +
+                                                " replies"
+                                            )
+                                          ]
+                                        )
                                   ])
                             ]
                           )
@@ -50286,7 +50530,7 @@ var render = function() {
                           _c(
                             "div",
                             {
-                              staticClass: "py-4 border-t-2 border-gray-200 ",
+                              staticClass: "py-4 border-t-2 border-gray-200",
                               class: {
                                 "": comment.comment_replies.length === 1
                               }
@@ -50309,7 +50553,8 @@ var render = function() {
                                       _c(
                                         "inertia-link",
                                         {
-                                          staticClass: "font-bold",
+                                          staticClass:
+                                            "font-bold hover:text-gray-400 duration-200",
                                           attrs: {
                                             href: "/user/" + reply.user.id
                                           }
@@ -50317,11 +50562,11 @@ var render = function() {
                                         [_vm._v(_vm._s(reply.user.name))]
                                       ),
                                       _vm._v(
-                                        "\n                                        " +
+                                        "\n                                    " +
                                           _vm._s(
                                             _vm.time_ago(reply.created_at)
                                           ) +
-                                          "\n                                    "
+                                          "\n                                "
                                       )
                                     ],
                                     1
@@ -50329,9 +50574,9 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("div", {}, [
                                     _vm._v(
-                                      "\n                                        " +
+                                      "\n                                    " +
                                         _vm._s(reply.text) +
-                                        "\n                                    "
+                                        "\n                                "
                                     )
                                   ])
                                 ])
@@ -50344,7 +50589,26 @@ var render = function() {
                 ],
                 2
               )
-            })
+            }),
+            _vm._v(" "),
+            this.localComments.next_page_url
+              ? _c("div", { staticClass: "flex justify-center" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                    },
+                    [
+                      _c("div", { on: { click: _vm.loadMoreComments } }, [
+                        _vm._v(
+                          "\n                        Load More Comments\n                    "
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e()
           ],
           2
         )
@@ -51635,6 +51899,242 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.usersCounted > 0 || _vm.postsCounted > 0
+      ? _c("div", [
+          _vm._v("\n        Found " + _vm._s(_vm.postsCounted) + " "),
+          _vm.postsCounted > 0
+            ? _c("span", [_vm._v("posts")])
+            : _c("span", [_vm._v("post")]),
+          _vm._v(" and " + _vm._s(_vm.usersCounted) + " "),
+          _vm.usersCounted > 0
+            ? _c("span", [_vm._v("users")])
+            : _c("span", [_vm._v("user")])
+        ])
+      : _c("div", [_vm._v("Nothing Found")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex pt-4 border-gray-200 font-serif" }, [
+      _c(
+        "div",
+        { staticClass: "w-1/2 mr-4" },
+        _vm._l(
+          _vm.posts.data.filter(function(x, i) {
+            return i % 2 === 0
+          }),
+          function(post) {
+            return _c(
+              "div",
+              {
+                staticClass:
+                  "border-gray-200 border-b-2 py-4 first-child last-child"
+              },
+              [
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
+                  },
+                  [
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(
+                                      "\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                            " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                            "
+                                    ) +
+                                    "\n                                    "
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          }
+        ),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+        _vm._l(
+          _vm.posts.data.filter(function(x, i) {
+            return i % 2 !== 0
+          }),
+          function(post) {
+            return _c(
+              "div",
+              {
+                staticClass:
+                  "border-gray-200 border-b-2 py-4 first-child last-child"
+              },
+              [
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
+                  },
+                  [
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(
+                                      "\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                            " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                            "
+                                    ) +
+                                    "\n                                    "
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          }
+        ),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm.postsCounted > 12
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "flex sans-bold pt-4 justify-center capitalize flex-row"
+          },
+          _vm._l(_vm.posts.links, function(item) {
+            return _c(
+              "inertia-link",
+              {
+                key: item.id,
+                attrs: {
+                  "preserve-scroll": "",
+                  "preserve-state": "",
+                  href: item.url || "#"
+                }
+              },
+              [
+                _c("div", {
+                  staticClass: "px-2",
+                  class: { "bg-gray-200 rounded": item.active === true },
+                  domProps: { innerHTML: _vm._s(item.label) }
+                })
+              ]
+            )
+          }),
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/User.vue?vue&type=template&id=777c8574&scoped=true&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/User.vue?vue&type=template&id=777c8574&scoped=true& ***!
@@ -51737,55 +52237,66 @@ var render = function() {
                   "border-gray-200 border-b-2 py-4 first-child last-child"
               },
               [
-                _c("inertia-link", { attrs: { href: "/post/" + post.slug } }, [
-                  _c("div", { staticClass: "flex" }, [
-                    _c("img", {
-                      staticClass: "w-1/3 h-full mr-4 mb-4",
-                      attrs: { src: post.image, alt: "" }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                      _c("div", { staticClass: "font-bold mb-2" }, [
-                        _vm._v(_vm._s(post.title))
-                      ]),
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
+                  },
+                  [
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
                       _vm._v(" "),
-                      _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
-                        _vm._v(_vm._s(post.brief))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "flex h-full sans uppercase text-gray-400"
-                        },
-                        [
-                          _c("div", { staticClass: "flex flex-wrap" }, [
-                            _c("div", { staticClass: "text-xs" }, [
-                              _vm._v(
-                                "\n                                            " +
-                                  _vm._s(
-                                    "\n                                            " +
-                                      new Date(
-                                        post.created_at
-                                      ).toLocaleString("default", {
-                                        month: "long"
-                                      }) +
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                            " +
+                                    _vm._s(
                                       "\n                                            " +
-                                      new Date(post.created_at).getDate() +
-                                      ",\n                                            " +
-                                      new Date(post.created_at).getFullYear() +
-                                      "\n                                            "
-                                  ) +
-                                  "\n                                        "
-                              )
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                            " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                            "
+                                    ) +
+                                    "\n                                        "
+                                )
+                              ])
                             ])
-                          ])
-                        ]
-                      )
+                          ]
+                        )
+                      ])
                     ])
-                  ])
-                ])
+                  ]
+                )
               ],
               1
             )
@@ -51809,55 +52320,66 @@ var render = function() {
                   "border-gray-200 border-b-2 py-4 first-child last-child"
               },
               [
-                _c("inertia-link", { attrs: { href: "/post/" + post.slug } }, [
-                  _c("div", { staticClass: "flex" }, [
-                    _c("img", {
-                      staticClass: "w-1/3 h-full mr-4 mb-4",
-                      attrs: { src: post.image, alt: "" }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                      _c("div", { staticClass: "font-bold mb-2" }, [
-                        _vm._v(_vm._s(post.title))
-                      ]),
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
+                  },
+                  [
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
                       _vm._v(" "),
-                      _c("div", { staticClass: "text-13 mb-2 text-gray-600" }, [
-                        _vm._v(_vm._s(post.brief))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "flex h-full sans uppercase text-gray-400"
-                        },
-                        [
-                          _c("div", { staticClass: "flex flex-wrap" }, [
-                            _c("div", { staticClass: "text-xs" }, [
-                              _vm._v(
-                                "\n                                            " +
-                                  _vm._s(
-                                    "\n                                            " +
-                                      new Date(
-                                        post.created_at
-                                      ).toLocaleString("default", {
-                                        month: "long"
-                                      }) +
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                            " +
+                                    _vm._s(
                                       "\n                                            " +
-                                      new Date(post.created_at).getDate() +
-                                      ",\n                                            " +
-                                      new Date(post.created_at).getFullYear() +
-                                      "\n                                            "
-                                  ) +
-                                  "\n                                        "
-                              )
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                            " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                            " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                            "
+                                    ) +
+                                    "\n                                        "
+                                )
+                              ])
                             ])
-                          ])
-                        ]
-                      )
+                          ]
+                        )
+                      ])
                     ])
-                  ])
-                ])
+                  ]
+                )
               ],
               1
             )
@@ -51873,7 +52395,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "sans text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded"
+                "sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded"
             },
             [
               _c("inertia-link", { attrs: { href: "posts" } }, [
@@ -51956,7 +52478,7 @@ var render = function() {
                   _c(
                     "inertia-link",
                     {
-                      staticClass: "flex",
+                      staticClass: "flex hover:text-gray-600 duration-200",
                       attrs: { href: "/post/" + comment.post.slug }
                     },
                     [
@@ -51998,7 +52520,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "sans text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                "sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
             },
             [
               _c("inertia-link", { attrs: { href: "comments" } }, [
@@ -66062,6 +66584,8 @@ var map = {
 	"./Profile/UpdatePasswordForm.vue": "./resources/js/Pages/Profile/UpdatePasswordForm.vue",
 	"./Profile/UpdateProfileInformationForm": "./resources/js/Pages/Profile/UpdateProfileInformationForm.vue",
 	"./Profile/UpdateProfileInformationForm.vue": "./resources/js/Pages/Profile/UpdateProfileInformationForm.vue",
+	"./SearchPosts": "./resources/js/Pages/SearchPosts.vue",
+	"./SearchPosts.vue": "./resources/js/Pages/SearchPosts.vue",
 	"./User": "./resources/js/Pages/User.vue",
 	"./User.vue": "./resources/js/Pages/User.vue"
 };
@@ -66965,6 +67489,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileInformationForm_vue_vue_type_template_id_f38ebb82___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileInformationForm_vue_vue_type_template_id_f38ebb82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/SearchPosts.vue":
+/*!********************************************!*\
+  !*** ./resources/js/Pages/SearchPosts.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchPosts.vue?vue&type=template&id=537eca72&scoped=true& */ "./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true&");
+/* harmony import */ var _SearchPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchPosts.vue?vue&type=script&lang=js& */ "./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "537eca72",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/SearchPosts.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchPosts.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/SearchPosts.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchPosts.vue?vue&type=template&id=537eca72&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/SearchPosts.vue?vue&type=template&id=537eca72&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchPosts_vue_vue_type_template_id_537eca72_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

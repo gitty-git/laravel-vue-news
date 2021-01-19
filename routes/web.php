@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::get('/category', [CategoriesController::class, 'index']);
 Route::get('/category/{slug}', [CategoriesController::class, 'show']);
 
 Route::get('/post/{slug}', [PostsController::class, 'show']);
+Route::get('/search/', [SearchController::class, 'search']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UsersController::class, 'index']);

@@ -78,7 +78,7 @@ export default {
                 <div v-for="post in posts.filter((x, i) => (i % 2 === 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child"
                 >
-                    <inertia-link :href="'/post/' + post.slug">
+                    <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
                             <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
 
@@ -109,7 +109,7 @@ export default {
             <div class="w-1/2 pl-4 border-l-2 border-gray-200">
                 <div v-for="post in posts.filter((x, i) => (i % 2 !== 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child">
-                    <inertia-link :href="'/post/' + post.slug">
+                    <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
                             <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
                             <div class="flex w-2/3 flex-col">
@@ -137,7 +137,7 @@ export default {
         </div>
 
         <div class="flex justify-center" v-if="postsCounted > 6">
-            <div class="sans text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded">
+            <div class="sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded">
                 <inertia-link href="posts">
                     See all {{postsCounted}} posts
                 </inertia-link>
@@ -175,7 +175,7 @@ export default {
                     </div>
 
                     <div class="w-1/2 pl-4 border-l-2 border-gray-200">
-                        <inertia-link :href="'/post/' + comment.post.slug"  class="flex">
+                        <inertia-link :href="'/post/' + comment.post.slug"  class="flex hover:text-gray-600 duration-200">
                             <img class="w-1/4 mr-4" :src="comment.post.image" alt="">
                             <div>
                                 <div class="font-serif font-bold mb-2">{{comment.post.title}}</div>
@@ -188,7 +188,7 @@ export default {
         </div>
 
         <div class="flex justify-center" v-if="commentsCounted > 6">
-            <div class="sans text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
+            <div class="sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                 <inertia-link href="comments">
                     See all {{commentsCounted}} comments
                 </inertia-link>
