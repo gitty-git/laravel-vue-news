@@ -24,13 +24,25 @@ class SearchController extends Controller
             ->latest()
             ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('body', 'LIKE', "%{$search}%")
-            ->paginate(12);
+            ->paginate(6, ['*'], 'posts')->appends(['search' => $search]);
 
         $users = User::query()
-            ->where('name', 'LIKE', "%{$search}%")->get();
+            ->where('name', 'LIKE', "%{$search}%")
+            ->withCount('posts')
+            ->withCount('comments')
+            ->paginate(10, ['*'], 'users')->appends(['search' => $search]);
 
-        return Inertia::render('SearchPosts',
-            compact('posts', 'users', 'postsCounted', 'usersCounted')
+        if ($request->wantsJson()) {
+            if ($request->type === 'morePosts') {
+                return $posts;
+            }
+            else if ($request->type === 'moreUsers') {
+                return $users;
+            }
+        }
+
+        return Inertia::render('SearchingPage',
+            compact('posts', 'users', 'postsCounted', 'usersCounted', 'search')
         );
     }
 }
