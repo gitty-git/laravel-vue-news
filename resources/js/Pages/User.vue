@@ -36,7 +36,10 @@ export default {
 
                     <div class="flex">
                         <div v-for="role in user.roles">
-                            <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" v-if="role.role === 'admin' || role.role === 'redactor'">{{role.role}}</div>
+                            <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
+                                 v-if="role.role === 'admin' || role.role === 'redactor'">
+                                {{role.role}}
+                            </div>
                         </div>
                     </div>
                 </div>

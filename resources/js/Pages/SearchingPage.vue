@@ -1,23 +1,28 @@
 <template>
     <div>
-        <div v-if="usersCounted > 0 || postsCounted > 0">
-            By request "{{ search }}" found {{ postsCounted }}
-            <span v-if="postsCounted > 0">posts</span>
-            <span v-else-if="postsCounted === 0">posts</span>
-            <span v-else>post</span>
-            and {{ usersCounted }}
-            <span v-if="usersCounted > 0">users</span>
-            <span v-else-if="usersCounted === 0">users</span>
-            <span v-else>user</span>
+        <div class="uppercase mt-2 sans-bold">
+            <div v-if="usersCounted > 0 || postsCounted > 0">
+                By request "{{ search }}" found {{ postsCounted }}
+                <span v-if="postsCounted === 1">post</span>
+                <span v-else>posts</span>
+                and {{ usersCounted }}
+                <span v-if="usersCounted === 1">user</span>
+                <span v-else>users</span>
+            </div>
+            <div v-else>Nothing Found</div>
         </div>
-        <div v-else>Nothing Found</div>
 
+        <div v-if="localPosts.data.length > 0" class="mt-2 sans-bold">
+            <div v-if="localPosts.data.length === 1">Post:</div>
+            <div v-else>Posts:</div>
+        </div>
 
         <!--POSTS-->
-        <div class="flex pt-4 border-gray-200 font-serif">
+        <div class="flex pt-2 border-gray-200 font-serif">
             <!--LEFT-->
             <div class="w-1/2 mr-4">
                 <div v-for="post in localPosts.data.filter((x, i) => (i % 2 === 0))"
+                     :class="''"
                      class="border-gray-200 border-b-2 py-4 first-child last-child"
                 >
                     <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
@@ -50,7 +55,7 @@
             </div>
 
             <!--RIGHT-->
-            <div class="w-1/2 pl-4 border-l-2 border-gray-200">
+            <div class="w-1/2 pl-4 border-gray-200" :class="{'border-l-2' : localPosts.data.length !== 1}">
                 <div v-for="post in localPosts.data.filter((x, i) => (i % 2 !== 0))"
                      class="border-gray-200 border-b-2 py-4 first-child last-child">
                     <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
@@ -82,7 +87,8 @@
             </div>
         </div>
 
-        <div class="mt-4 flex justify-center" v-if="this.localPosts.next_page_url">
+        <!--LOAD MORE POSTS-->
+        <div class="my-4 flex justify-center" v-if="localPosts.next_page_url">
             <div class="sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                 <div @click="loadMorePosts">
                     Load More Posts
@@ -90,32 +96,51 @@
             </div>
         </div>
 
-        <div v-for="user in localUsers.data">
-            <div class="flex flex-row font-serif w-full">
-                <div class="flex w-1/3">
+        <div v-if="localUsers.data.length > 0">
+            <div class="border-t-4 mb-2 border-gray-400 w-full" v-if="localPosts.data.length !== 0"></div>
+
+            <div class="sans-bold">
+                <div v-if="localUsers.data.length === 1">User:</div>
+                <div v-else>Users:</div>
+            </div>
+        </div>
+
+        <!--USERS-->
+        <div class="flex flex-wrap">
+            <div class="w-1/3 mb-2" v-for="user in localUsers.data">
+                <div class="flex font-serif mt-2">
                     <img class="w-12 h-12 mr-4" :src="user.profile_photo_url" alt="">
 
-                    <div>
+                    <div class="mr-2">
                         <div class="mb-2">
                             <inertia-link class="font-bold hover:text-gray-400 duration-200"
                                           :href="`/user/${user.id}` ">{{ user.name }}
                             </inertia-link>
+
+                            <span v-for="role in user.roles">
+                                <span class="bg-gray-200 sans text-xs mr-2 px-2 uppercase text-xs rounded-full"
+                                     v-if="role.role === 'admin' || role.role === 'redactor'">
+                                    {{role.role}}
+                                </span>
+                            </span>
                         </div>
 
-                        <div class="mb-2 flex sans text-xs uppercase text-gray-400">
-                            <div v-if="user.posts_count > 1">{{ user.posts_count }} posts,</div>
-                            <div v-else-if="user.posts_count === 1">{{ user.posts_count }} post,</div>
-                            <div v-else>No posts,</div>
+                        <div class="mb-2 sans text-xs uppercase text-gray-400">
+                            <span v-if="user.posts_count > 1">{{ user.posts_count }} posts,</span>
+                            <span v-else-if="user.posts_count === 1">{{ user.posts_count }} post,</span>
+                            <span v-else>No posts,</span>
 
-                            <div v-if="user.posts_count > 1">{{ user.posts_count }} comments.</div>
-                            <div v-else-if="user.posts_count === 1">{{ user.posts_count }} comment.</div>
-                            <div v-else>No comments.</div>
+                            <span v-if="user.comments_count > 1">{{ user.comments_count }} comments.</span>
+                            <span v-else-if="user.comments_count === 1">{{ user.comments_count }} comment.</span>
+                            <span v-else>No comments.</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+
+        <!--LOAD MORE USERS-->
         <div class="mt-4 flex justify-center" v-if="this.localUsers.next_page_url">
             <div class="sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                 <div @click="loadMoreUsers">
@@ -142,7 +167,7 @@ export default {
     methods: {
         loadMorePosts() {
             if (this.localPosts.next_page_url) {
-                axios.get(this.localPosts.next_page_url, {params: {type: 'morePosts'}}).then(response => {
+                axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
                     console.log(response)
                     this.localPosts = {
                         ...response.data,
@@ -154,7 +179,7 @@ export default {
 
         loadMoreUsers() {
             if (this.localUsers.next_page_url) {
-                axios.get(this.localUsers.next_page_url, {params: {type: 'moreUsers'}}).then(response => {
+                axios.get(this.localUsers.next_page_url, {params: {loadMoreType: 'moreUsers'}}).then(response => {
                     console.log(response)
                     this.localUsers = {
                         ...response.data,

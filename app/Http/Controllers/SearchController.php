@@ -17,26 +17,27 @@ class SearchController extends Controller
 
         $postsCounted = Post::query()
             ->where('title', 'LIKE', "%{$search}%")
-            ->orWhere('body', 'LIKE', "%{$search}%")
+//            ->orWhere('body', 'LIKE', "%{$search}%")
             ->count();
 
         $posts = Post::query()
             ->latest()
             ->where('title', 'LIKE', "%{$search}%")
-            ->orWhere('body', 'LIKE', "%{$search}%")
+//            ->orWhere('body', 'LIKE', "%{$search}%")
             ->paginate(6, ['*'], 'posts')->appends(['search' => $search]);
 
         $users = User::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->withCount('posts')
             ->withCount('comments')
-            ->paginate(10, ['*'], 'users')->appends(['search' => $search]);
+            ->with('roles')
+            ->paginate(9, ['*'], 'users')->appends(['search' => $search]);
 
         if ($request->wantsJson()) {
-            if ($request->type === 'morePosts') {
+            if ($request->loadMoreType === 'morePosts') {
                 return $posts;
             }
-            else if ($request->type === 'moreUsers') {
+            else if ($request->loadMoreType === 'moreUsers') {
                 return $users;
             }
         }

@@ -5085,6 +5085,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -5103,7 +5128,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.localPosts.next_page_url) {
         axios.get(this.localPosts.next_page_url, {
           params: {
-            type: 'morePosts'
+            loadMoreType: 'morePosts'
           }
         }).then(function (response) {
           console.log(response);
@@ -5119,7 +5144,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.localUsers.next_page_url) {
         axios.get(this.localUsers.next_page_url, {
           params: {
-            type: 'moreUsers'
+            loadMoreType: 'moreUsers'
           }
         }).then(function (response) {
           console.log(response);
@@ -51994,295 +52019,337 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
+  return _c("div", [
+    _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
       _vm.usersCounted > 0 || _vm.postsCounted > 0
         ? _c("div", [
             _vm._v(
-              '\n        By request "' +
+              '\n            By request "' +
                 _vm._s(_vm.search) +
                 '" found ' +
                 _vm._s(_vm.postsCounted) +
-                "\n        "
+                "\n            "
             ),
-            _vm.postsCounted > 0
-              ? _c("span", [_vm._v("posts")])
-              : _vm.postsCounted === 0
-              ? _c("span", [_vm._v("posts")])
-              : _c("span", [_vm._v("post")]),
-            _vm._v("\n        and " + _vm._s(_vm.usersCounted) + "\n        "),
-            _vm.usersCounted > 0
-              ? _c("span", [_vm._v("users")])
-              : _vm.usersCounted === 0
-              ? _c("span", [_vm._v("users")])
-              : _c("span", [_vm._v("user")])
+            _vm.postsCounted === 1
+              ? _c("span", [_vm._v("post")])
+              : _c("span", [_vm._v("posts")]),
+            _vm._v(
+              "\n            and " + _vm._s(_vm.usersCounted) + "\n            "
+            ),
+            _vm.usersCounted === 1
+              ? _c("span", [_vm._v("user")])
+              : _c("span", [_vm._v("users")])
           ])
-        : _c("div", [_vm._v("Nothing Found")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex pt-4 border-gray-200 font-serif" }, [
-        _c(
-          "div",
-          { staticClass: "w-1/2 mr-4" },
-          _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
-              return i % 2 === 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + post.slug }
-                    },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(
-                                        "\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                        " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                        "
-                                      ) +
-                                      "\n                                    "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-          _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
-              return i % 2 !== 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + post.slug }
-                    },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(
-                                        "\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                        " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                        "
-                                      ) +
-                                      "\n                                    "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      this.localPosts.next_page_url
-        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-            _c(
+        : _c("div", [_vm._v("Nothing Found")])
+    ]),
+    _vm._v(" "),
+    _vm.localPosts.data.length > 0
+      ? _c("div", { staticClass: "mt-2 sans-bold" }, [
+          _vm.localPosts.data.length === 1
+            ? _c("div", [_vm._v("Post:")])
+            : _c("div", [_vm._v("Posts:")])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex pt-2 border-gray-200 font-serif" }, [
+      _c(
+        "div",
+        { staticClass: "w-1/2 mr-4" },
+        _vm._l(
+          _vm.localPosts.data.filter(function(x, i) {
+            return i % 2 === 0
+          }),
+          function(post) {
+            return _c(
               "div",
               {
                 staticClass:
-                  "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                  "border-gray-200 border-b-2 py-4 first-child last-child",
+                class: ""
               },
               [
-                _c("div", { on: { click: _vm.loadMorePosts } }, [
-                  _vm._v("\n                Load More Posts\n            ")
-                ])
-              ]
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.localUsers.data, function(user) {
-        return _c("div", [
-          _c("div", { staticClass: "flex flex-row font-serif w-full" }, [
-            _c("div", { staticClass: "flex w-1/3" }, [
-              _c("img", {
-                staticClass: "w-12 h-12 mr-4",
-                attrs: { src: user.profile_photo_url, alt: "" }
-              }),
-              _vm._v(" "),
-              _c("div", [
                 _c(
-                  "div",
-                  { staticClass: "mb-2" },
-                  [
-                    _c(
-                      "inertia-link",
-                      {
-                        staticClass:
-                          "font-bold hover:text-gray-400 duration-200",
-                        attrs: { href: "/user/" + user.id }
-                      },
-                      [_vm._v(_vm._s(user.name) + "\n                        ")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
+                  "inertia-link",
                   {
-                    staticClass:
-                      "mb-2 flex sans text-xs uppercase text-gray-400"
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
                   },
                   [
-                    user.posts_count > 1
-                      ? _c("div", [
-                          _vm._v(_vm._s(user.posts_count) + " posts,")
-                        ])
-                      : user.posts_count === 1
-                      ? _c("div", [_vm._v(_vm._s(user.posts_count) + " post,")])
-                      : _c("div", [_vm._v("No posts,")]),
-                    _vm._v(" "),
-                    user.posts_count > 1
-                      ? _c("div", [
-                          _vm._v(_vm._s(user.posts_count) + " comments.")
-                        ])
-                      : user.posts_count === 1
-                      ? _c("div", [
-                          _vm._v(_vm._s(user.posts_count) + " comment.")
-                        ])
-                      : _c("div", [_vm._v("No comments.")])
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(
+                                      "\n                                        " +
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                        " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                        " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                        "
+                                    ) +
+                                    "\n                                    "
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
                   ]
                 )
+              ],
+              1
+            )
+          }
+        ),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "w-1/2 pl-4 border-gray-200",
+          class: { "border-l-2": _vm.localPosts.data.length !== 1 }
+        },
+        _vm._l(
+          _vm.localPosts.data.filter(function(x, i) {
+            return i % 2 !== 0
+          }),
+          function(post) {
+            return _c(
+              "div",
+              {
+                staticClass:
+                  "border-gray-200 border-b-2 py-4 first-child last-child"
+              },
+              [
+                _c(
+                  "inertia-link",
+                  {
+                    staticClass: "hover:text-gray-600 duration-200",
+                    attrs: { href: "/post/" + post.slug }
+                  },
+                  [
+                    _c("div", { staticClass: "flex" }, [
+                      _c("img", {
+                        staticClass: "w-1/3 h-full mr-4 mb-4",
+                        attrs: { src: post.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                        _c("div", { staticClass: "font-bold mb-2" }, [
+                          _vm._v(_vm._s(post.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-13 mb-2 text-gray-600" },
+                          [_vm._v(_vm._s(post.brief))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex h-full sans uppercase text-gray-400"
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
+                              _c("div", { staticClass: "text-xs" }, [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(
+                                      "\n                                        " +
+                                        new Date(
+                                          post.created_at
+                                        ).toLocaleString("default", {
+                                          month: "long"
+                                        }) +
+                                        "\n                                        " +
+                                        new Date(post.created_at).getDate() +
+                                        ",\n                                        " +
+                                        new Date(
+                                          post.created_at
+                                        ).getFullYear() +
+                                        "\n                                        "
+                                    ) +
+                                    "\n                                    "
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          }
+        ),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm.localPosts.next_page_url
+      ? _c("div", { staticClass: "my-4 flex justify-center" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+            },
+            [
+              _c("div", { on: { click: _vm.loadMorePosts } }, [
+                _vm._v("\n                Load More Posts\n            ")
               ])
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.localUsers.data.length > 0
+      ? _c("div", [
+          _vm.localPosts.data.length !== 0
+            ? _c("div", {
+                staticClass: "border-t-4 mb-2 border-gray-400 w-full"
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "sans-bold" }, [
+            _vm.localUsers.data.length === 1
+              ? _c("div", [_vm._v("User:")])
+              : _c("div", [_vm._v("Users:")])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "flex flex-wrap" },
+      _vm._l(_vm.localUsers.data, function(user) {
+        return _c("div", { staticClass: "w-1/3 mb-2" }, [
+          _c("div", { staticClass: "flex font-serif mt-2" }, [
+            _c("img", {
+              staticClass: "w-12 h-12 mr-4",
+              attrs: { src: user.profile_photo_url, alt: "" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-2" }, [
+              _c(
+                "div",
+                { staticClass: "mb-2" },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "font-bold hover:text-gray-400 duration-200",
+                      attrs: { href: "/user/" + user.id }
+                    },
+                    [_vm._v(_vm._s(user.name) + "\n                        ")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(user.roles, function(role) {
+                    return _c("span", [
+                      role.role === "admin" || role.role === "redactor"
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "bg-gray-200 sans text-xs mr-2 px-2 uppercase text-xs rounded-full"
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(role.role) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ])
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mb-2 sans text-xs uppercase text-gray-400" },
+                [
+                  user.posts_count > 1
+                    ? _c("span", [_vm._v(_vm._s(user.posts_count) + " posts,")])
+                    : user.posts_count === 1
+                    ? _c("span", [_vm._v(_vm._s(user.posts_count) + " post,")])
+                    : _c("span", [_vm._v("No posts,")]),
+                  _vm._v(" "),
+                  user.comments_count > 1
+                    ? _c("span", [
+                        _vm._v(_vm._s(user.comments_count) + " comments.")
+                      ])
+                    : user.comments_count === 1
+                    ? _c("span", [
+                        _vm._v(_vm._s(user.comments_count) + " comment.")
+                      ])
+                    : _c("span", [_vm._v("No comments.")])
+                ]
+              )
             ])
           ])
         ])
       }),
-      _vm._v(" "),
-      this.localUsers.next_page_url
-        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
-              },
-              [
-                _c("div", { on: { click: _vm.loadMoreUsers } }, [
-                  _vm._v("\n                Load More Users\n            ")
-                ])
-              ]
-            )
-          ])
-        : _vm._e()
-    ],
-    2
-  )
+      0
+    ),
+    _vm._v(" "),
+    this.localUsers.next_page_url
+      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+            },
+            [
+              _c("div", { on: { click: _vm.loadMoreUsers } }, [
+                _vm._v("\n                Load More Users\n            ")
+              ])
+            ]
+          )
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52328,7 +52395,13 @@ var render = function() {
                         staticClass:
                           "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
                       },
-                      [_vm._v(_vm._s(role.role))]
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(role.role) +
+                            "\n                            "
+                        )
+                      ]
                     )
                   : _vm._e()
               ])
