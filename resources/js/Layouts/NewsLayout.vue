@@ -14,7 +14,7 @@
             <div class="w-1200 flex my-6">
                 <div class="w-2/3 -ml-4 mr-4 px-4 flex border-r-2 h-full border-gray-300">
                     <div class="w-1/2 pr-3 border-r-2 border-gray-300 h-full mb-3">
-                        <div class="sans-bold text-sm mb-3">
+                        <div class="font-bold text-sm mb-3">
                             About
                         </div>
 
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="w-1/2 pb-2 px-4">
-                        <div class="sans-bold text-sm mb-3">
+                        <div class="font-bold text-sm mb-3">
                             Contact Us
                         </div>
 
@@ -33,14 +33,14 @@
                             Email:
                         </div>
 
-                        <div class="sans-bold text-sm text-gray-400 font-sans">
+                        <div class="font-bold text-sm text-gray-400">
                             example@mail.com
                         </div>
                     </div>
                 </div>
 
                 <div class="w-1/3 last-child ">
-                    <div class="sans-bold text-sm mb-2">
+                    <div class="font-bold text-sm mb-2">
                         In Social Media
                     </div>
 

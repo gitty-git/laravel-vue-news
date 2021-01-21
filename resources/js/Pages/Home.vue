@@ -54,9 +54,9 @@
         <!--CATEGORIES POSTS-->
         <div class="items-start">
             <div v-for="(cat, id) in categories">
-                <div class="border-t-4 border-gray-400 w-full mb-4"></div>
+                <div class="border-t-4 border-gray-400 w-full mb-2"></div>
 
-                <div class="sans-bold mb-4 text-sm">{{ cat.name }}</div>
+                <div class="font-bold mb-4 text-sm">{{ cat.name }}</div>
 
                 <div class="flex pb-4 font-serif">
                     <!--PRIMARY POSTS-->

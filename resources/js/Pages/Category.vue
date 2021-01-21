@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="uppercase mt-2 sans-bold">{{ primaryPosts[0].category.name }}</div>
+        <div class="uppercase mt-2 font-sans font-bold">{{ primaryPosts[0].category.name }}</div>
 
         <!--PRIMARY POSTS-->
         <div class="flex border-b-2 py-4 mb-4 border-gray-200">
@@ -15,7 +15,7 @@
                             <div class="text-13 mb-2 text-gray-600">{{ post.brief }}</div>
 
                             <!--CREATED AT-->
-                            <div class="flex h-full sans uppercase text-gray-400">
+                            <div class="flex h-full font-sans uppercase text-gray-400">
                                 <div class="flex flex-wrap">
                                     <div class="text-xs">
                                         {{ `
@@ -51,7 +51,7 @@
                                 <div class="text-13 mb-2 text-gray-600">{{ post.brief }}</div>
 
                                 <!--CREATED AT-->
-                                <div class="flex h-full sans uppercase text-gray-400">
+                                <div class="flex h-full font-sans uppercase text-gray-400">
                                     <div class="flex flex-wrap">
                                         <div class="text-xs">
                                             {{
@@ -81,7 +81,7 @@
                                 <div class="text-13 mb-2 text-gray-600">{{ post.brief }}</div>
 
                                 <!--CREATED AT-->
-                                <div class="flex h-full sans uppercase text-gray-400">
+                                <div class="flex h-full font-sans uppercase text-gray-400">
                                     <div class="flex flex-wrap">
                                         <div class="text-xs">
                                             {{
@@ -99,7 +99,7 @@
         </div>
 
         <!--PAGINATION-->
-        <div class="flex sans-bold pt-4 justify-center capitalize flex-row">
+        <div class="flex font-bold pt-4 justify-center capitalize flex-row">
             <inertia-link
                 v-for="item in posts.links"
                 :key="item.id"

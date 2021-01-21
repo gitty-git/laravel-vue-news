@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="uppercase mt-2 sans-bold">{{ post.category.name }}</div>
+        <div class="uppercase mt-2 font-bold">{{ post.category.name }}</div>
 
         <!--POST-->
         <div class="w-full mt-4 flex justify-center">
@@ -10,7 +10,7 @@
                 <div class="font-serif text-xl leading-9 text-gray-600 mt-8 mb-2">{{post.brief}}</div>
 
                 <!--CREATED AT-->
-                <div class="flex sans uppercase text-gray-400">
+                <div class="flex font-sans uppercase text-gray-400">
                     <div class="text-xs">
                         {{`
                             ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
@@ -38,11 +38,11 @@
         <!--COMMENTS-->
         <div class="flex justify-center font-serif text-sm text-gray-600">
             <div class="post-width">
-                <div v-if="post.comments_count < 1" class="uppercase mb-4 sans-bold">No comments yet</div>
+                <div v-if="post.comments_count < 1" class="uppercase mb-4 font-sans font-bold">No comments yet</div>
 
-                <div v-else-if="post.comments_count === 1" class="uppercase mb-4 sans-bold">{{ post.comments_count }} Comment:</div>
+                <div v-else-if="post.comments_count === 1" class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comment:</div>
 
-                <div v-else class="uppercase mb-4 sans-bold">{{ post.comments_count }} Comments:</div>
+                <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments:</div>
 
                 <div class="" v-for="comment in localComments.data" :key="comment.id">
                     <div class="py-4 border-t-2 border-gray-200">
@@ -51,7 +51,8 @@
 
                             <div>
                                 <div class="mb-2">
-                                    <inertia-link class="font-bold hover:text-gray-400 duration-200" :href="`/user/${comment.user.id}` ">{{ comment.user.name }}</inertia-link>
+                                    <inertia-link class="font-bold text-gray-900 hover:text-gray-400 duration-200"
+                                                  :href="`/user/${comment.user.id}` ">{{ comment.user.name }}</inertia-link>
                                     {{ time_ago(comment.created_at) }}
                                 </div>
 
@@ -62,7 +63,7 @@
                         </div>
 
                         <!--show replies button-->
-                        <div v-if="comment.comment_replies.length > 0" class="cursor-pointer sans flex justify-end"
+                        <div v-if="comment.comment_replies.length > 0" class="cursor-pointer font-sans flex justify-end"
                              @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
                         >
                             <div v-if="comment.comment_replies.length === 1">
@@ -86,7 +87,8 @@
                                 <img class="w-12 h-12 mr-4" :src="reply.user.profile_photo_url" alt="">
                                 <div>
                                     <div class="mb-2">
-                                        <inertia-link class="font-bold hover:text-gray-400 duration-200" :href="`/user/${reply.user.id}` ">{{ reply.user.name }}</inertia-link>
+                                        <inertia-link class="font-bold text-gray-900 hover:text-gray-400 duration-200"
+                                                      :href="`/user/${reply.user.id}` ">{{ reply.user.name }}</inertia-link>
                                         {{ time_ago(reply.created_at) }}
                                     </div>
 
@@ -99,7 +101,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center" v-if="this.localComments.next_page_url">
-                    <div class="sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
+                    <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                         <div @click="loadMoreComments">
                             Load More Comments
                         </div>

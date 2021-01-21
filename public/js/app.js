@@ -2040,6 +2040,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TopMenu",
   data: function data() {
@@ -4055,6 +4056,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -5101,15 +5104,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -5169,39 +5163,75 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "User",
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
-  // data: () => ({
-  //     orderBy: 'created_at',
-  // }),
   props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
+  data: function data() {
+    return {
+      localPosts: this.posts,
+      localComments: this.comments
+    };
+  },
+  methods: {
+    loadMorePosts: function loadMorePosts() {
+      var _this = this;
+
+      if (this.localPosts.next_page_url) {
+        axios.get(this.localPosts.next_page_url, {
+          params: {
+            loadMoreType: 'morePosts'
+          }
+        }).then(function (response) {
+          console.log(response);
+          _this.localPosts = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this.localPosts.data), _toConsumableArray(response.data.data))
+          });
+        });
+      }
+    },
+    loadMoreComments: function loadMoreComments() {
+      var _this2 = this;
+
+      if (this.localComments.next_page_url) {
+        axios.get(this.localComments.next_page_url, {
+          params: {
+            loadMoreType: 'moreComments'
+          }
+        }).then(function (response) {
+          console.log(response);
+          _this2.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this2.localComments.data), _toConsumableArray(response.data.data))
+          });
+        });
+      }
+    }
+  },
   computed: {
     showComments: function showComments() {
       return this.comments;
     }
   }
 });
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".sans-bold {\n  font-family: 'Fira Sans', sans-serif;\n  font-weight: bold;\n}\n.sans {\n  font-family: 'Fira Sans', sans-serif;\n}\n", ""]);
-
-// exports
-
 
 /***/ }),
 
@@ -45669,36 +45699,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TopMenu.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Layouts/NewsLayout.vue?vue&type=style&index=0&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Layouts/NewsLayout.vue?vue&type=style&index=0&lang=css& ***!
@@ -46515,7 +46515,7 @@ var render = function() {
           _c(
             "svg",
             {
-              staticClass: "mr-1",
+              staticClass: "mr-2",
               attrs: {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "15",
@@ -46578,10 +46578,11 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "sans hover:bg-gray-100 duration-200 focus:bg-gray-100 px-2 rounded outline-none",
+                  "duration-200 hover:border-black hover:border-b-2 outline-none",
                 attrs: {
                   required: "",
                   name: "search",
+                  autocomplete: "off",
                   placeholder: "Search",
                   type: "text"
                 },
@@ -46601,7 +46602,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "sans flex" },
+          { staticClass: "flex" },
           _vm._l(_vm.categories, function(cat) {
             return _c(
               "inertia-link",
@@ -46615,7 +46616,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "hover:bg-gray-100 px-2 mx-1 rounded duration-200"
+                      "hover:text-gray-500 px-2 mx-1 rounded duration-200"
                   },
                   [_vm._v(_vm._s(cat.name))]
                 )
@@ -46625,16 +46626,17 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 sans flex justify-end" }, [
+        _c("div", { staticClass: "w-1/4 font-sans flex justify-end" }, [
           !_vm.user
             ? _c("div", { staticClass: "flex" }, [
                 _c(
                   "a",
                   {
-                    staticClass: "hover:bg-gray-100 px-2 rounded duration-200",
+                    staticClass:
+                      "hover:text-gray-500 mx-2 rounded duration-200",
                     attrs: { href: "/login" }
                   },
-                  [_vm._v("Log In")]
+                  [_vm._v("Login")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "font-bold text-gray-400" }, [
@@ -46644,10 +46646,11 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "hover:bg-gray-100 px-2 rounded duration-200",
+                    staticClass:
+                      "hover:text-gray-500 mx-2 rounded duration-200",
                     attrs: { href: "/register" }
                   },
-                  [_vm._v("Sign In")]
+                  [_vm._v("Reginster")]
                 )
               ])
             : _c("a", { attrs: { href: "/user/profile" } }, [
@@ -49006,7 +49009,7 @@ var staticRenderFns = [
                     "w-1/2 pr-3 border-r-2 border-gray-300 h-full mb-3"
                 },
                 [
-                  _c("div", { staticClass: "sans-bold text-sm mb-3" }, [
+                  _c("div", { staticClass: "font-bold text-sm mb-3" }, [
                     _vm._v(
                       "\n                        About\n                    "
                     )
@@ -49025,7 +49028,7 @@ var staticRenderFns = [
               ),
               _vm._v(" "),
               _c("div", { staticClass: "w-1/2 pb-2 px-4" }, [
-                _c("div", { staticClass: "sans-bold text-sm mb-3" }, [
+                _c("div", { staticClass: "font-bold text-sm mb-3" }, [
                   _vm._v(
                     "\n                        Contact Us\n                    "
                   )
@@ -49041,21 +49044,17 @@ var staticRenderFns = [
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "sans-bold text-sm text-gray-400 font-sans" },
-                  [
-                    _vm._v(
-                      "\n                        example@mail.com\n                    "
-                    )
-                  ]
-                )
+                _c("div", { staticClass: "font-bold text-sm text-gray-400" }, [
+                  _vm._v(
+                    "\n                        example@mail.com\n                    "
+                  )
+                ])
               ])
             ]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "w-1/3 last-child " }, [
-            _c("div", { staticClass: "sans-bold text-sm mb-2" }, [
+            _c("div", { staticClass: "font-bold text-sm mb-2" }, [
               _vm._v("\n                    In Social Media\n                ")
             ]),
             _vm._v(" "),
@@ -49789,7 +49788,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
+    _c("div", { staticClass: "uppercase mt-2 font-sans font-bold" }, [
       _vm._v(_vm._s(_vm.primaryPosts[0].category.name))
     ]),
     _vm._v(" "),
@@ -49828,7 +49827,8 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass: "flex h-full sans uppercase text-gray-400"
+                        staticClass:
+                          "flex h-full font-sans uppercase text-gray-400"
                       },
                       [
                         _c("div", { staticClass: "flex flex-wrap" }, [
@@ -49916,7 +49916,7 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "flex h-full sans uppercase text-gray-400"
+                                "flex h-full font-sans uppercase text-gray-400"
                             },
                             [
                               _c("div", { staticClass: "flex flex-wrap" }, [
@@ -50001,7 +50001,7 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "flex h-full sans uppercase text-gray-400"
+                                "flex h-full font-sans uppercase text-gray-400"
                             },
                             [
                               _c("div", { staticClass: "flex flex-wrap" }, [
@@ -50047,7 +50047,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "flex sans-bold pt-4 justify-center capitalize flex-row" },
+      { staticClass: "flex font-bold pt-4 justify-center capitalize flex-row" },
       _vm._l(_vm.posts.links, function(item) {
         return _c(
           "inertia-link",
@@ -50288,9 +50288,9 @@ var render = function() {
       { staticClass: "items-start" },
       _vm._l(_vm.categories, function(cat, id) {
         return _c("div", [
-          _c("div", { staticClass: "border-t-4 border-gray-400 w-full mb-4" }),
+          _c("div", { staticClass: "border-t-4 border-gray-400 w-full mb-2" }),
           _vm._v(" "),
-          _c("div", { staticClass: "sans-bold mb-4 text-sm" }, [
+          _c("div", { staticClass: "font-bold mb-4 text-sm" }, [
             _vm._v(_vm._s(cat.name))
           ]),
           _vm._v(" "),
@@ -50406,7 +50406,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
+    _c("div", { staticClass: "uppercase mt-2 font-bold" }, [
       _vm._v(_vm._s(_vm.post.category.name))
     ]),
     _vm._v(" "),
@@ -50426,7 +50426,7 @@ var render = function() {
           [_vm._v(_vm._s(_vm.post.brief))]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "flex sans uppercase text-gray-400" }, [
+        _c("div", { staticClass: "flex font-sans uppercase text-gray-400" }, [
           _c("div", { staticClass: "text-xs" }, [
             _vm._v(
               "\n                    " +
@@ -50499,16 +50499,22 @@ var render = function() {
           { staticClass: "post-width" },
           [
             _vm.post.comments_count < 1
-              ? _c("div", { staticClass: "uppercase mb-4 sans-bold" }, [
-                  _vm._v("No comments yet")
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "uppercase mb-4 font-sans font-bold" },
+                  [_vm._v("No comments yet")]
+                )
               : _vm.post.comments_count === 1
-              ? _c("div", { staticClass: "uppercase mb-4 sans-bold" }, [
-                  _vm._v(_vm._s(_vm.post.comments_count) + " Comment:")
-                ])
-              : _c("div", { staticClass: "uppercase mb-4 sans-bold" }, [
-                  _vm._v(_vm._s(_vm.post.comments_count) + " Comments:")
-                ]),
+              ? _c(
+                  "div",
+                  { staticClass: "uppercase mb-4 font-sans font-bold" },
+                  [_vm._v(_vm._s(_vm.post.comments_count) + " Comment:")]
+                )
+              : _c(
+                  "div",
+                  { staticClass: "uppercase mb-4 font-sans font-bold" },
+                  [_vm._v(_vm._s(_vm.post.comments_count) + " Comments:")]
+                ),
             _vm._v(" "),
             _vm._l(_vm.localComments.data, function(comment) {
               return _c(
@@ -50537,7 +50543,7 @@ var render = function() {
                                 "inertia-link",
                                 {
                                   staticClass:
-                                    "font-bold hover:text-gray-400 duration-200",
+                                    "font-bold text-gray-900 hover:text-gray-400 duration-200",
                                   attrs: { href: "/user/" + comment.user.id }
                                 },
                                 [_vm._v(_vm._s(comment.user.name))]
@@ -50566,7 +50572,7 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "cursor-pointer sans flex justify-end",
+                                "cursor-pointer font-sans flex justify-end",
                               on: {
                                 click: function($event) {
                                   comment.active === 1
@@ -50659,7 +50665,7 @@ var render = function() {
                                         "inertia-link",
                                         {
                                           staticClass:
-                                            "font-bold hover:text-gray-400 duration-200",
+                                            "font-bold text-gray-900 hover:text-gray-400 duration-200",
                                           attrs: {
                                             href: "/user/" + reply.user.id
                                           }
@@ -50702,7 +50708,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                        "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
                     },
                     [
                       _c("div", { on: { click: _vm.loadMoreComments } }, [
@@ -52020,7 +52026,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uppercase mt-2 sans-bold" }, [
+    _c("div", { staticClass: "uppercase mt-2 font-bold" }, [
       _vm.usersCounted > 0 || _vm.postsCounted > 0
         ? _c("div", [
             _vm._v(
@@ -52040,205 +52046,207 @@ var render = function() {
               ? _c("span", [_vm._v("user")])
               : _c("span", [_vm._v("users")])
           ])
-        : _c("div", [_vm._v("Nothing Found")])
+        : _c("div", [
+            _vm._v('By Request "' + _vm._s(_vm.search) + '" Nothing Found')
+          ])
     ]),
     _vm._v(" "),
     _vm.localPosts.data.length > 0
-      ? _c("div", { staticClass: "mt-2 sans-bold" }, [
+      ? _c("div", { staticClass: "mt-4 font-bold text-sm" }, [
           _vm.localPosts.data.length === 1
             ? _c("div", [_vm._v("Post:")])
             : _c("div", [_vm._v("Posts:")])
         ])
       : _vm._e(),
     _vm._v(" "),
-    _c("div", { staticClass: "flex pt-2 border-gray-200 font-serif" }, [
-      _c(
-        "div",
-        { staticClass: "w-1/2 mr-4" },
-        _vm._l(
-          _vm.localPosts.data.filter(function(x, i) {
-            return i % 2 === 0
-          }),
-          function(post) {
-            return _c(
-              "div",
-              {
-                staticClass:
-                  "border-gray-200 border-b-2 py-4 first-child last-child",
-                class: ""
-              },
-              [
-                _c(
-                  "inertia-link",
-                  {
-                    staticClass: "hover:text-gray-600 duration-200",
-                    attrs: { href: "/post/" + post.slug }
-                  },
-                  [
-                    _c("div", { staticClass: "flex" }, [
-                      _c("img", {
-                        staticClass: "w-1/3 h-full mr-4 mb-4",
-                        attrs: { src: post.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                        _c("div", { staticClass: "font-bold mb-2" }, [
-                          _vm._v(_vm._s(post.title))
-                        ]),
+    _c("div", { staticClass: "my-4" }, [
+      _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
+        _c(
+          "div",
+          { staticClass: "w-1/2 mr-4" },
+          _vm._l(
+            _vm.localPosts.data.filter(function(x, i) {
+              return i % 2 === 0
+            }),
+            function(post) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "border-gray-200 border-b-2 py-4 first-child last-child"
+                },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
+                    [
+                      _c("div", { staticClass: "flex" }, [
+                        _c("img", {
+                          staticClass: "w-1/3 h-full mr-4 mb-4",
+                          attrs: { src: post.image, alt: "" }
+                        }),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-13 mb-2 text-gray-600" },
-                          [_vm._v(_vm._s(post.brief))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex h-full sans uppercase text-gray-400"
-                          },
-                          [
-                            _c("div", { staticClass: "flex flex-wrap" }, [
-                              _c("div", { staticClass: "text-xs" }, [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(
-                                      "\n                                        " +
-                                        new Date(
-                                          post.created_at
-                                        ).toLocaleString("default", {
-                                          month: "long"
-                                        }) +
+                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                          _c("div", { staticClass: "font-bold mb-2" }, [
+                            _vm._v(_vm._s(post.title))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-13 mb-2 text-gray-600" },
+                            [_vm._v(_vm._s(post.brief))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "flex h-full font-sans uppercase text-gray-400"
+                            },
+                            [
+                              _c("div", { staticClass: "flex flex-wrap" }, [
+                                _c("div", { staticClass: "text-xs" }, [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(
                                         "\n                                        " +
-                                        new Date(post.created_at).getDate() +
-                                        ",\n                                        " +
-                                        new Date(
-                                          post.created_at
-                                        ).getFullYear() +
-                                        "\n                                        "
-                                    ) +
-                                    "\n                                    "
-                                )
+                                          new Date(
+                                            post.created_at
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                          "\n                                        " +
+                                          new Date(post.created_at).getDate() +
+                                          ",\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).getFullYear() +
+                                          "\n                                        "
+                                      ) +
+                                      "\n                                        "
+                                  )
+                                ])
                               ])
-                            ])
-                          ]
-                        )
+                            ]
+                          )
+                        ])
                       ])
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
-          }
+                    ]
+                  )
+                ],
+                1
+              )
+            }
+          ),
+          0
         ),
-        0
-      ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+          _vm._l(
+            _vm.localPosts.data.filter(function(x, i) {
+              return i % 2 !== 0
+            }),
+            function(post) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "border-gray-200 border-b-2 py-4 first-child last-child"
+                },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
+                    [
+                      _c("div", { staticClass: "flex" }, [
+                        _c("img", {
+                          staticClass: "w-1/3 h-full mr-4 mb-4",
+                          attrs: { src: post.image, alt: "" }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                          _c("div", { staticClass: "font-bold mb-2" }, [
+                            _vm._v(_vm._s(post.title))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-13 mb-2 text-gray-600" },
+                            [_vm._v(_vm._s(post.brief))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "flex h-full font-sans uppercase text-gray-400"
+                            },
+                            [
+                              _c("div", { staticClass: "flex flex-wrap" }, [
+                                _c("div", { staticClass: "text-xs" }, [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(
+                                        "\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                          "\n                                        " +
+                                          new Date(post.created_at).getDate() +
+                                          ",\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).getFullYear() +
+                                          "\n                                        "
+                                      ) +
+                                      "\n                                        "
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            }
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "w-1/2 pl-4 border-gray-200",
-          class: { "border-l-2": _vm.localPosts.data.length !== 1 }
-        },
-        _vm._l(
-          _vm.localPosts.data.filter(function(x, i) {
-            return i % 2 !== 0
-          }),
-          function(post) {
-            return _c(
+      _vm.localPosts.next_page_url
+        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+            _c(
               "div",
               {
                 staticClass:
-                  "border-gray-200 border-b-2 py-4 first-child last-child"
+                  "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
               },
               [
-                _c(
-                  "inertia-link",
-                  {
-                    staticClass: "hover:text-gray-600 duration-200",
-                    attrs: { href: "/post/" + post.slug }
-                  },
-                  [
-                    _c("div", { staticClass: "flex" }, [
-                      _c("img", {
-                        staticClass: "w-1/3 h-full mr-4 mb-4",
-                        attrs: { src: post.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                        _c("div", { staticClass: "font-bold mb-2" }, [
-                          _vm._v(_vm._s(post.title))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-13 mb-2 text-gray-600" },
-                          [_vm._v(_vm._s(post.brief))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex h-full sans uppercase text-gray-400"
-                          },
-                          [
-                            _c("div", { staticClass: "flex flex-wrap" }, [
-                              _c("div", { staticClass: "text-xs" }, [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(
-                                      "\n                                        " +
-                                        new Date(
-                                          post.created_at
-                                        ).toLocaleString("default", {
-                                          month: "long"
-                                        }) +
-                                        "\n                                        " +
-                                        new Date(post.created_at).getDate() +
-                                        ",\n                                        " +
-                                        new Date(
-                                          post.created_at
-                                        ).getFullYear() +
-                                        "\n                                        "
-                                    ) +
-                                    "\n                                    "
-                                )
-                              ])
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ],
-              1
+                _c("div", { on: { click: _vm.loadMorePosts } }, [
+                  _vm._v(
+                    "\n                    Show More Posts\n                "
+                  )
+                ])
+              ]
             )
-          }
-        ),
-        0
-      )
+          ])
+        : _vm._e()
     ]),
-    _vm._v(" "),
-    _vm.localPosts.next_page_url
-      ? _c("div", { staticClass: "my-4 flex justify-center" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
-            },
-            [
-              _c("div", { on: { click: _vm.loadMorePosts } }, [
-                _vm._v("\n                Load More Posts\n            ")
-              ])
-            ]
-          )
-        ])
-      : _vm._e(),
     _vm._v(" "),
     _vm.localUsers.data.length > 0
       ? _c("div", [
@@ -52248,7 +52256,7 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "sans-bold" }, [
+          _c("div", { staticClass: "font-bold mb-4 text-sm" }, [
             _vm.localUsers.data.length === 1
               ? _c("div", [_vm._v("User:")])
               : _c("div", [_vm._v("Users:")])
@@ -52260,54 +52268,50 @@ var render = function() {
       "div",
       { staticClass: "flex flex-wrap" },
       _vm._l(_vm.localUsers.data, function(user) {
-        return _c("div", { staticClass: "w-1/3 mb-2" }, [
-          _c("div", { staticClass: "flex font-serif mt-2" }, [
-            _c("img", {
-              staticClass: "w-12 h-12 mr-4",
-              attrs: { src: user.profile_photo_url, alt: "" }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "mr-2" }, [
+        return _c("div", { staticClass: "w-1/3 flex font-serif mb-4" }, [
+          _c("img", {
+            staticClass: "w-12 h-12 mr-4",
+            attrs: { src: user.profile_photo_url, alt: "" }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "mr-2" },
+            [
               _c(
-                "div",
-                { staticClass: "mb-2" },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "font-bold hover:text-gray-400 duration-200",
-                      attrs: { href: "/user/" + user.id }
-                    },
-                    [_vm._v(_vm._s(user.name) + "\n                        ")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(user.roles, function(role) {
-                    return _c("span", [
-                      role.role === "admin" || role.role === "redactor"
-                        ? _c(
-                            "span",
-                            {
-                              staticClass:
-                                "bg-gray-200 sans text-xs mr-2 px-2 uppercase text-xs rounded-full"
-                            },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(role.role) +
-                                  "\n                            "
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ])
-                  })
-                ],
-                2
+                "inertia-link",
+                {
+                  staticClass:
+                    "font-bold text-sm hover:text-gray-400 duration-200",
+                  attrs: { href: "/user/" + user.id }
+                },
+                [_vm._v(_vm._s(user.name) + "\n                ")]
               ),
+              _vm._v(" "),
+              _vm._l(user.roles, function(role) {
+                return role.role === "admin" || role.role === "redactor"
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "bg-gray-200 font-sans text-xs mr-1 px-2 uppercase text-xs rounded-full"
+                      },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(role.role) +
+                            "\n                "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              }),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mb-2 sans text-xs uppercase text-gray-400" },
+                {
+                  staticClass: "mb-2 font-sans text-xs uppercase text-gray-400"
+                },
                 [
                   user.posts_count > 1
                     ? _c("span", [_vm._v(_vm._s(user.posts_count) + " posts,")])
@@ -52326,8 +52330,9 @@ var render = function() {
                     : _c("span", [_vm._v("No comments.")])
                 ]
               )
-            ])
-          ])
+            ],
+            2
+          )
         ])
       }),
       0
@@ -52339,11 +52344,11 @@ var render = function() {
             "div",
             {
               staticClass:
-                "sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
             },
             [
               _c("div", { on: { click: _vm.loadMoreUsers } }, [
-                _vm._v("\n                Load More Users\n            ")
+                _vm._v("\n                Show More Users\n            ")
               ])
             ]
           )
@@ -52379,7 +52384,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "flex-col ml-4" }, [
         _c("div", { staticClass: "flex items-center" }, [
-          _c("div", { staticClass: "sans font-bold uppercase mr-2" }, [
+          _c("div", { staticClass: "font-sans font-bold uppercase mr-2" }, [
             _vm._v(_vm._s(_vm.user.name))
           ]),
           _vm._v(" "),
@@ -52397,9 +52402,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                                " +
+                          "\n                            " +
                             _vm._s(role.role) +
-                            "\n                            "
+                            "\n                        "
                         )
                       ]
                     )
@@ -52410,38 +52415,47 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "sans text-xs uppercase text-gray-400" }, [
-          _vm.postsCounted > 1
-            ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
-            : _vm.postsCounted === 1
-            ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
-            : _c("span", [_vm._v("No posts,")]),
-          _vm._v(" "),
-          _vm.commentsCounted > 1
-            ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comments.")])
-            : _vm.commentsCounted === 1
-            ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comment.")])
-            : _c("span", [_vm._v("No comments.")])
-        ])
+        _c(
+          "div",
+          { staticClass: "font-sans text-xs uppercase text-gray-400" },
+          [
+            _vm.postsCounted > 1
+              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
+              : _vm.postsCounted === 1
+              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
+              : _c("span", [_vm._v("No posts,")]),
+            _vm._v(" "),
+            _vm.commentsCounted > 1
+              ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comments.")])
+              : _vm.commentsCounted === 1
+              ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comment.")])
+              : _c("span", [_vm._v("No comments.")])
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "sans-bold mt-4 flex justify-between items-end" },
+      {
+        staticClass:
+          "font-sans font-bold text-sm mt-2 flex justify-between items-end"
+      },
       [
         _c("div", [
-          _vm.posts.length > 1
+          _vm.localPosts.data.length > 1
             ? _c("div", { staticClass: "mt-2" }, [
                 _vm._v(
                   "Last " +
-                    _vm._s(_vm.posts.length) +
-                    " posts:\n                "
+                    _vm._s(_vm.localPosts.data.length) +
+                    " posts:\n            "
                 )
               ])
-            : _vm.posts.length === 1
+            : _vm.localPosts.data.length === 1
             ? _c("div", { staticClass: "mt-2" }, [
-                _vm._v(_vm._s(_vm.posts.length) + " post:\n                ")
+                _vm._v(
+                  _vm._s(_vm.localPosts.data.length) + " post:\n            "
+                )
               ])
             : _c("div", { staticClass: "mt-2 " }, [
                 _vm._v("No posts by " + _vm._s(_vm.user.name))
@@ -52450,223 +52464,227 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "flex pt-4 border-gray-200 font-serif" }, [
-      _c(
-        "div",
-        { staticClass: "w-1/2 mr-4" },
-        _vm._l(
-          _vm.posts.filter(function(x, i) {
-            return i % 2 === 0
-          }),
-          function(post) {
-            return _c(
-              "div",
-              {
-                staticClass:
-                  "border-gray-200 border-b-2 py-4 first-child last-child"
-              },
-              [
-                _c(
-                  "inertia-link",
-                  {
-                    staticClass: "hover:text-gray-600 duration-200",
-                    attrs: { href: "/post/" + post.slug }
-                  },
-                  [
-                    _c("div", { staticClass: "flex" }, [
-                      _c("img", {
-                        staticClass: "w-1/3 h-full mr-4 mb-4",
-                        attrs: { src: post.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                        _c("div", { staticClass: "font-bold mb-2" }, [
-                          _vm._v(_vm._s(post.title))
-                        ]),
+    _c("div", { staticClass: "my-4" }, [
+      _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
+        _c(
+          "div",
+          { staticClass: "w-1/2 mr-4" },
+          _vm._l(
+            _vm.localPosts.data.filter(function(x, i) {
+              return i % 2 === 0
+            }),
+            function(post) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "border-gray-200 border-b-2 py-4 first-child last-child"
+                },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
+                    [
+                      _c("div", { staticClass: "flex" }, [
+                        _c("img", {
+                          staticClass: "w-1/3 h-full mr-4 mb-4",
+                          attrs: { src: post.image, alt: "" }
+                        }),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-13 mb-2 text-gray-600" },
-                          [_vm._v(_vm._s(post.brief))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex h-full sans uppercase text-gray-400"
-                          },
-                          [
-                            _c("div", { staticClass: "flex flex-wrap" }, [
-                              _c("div", { staticClass: "text-xs" }, [
-                                _vm._v(
-                                  "\n                                            " +
-                                    _vm._s(
-                                      "\n                                            " +
-                                        new Date(
-                                          post.created_at
-                                        ).toLocaleString("default", {
-                                          month: "long"
-                                        }) +
-                                        "\n                                            " +
-                                        new Date(post.created_at).getDate() +
-                                        ",\n                                            " +
-                                        new Date(
-                                          post.created_at
-                                        ).getFullYear() +
-                                        "\n                                            "
-                                    ) +
-                                    "\n                                        "
-                                )
+                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                          _c("div", { staticClass: "font-bold mb-2" }, [
+                            _vm._v(_vm._s(post.title))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-13 mb-2 text-gray-600" },
+                            [_vm._v(_vm._s(post.brief))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "flex h-full font-sans uppercase text-gray-400"
+                            },
+                            [
+                              _c("div", { staticClass: "flex flex-wrap" }, [
+                                _c("div", { staticClass: "text-xs" }, [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(
+                                        "\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                          "\n                                        " +
+                                          new Date(post.created_at).getDate() +
+                                          ",\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).getFullYear() +
+                                          "\n                                        "
+                                      ) +
+                                      "\n                                        "
+                                  )
+                                ])
                               ])
-                            ])
-                          ]
-                        )
+                            ]
+                          )
+                        ])
                       ])
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
-          }
+                    ]
+                  )
+                ],
+                1
+              )
+            }
+          ),
+          0
         ),
-        0
-      ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+          _vm._l(
+            _vm.localPosts.data.filter(function(x, i) {
+              return i % 2 !== 0
+            }),
+            function(post) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "border-gray-200 border-b-2 py-4 first-child last-child"
+                },
+                [
+                  _c(
+                    "inertia-link",
+                    {
+                      staticClass: "hover:text-gray-600 duration-200",
+                      attrs: { href: "/post/" + post.slug }
+                    },
+                    [
+                      _c("div", { staticClass: "flex" }, [
+                        _c("img", {
+                          staticClass: "w-1/3 h-full mr-4 mb-4",
+                          attrs: { src: post.image, alt: "" }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                          _c("div", { staticClass: "font-bold mb-2" }, [
+                            _vm._v(_vm._s(post.title))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-13 mb-2 text-gray-600" },
+                            [_vm._v(_vm._s(post.brief))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "flex h-full font-sans uppercase text-gray-400"
+                            },
+                            [
+                              _c("div", { staticClass: "flex flex-wrap" }, [
+                                _c("div", { staticClass: "text-xs" }, [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(
+                                        "\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).toLocaleString("default", {
+                                            month: "long"
+                                          }) +
+                                          "\n                                        " +
+                                          new Date(post.created_at).getDate() +
+                                          ",\n                                        " +
+                                          new Date(
+                                            post.created_at
+                                          ).getFullYear() +
+                                          "\n                                        "
+                                      ) +
+                                      "\n                                        "
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            }
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-        _vm._l(
-          _vm.posts.filter(function(x, i) {
-            return i % 2 !== 0
-          }),
-          function(post) {
-            return _c(
+      _vm.localPosts.next_page_url
+        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+            _c(
               "div",
               {
                 staticClass:
-                  "border-gray-200 border-b-2 py-4 first-child last-child"
+                  "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
               },
               [
-                _c(
-                  "inertia-link",
-                  {
-                    staticClass: "hover:text-gray-600 duration-200",
-                    attrs: { href: "/post/" + post.slug }
-                  },
-                  [
-                    _c("div", { staticClass: "flex" }, [
-                      _c("img", {
-                        staticClass: "w-1/3 h-full mr-4 mb-4",
-                        attrs: { src: post.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                        _c("div", { staticClass: "font-bold mb-2" }, [
-                          _vm._v(_vm._s(post.title))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-13 mb-2 text-gray-600" },
-                          [_vm._v(_vm._s(post.brief))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex h-full sans uppercase text-gray-400"
-                          },
-                          [
-                            _c("div", { staticClass: "flex flex-wrap" }, [
-                              _c("div", { staticClass: "text-xs" }, [
-                                _vm._v(
-                                  "\n                                            " +
-                                    _vm._s(
-                                      "\n                                            " +
-                                        new Date(
-                                          post.created_at
-                                        ).toLocaleString("default", {
-                                          month: "long"
-                                        }) +
-                                        "\n                                            " +
-                                        new Date(post.created_at).getDate() +
-                                        ",\n                                            " +
-                                        new Date(
-                                          post.created_at
-                                        ).getFullYear() +
-                                        "\n                                            "
-                                    ) +
-                                    "\n                                        "
-                                )
-                              ])
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ],
-              1
+                _c("div", { on: { click: _vm.loadMorePosts } }, [
+                  _vm._v(
+                    "\n                    Load More Posts\n                "
+                  )
+                ])
+              ]
             )
-          }
-        ),
-        0
-      )
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
-    _vm.postsCounted > 6
-      ? _c("div", { staticClass: "flex justify-center" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase my-4 bg-gray-200 px-3 py-1 rounded"
-            },
-            [
-              _c("inertia-link", { attrs: { href: "posts" } }, [
-                _vm._v(
-                  "\n                    See all " +
-                    _vm._s(_vm.postsCounted) +
-                    " posts\n                "
-                )
-              ])
-            ],
-            1
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "border-t-4 border-gray-400 w-full mt-4" }),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex justify-between sans-bold" }, [
-      _c("div", [
-        _vm.comments.length > 1
-          ? _c("div", { staticClass: "mt-2 sans" }, [
-              _vm._v(
-                "Last " +
-                  _vm._s(_vm.comments.length) +
-                  " comments:\n                "
-              )
-            ])
-          : _vm.comments.length === 1
-          ? _c("div", { staticClass: "mt-2 sans" }, [
-              _vm._v(
-                _vm._s(_vm.comments.length) + " comment:\n                "
-              )
-            ])
-          : _c("div", { staticClass: "mt-2 sans-bold" }, [
-              _vm._v("No comments by " + _vm._s(_vm.user.name))
-            ])
-      ])
-    ]),
+    _c("div", { staticClass: "border-t-4 border-gray-400 w-full" }),
     _vm._v(" "),
     _c(
       "div",
-      _vm._l(_vm.comments, function(comment) {
+      { staticClass: "flex mt-2 text-sm justify-between font-sans font-bold" },
+      [
+        _c("div", [
+          _vm.localComments.data.length > 1
+            ? _c("div", { staticClass: "font-sans" }, [
+                _vm._v(
+                  "Last " +
+                    _vm._s(_vm.localComments.data.length) +
+                    " comments:\n            "
+                )
+              ])
+            : _vm.localComments.data.length === 1
+            ? _c("div", { staticClass: "mt-2 font-sans" }, [
+                _vm._v(
+                  _vm._s(_vm.localComments.data.length) +
+                    " comment:\n            "
+                )
+              ])
+            : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
+                _vm._v("No comments by " + _vm._s(_vm.user.name))
+              ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      _vm._l(_vm.localComments.data, function(comment) {
         return _c(
           "div",
           { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
@@ -52675,22 +52693,25 @@ var render = function() {
               _c("div", { staticClass: "w-1/2 mr-4" }, [
                 _c(
                   "div",
-                  { staticClass: "sans text-xs uppercase text-gray-400 mb-2" },
+                  {
+                    staticClass:
+                      "font-sans text-xs uppercase text-gray-400 mb-2"
+                  },
                   [
                     _vm._v(
-                      "\n                            " +
+                      "\n                        " +
                         _vm._s(
-                          "\n                        " +
+                          "\n                    " +
                             new Date(
                               comment.created_at
                             ).toLocaleString("default", { month: "long" }) +
-                            "\n                        " +
+                            "\n                    " +
                             new Date(comment.created_at).getDate() +
                             ", " +
                             new Date(comment.created_at).getFullYear() +
-                            "\n                        "
+                            "\n                    "
                         ) +
-                        "\n                            comment:\n                        "
+                        "\n                        comment:\n                    "
                     )
                   ]
                 ),
@@ -52726,7 +52747,8 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "sans text-xs uppercase text-gray-400"
+                            staticClass:
+                              "font-sans text-xs uppercase text-gray-400"
                           },
                           [_vm._v("by " + _vm._s(comment.post.user.name))]
                         )
@@ -52743,24 +52765,19 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm.commentsCounted > 6
-      ? _c("div", { staticClass: "flex justify-center" }, [
+    _vm.localComments.next_page_url
+      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
           _c(
             "div",
             {
               staticClass:
-                "sans hover:bg-gray-100 duration-200 text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
             },
             [
-              _c("inertia-link", { attrs: { href: "comments" } }, [
-                _vm._v(
-                  "\n                    See all " +
-                    _vm._s(_vm.commentsCounted) +
-                    " comments\n                "
-                )
+              _c("div", { on: { click: _vm.loadMoreComments } }, [
+                _vm._v("\n                Load More Comments\n            ")
               ])
-            ],
-            1
+            ]
           )
         ])
       : _vm._e()
@@ -65095,9 +65112,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TopMenu_vue_vue_type_template_id_280d23d9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TopMenu.vue?vue&type=template&id=280d23d9& */ "./resources/js/Components/TopMenu.vue?vue&type=template&id=280d23d9&");
 /* harmony import */ var _TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TopMenu.vue?vue&type=script&lang=js& */ "./resources/js/Components/TopMenu.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TopMenu.vue?vue&type=style&index=0&lang=css& */ "./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -65105,7 +65120,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TopMenu_vue_vue_type_template_id_280d23d9___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TopMenu_vue_vue_type_template_id_280d23d9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -65134,22 +65149,6 @@ component.options.__file = "resources/js/Components/TopMenu.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TopMenu.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/TopMenu.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TopMenu.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/TopMenu.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 

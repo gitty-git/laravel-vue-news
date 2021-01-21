@@ -11,14 +11,14 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                'sans': ['Fira Sans', "sans-serif"],
+                'serif': ['Libre Baskerville', "serif"],
+                'logo': ['Cormorant Garamond', "serif"],
             },
         },
 
         fontFamily: {
-            'sans': ['Nanum Gothic', "sans-serif"],
-            'serif': ['Libre Baskerville', "serif"],
-            'logo': ['Cormorant Garamond', "serif"],
+
         },
 
         fontSize: {

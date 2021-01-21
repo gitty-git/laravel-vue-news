@@ -42,64 +42,33 @@ class UsersController extends Controller
     }
 
 
-    public function show($id, Request $request): \Inertia\Response
+    public function show($id, Request $request)
     {
         $user = User::query()->where('id', $id)->with('roles')->first();
 
 //        $posts = Post::query()->offset(2)
 //            ->take(12);
-
-        $posts = $user->posts()->latest()->limit(6)->get();
-
+        $commentsCounted = $user->comments()->count();
         $postsCounted = $user->posts()->count();
 
-        $comments = $user->comments()->latest()->with('post.user')->limit(5)->get();
+        $posts = $user->posts()->latest()->paginate(6, ['*'], 'posts');
+        $comments = $user->comments()->latest()->with('post.user')->paginate(6, ['*'], 'comments');
 
-        $commentsCounted = $user->comments()->count();
-
-//        dd($comments);
+        if ($request->wantsJson()) {
+            if ($request->loadMoreType === 'morePosts') {
+                return $posts;
+            }
+            else if ($request->loadMoreType === 'moreComments') {
+                return $comments;
+            }
+        }
 
         return Inertia::render('User', compact('posts', 'comments', 'user', 'postsCounted', 'commentsCounted'));
-
-//        return Inertia::render('User', compact('posts', 'user', 'comments'));
-//        dd($request);
-
-//        $created_at = $request->sort ?: 'created_at';
-//        echo $request->sort;
-
-//        $user = User::query()->where('id', $id)->first();
-//        $posts = $user->posts()->withCount('comments')->orderByDesc('created_at')->limit(6)->get();
-////        $posts = $user->posts()->latest()->where('is_published', 1)->limit(6)->get();
-//        $comments = $user->comments()->latest()->with('post')->paginate(10);
-//
-//        if ($user) {
-//            return Inertia::render('User',
-//                compact('posts', 'comments')
-//            );
-//        }
-//        else {
-//            return Inertia::render('Error.404', 404);
-//        }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
