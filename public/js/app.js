@@ -3183,6 +3183,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3202,6 +3203,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    changeUserType: function changeUserType() {
+      this.$inertia.post;
+    },
     switchToTeam: function switchToTeam(team) {
       this.$inertia.put(route('current-team.update'), {
         'team_id': team.id
@@ -4861,6 +4865,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4885,7 +4897,8 @@ __webpack_require__.r(__webpack_exports__);
         '_method': 'PUT',
         name: this.user.name,
         email: this.user.email,
-        photo: null
+        photo: null,
+        role: this.user.role
       }, {
         bag: 'updateProfileInformation',
         resetOnSuccess: false
@@ -5231,6 +5244,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.comments;
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "UserProfile"
 });
 
 /***/ }),
@@ -46650,16 +46682,23 @@ var render = function() {
                       "hover:text-gray-500 mx-2 rounded duration-200",
                     attrs: { href: "/register" }
                   },
-                  [_vm._v("Reginster")]
+                  [_vm._v("Register")]
                 )
               ])
-            : _c("a", { attrs: { href: "/user/profile" } }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.user.name) +
-                    "\n                "
-                )
-              ])
+            : _c(
+                "a",
+                {
+                  staticClass: "hover:text-gray-500 rounded duration-200",
+                  attrs: { href: "/user/profile" }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.user.name) +
+                      "\n                "
+                  )
+                ]
+              )
         ])
       ]
     ),
@@ -48299,7 +48338,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            Dashboard\n                        "
+                        "\n                                Dashboard\n                            "
                       )
                     ]
                   )
@@ -48393,7 +48432,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                    Manage Account\n                                "
+                                    "\n                                        Manage Account\n                                    "
                                   )
                                 ]
                               ),
@@ -48403,7 +48442,7 @@ var render = function() {
                                 { attrs: { href: _vm.route("profile.show") } },
                                 [
                                   _vm._v(
-                                    "\n                                    Profile\n                                "
+                                    "\n                                        Profile\n                                    "
                                   )
                                 ]
                               ),
@@ -48418,7 +48457,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                    API Tokens\n                                "
+                                        "\n                                        API Tokens\n                                    "
                                       )
                                     ]
                                   )
@@ -48438,7 +48477,7 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                        Manage Team\n                                    "
+                                          "\n                                            Manage Team\n                                        "
                                         )
                                       ]
                                     ),
@@ -48455,7 +48494,7 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                        Team Settings\n                                    "
+                                          "\n                                            Team Settings\n                                        "
                                         )
                                       ]
                                     ),
@@ -48470,7 +48509,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                        Create New Team\n                                    "
+                                              "\n                                            Create New Team\n                                        "
                                             )
                                           ]
                                         )
@@ -48488,7 +48527,7 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                        Switch Teams\n                                    "
+                                          "\n                                            Switch Teams\n                                        "
                                         )
                                       ]
                                     ),
@@ -48588,7 +48627,7 @@ var render = function() {
                                     { attrs: { as: "button" } },
                                     [
                                       _vm._v(
-                                        "\n                                        Logout\n                                    "
+                                        "\n                                            Logout\n                                        "
                                       )
                                     ]
                                   )
@@ -48686,7 +48725,11 @@ var render = function() {
                       active: _vm.route().current("dashboard")
                     }
                   },
-                  [_vm._v("\n                    Dashboard\n                ")]
+                  [
+                    _vm._v(
+                      "\n                        Dashboard\n                    "
+                    )
+                  ]
                 )
               ],
               1
@@ -48733,7 +48776,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                        Profile\n                    "
+                        "\n                            Profile\n                        "
                       )
                     ]
                   ),
@@ -48749,7 +48792,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                        API Tokens\n                    "
+                            "\n                            API Tokens\n                        "
                           )
                         ]
                       )
@@ -48772,7 +48815,7 @@ var render = function() {
                         { attrs: { as: "button" } },
                         [
                           _vm._v(
-                            "\n                            Logout\n                        "
+                            "\n                                Logout\n                            "
                           )
                         ]
                       )
@@ -48791,7 +48834,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            Manage Team\n                        "
+                              "\n                                Manage Team\n                            "
                             )
                           ]
                         ),
@@ -48809,7 +48852,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            Team Settings\n                        "
+                              "\n                                Team Settings\n                            "
                             )
                           ]
                         ),
@@ -48824,7 +48867,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            Create New Team\n                        "
+                              "\n                                Create New Team\n                            "
                             )
                           ]
                         ),
@@ -48838,7 +48881,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            Switch Teams\n                        "
+                              "\n                                Switch Teams\n                            "
                             )
                           ]
                         ),
@@ -50456,7 +50499,8 @@ var render = function() {
                 _c(
                   "inertia-link",
                   {
-                    staticClass: "font-bold hover:text-gray-600 duration-200",
+                    staticClass:
+                      "underline font-bold hover:text-gray-600 duration-200",
                     attrs: { href: "/user/" + _vm.post.user.id }
                   },
                   [_vm._v(_vm._s(_vm.post.user.name))]
@@ -51788,7 +51832,7 @@ var render = function() {
       {
         key: "title",
         fn: function() {
-          return [_vm._v("\n        Profile Information\n    ")]
+          return [_vm._v("\n            Profile Information\n        ")]
         },
         proxy: true
       },
@@ -51797,7 +51841,7 @@ var render = function() {
         fn: function() {
           return [
             _vm._v(
-              "\n        Update your account's profile information and email address.\n    "
+              "\n            Update your account's profile information and email address.\n        "
             )
           ]
         },
@@ -51885,7 +51929,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                Select A New Photo\n            "
+                          "\n                    Select A New Photo\n                "
                         )
                       ]
                     ),
@@ -51905,7 +51949,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                Remove Photo\n            "
+                              "\n                    Remove Photo\n                "
                             )
                           ]
                         )
@@ -51970,6 +52014,32 @@ var render = function() {
                 })
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
+                _c("jet-label", { attrs: { for: "role", value: "Role" } }),
+                _vm._v(" "),
+                _c("jet-input", {
+                  staticClass: "mt-1 block w-full",
+                  attrs: { id: "role", role: "role" },
+                  model: {
+                    value: _vm.form.role,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "role", $$v)
+                    },
+                    expression: "form.role"
+                  }
+                }),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.error("role") }
+                })
+              ],
+              1
             )
           ]
         },
@@ -51985,7 +52055,7 @@ var render = function() {
                 staticClass: "mr-3",
                 attrs: { on: _vm.form.recentlySuccessful }
               },
-              [_vm._v("\n            Saved.\n        ")]
+              [_vm._v("\n                Saved.\n            ")]
             ),
             _vm._v(" "),
             _c(
@@ -51994,7 +52064,7 @@ var render = function() {
                 class: { "opacity-25": _vm.form.processing },
                 attrs: { disabled: _vm.form.processing }
               },
-              [_vm._v("\n            Save\n        ")]
+              [_vm._v("\n                Save\n            ")]
             )
           ]
         },
@@ -52435,34 +52505,37 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "font-sans font-bold text-sm mt-2 flex justify-between items-end"
-      },
-      [
-        _c("div", [
-          _vm.localPosts.data.length > 1
-            ? _c("div", { staticClass: "mt-2" }, [
-                _vm._v(
-                  "Last " +
-                    _vm._s(_vm.localPosts.data.length) +
-                    " posts:\n            "
-                )
-              ])
-            : _vm.localPosts.data.length === 1
-            ? _c("div", { staticClass: "mt-2" }, [
-                _vm._v(
-                  _vm._s(_vm.localPosts.data.length) + " post:\n            "
-                )
-              ])
-            : _c("div", { staticClass: "mt-2 " }, [
-                _vm._v("No posts by " + _vm._s(_vm.user.name))
-              ])
-        ])
-      ]
-    ),
+    _vm.localPosts.data.length > 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "font-sans font-bold text-sm mt-2 flex justify-between items-end"
+          },
+          [
+            _c("div", [
+              _vm.localPosts.data.length > 1
+                ? _c("div", { staticClass: "mt-2" }, [
+                    _vm._v(
+                      "Last " +
+                        _vm._s(_vm.localPosts.data.length) +
+                        " posts:\n            "
+                    )
+                  ])
+                : _vm.localPosts.data.length === 1
+                ? _c("div", { staticClass: "mt-2" }, [
+                    _vm._v(
+                      _vm._s(_vm.localPosts.data.length) +
+                        " post:\n            "
+                    )
+                  ])
+                : _c("div", { staticClass: "mt-2 " }, [
+                    _vm._v("No posts by " + _vm._s(_vm.user.name))
+                  ])
+            ])
+          ]
+        )
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "my-4" }, [
       _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
@@ -52653,34 +52726,40 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "border-t-4 border-gray-400 w-full" }),
+    _vm.localComments.data.length > 0
+      ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
+      : _vm._e(),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "flex mt-2 text-sm justify-between font-sans font-bold" },
-      [
-        _c("div", [
-          _vm.localComments.data.length > 1
-            ? _c("div", { staticClass: "font-sans" }, [
-                _vm._v(
-                  "Last " +
-                    _vm._s(_vm.localComments.data.length) +
-                    " comments:\n            "
-                )
-              ])
-            : _vm.localComments.data.length === 1
-            ? _c("div", { staticClass: "mt-2 font-sans" }, [
-                _vm._v(
-                  _vm._s(_vm.localComments.data.length) +
-                    " comment:\n            "
-                )
-              ])
-            : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
-                _vm._v("No comments by " + _vm._s(_vm.user.name))
-              ])
-        ])
-      ]
-    ),
+    _vm.localComments.data.length > 0
+      ? _c(
+          "div",
+          {
+            staticClass: "flex mt-2 text-sm justify-between font-sans font-bold"
+          },
+          [
+            _c("div", [
+              _vm.localComments.data.length > 1
+                ? _c("div", { staticClass: "font-sans" }, [
+                    _vm._v(
+                      "Last " +
+                        _vm._s(_vm.localComments.data.length) +
+                        " comments:\n            "
+                    )
+                  ])
+                : _vm.localComments.data.length === 1
+                ? _c("div", { staticClass: "mt-2 font-sans" }, [
+                    _vm._v(
+                      _vm._s(_vm.localComments.data.length) +
+                        " comment:\n            "
+                    )
+                  ])
+                : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
+                    _vm._v("No comments by " + _vm._s(_vm.user.name))
+                  ])
+            ])
+          ]
+        )
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -52785,6 +52864,24 @@ var render = function() {
 }
 var staticRenderFns = []
 render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {}
+var staticRenderFns = []
 
 
 
@@ -66815,7 +66912,9 @@ var map = {
 	"./SearchingPage": "./resources/js/Pages/SearchingPage.vue",
 	"./SearchingPage.vue": "./resources/js/Pages/SearchingPage.vue",
 	"./User": "./resources/js/Pages/User.vue",
-	"./User.vue": "./resources/js/Pages/User.vue"
+	"./User.vue": "./resources/js/Pages/User.vue",
+	"./UserProfile": "./resources/js/Pages/UserProfile.vue",
+	"./UserProfile.vue": "./resources/js/Pages/UserProfile.vue"
 };
 
 
@@ -67873,6 +67972,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_User_vue_vue_type_template_id_777c8574_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_User_vue_vue_type_template_id_777c8574_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/UserProfile.vue":
+/*!********************************************!*\
+  !*** ./resources/js/Pages/UserProfile.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=template&id=71873576&scoped=true& */ "./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&");
+/* harmony import */ var _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=script&lang=js& */ "./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "71873576",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/UserProfile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=template&id=71873576&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

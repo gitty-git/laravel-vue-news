@@ -7,7 +7,7 @@
             </header>
 
             <div class="mb-4 w-full text-lg text-center">
-                Login to your asdfasdfsadfasdf account. Don’t have one?&nbsp;<a href="register" class="duration-200 hover:text-gray-500 underline">Register</a>
+                Login to your account. Don’t have one?&nbsp;<a href="register" class="duration-200 hover:text-gray-500 underline">Register</a>
             </div>
 
             <x-jet-validation-errors class="mb-4"/>

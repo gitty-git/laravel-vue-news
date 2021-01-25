@@ -54,6 +54,14 @@
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
                 <jet-input-error :message="form.error('email')" class="mt-2" />
             </div>
+
+            <!-- Type -->
+<!--            {{ user.roles }}-->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="role" value="Role" />
+                <jet-input id="role" role="role" class="mt-1 block w-full" v-model="form.role" />
+                <jet-input-error :message="form.error('role')" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
@@ -97,6 +105,7 @@
                     name: this.user.name,
                     email: this.user.email,
                     photo: null,
+                    role: this.user.role,
                 }, {
                     bag: 'updateProfileInformation',
                     resetOnSuccess: false,

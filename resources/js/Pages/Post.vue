@@ -20,7 +20,7 @@
                     <div>
                         <div class="text-xs">
                             &nbsp;by
-                            <inertia-link class="font-bold hover:text-gray-600 duration-200" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
+                            <inertia-link class="underline font-bold hover:text-gray-600 duration-200" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
                         </div>
                     </div>
 

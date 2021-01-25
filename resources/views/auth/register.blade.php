@@ -7,7 +7,7 @@
             </header>
 
             <div class="mb-4 w-full text-lg text-center">
-                Register new account. Already have one?&nbsp;<a href="login" class="duration-200 hover:text-gray-500 underline">Login</a>
+                Register a new account. Already have one?&nbsp;<a href="login" class="duration-200 hover:text-gray-500 underline">Login</a>
             </div>
 
             <x-jet-validation-errors class="mb-4"/>

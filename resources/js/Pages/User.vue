@@ -83,7 +83,7 @@ export default {
             </div>
         </div>
 
-        <div class="font-sans font-bold text-sm mt-2 flex justify-between items-end">
+        <div v-if="localPosts.data.length > 0" class="font-sans font-bold text-sm mt-2 flex justify-between items-end">
             <div>
                 <div v-if="localPosts.data.length > 1"
                      class="mt-2">Last {{ localPosts.data.length }} posts:
@@ -171,10 +171,10 @@ export default {
             </div>
         </div>
 
-        <div class="border-t-4 border-gray-400 w-full"></div>
+        <div v-if="localComments.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
 
         <!--COMMENTS-->
-        <div class="flex mt-2 text-sm justify-between font-sans font-bold">
+        <div v-if="localComments.data.length > 0" class="flex mt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
                      class="font-sans">Last {{ localComments.data.length }} comments:

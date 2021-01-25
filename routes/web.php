@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\SearchController;
@@ -32,6 +33,10 @@ Route::get('search', [SearchController::class, 'search']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UsersController::class, 'index']);
+
+    Route::middleware('/admin')->group(function () {
+        Route::get( '/admin', [AdminController::class, 'index']);
+    });
 });
 
 Route::resource('/user', UsersController::class);
@@ -39,3 +44,9 @@ Route::resource('/user', UsersController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
+
+
+
+//Route::middleware(['auth:sanctum'])->get('/user/profile', function () {
+//    return Inertia\Inertia::render('UserProfile');
+//})->name('dashboard');/

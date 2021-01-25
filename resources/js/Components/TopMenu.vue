@@ -33,10 +33,10 @@
                 <div v-if="!user" class="flex">
                     <a class="hover:text-gray-500 mx-2 rounded duration-200" :href="'/login'">Login</a>
                     <div class="font-bold text-gray-400">/</div>
-                    <a class="hover:text-gray-500 mx-2 rounded duration-200" :href="'/register'">Reginster</a>
+                    <a class="hover:text-gray-500 mx-2 rounded duration-200" :href="'/register'">Register</a>
                 </div >
 
-                <a v-else :href="'/user/profile'">
+                <a v-else class="hover:text-gray-500 rounded duration-200" :href="'/user/profile'">
                     {{ user.name }}
                 </a>
             </div>

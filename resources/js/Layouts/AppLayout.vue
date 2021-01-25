@@ -1,5 +1,6 @@
 <template>
     <div class="min-h-screen bg-gray-100">
+<!--        {{user.roles}}-->
         <nav class="bg-white border-b border-gray-100">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -233,6 +234,10 @@
         },
 
         methods: {
+            changeUserType() {
+                this.$inertia.post
+            },
+
             switchToTeam(team) {
                 this.$inertia.put(route('current-team.update'), {
                     'team_id': team.id

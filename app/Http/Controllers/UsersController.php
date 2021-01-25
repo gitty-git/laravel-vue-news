@@ -44,10 +44,8 @@ class UsersController extends Controller
 
     public function show($id, Request $request)
     {
-        $user = User::query()->where('id', $id)->with('roles')->first();
+        $user = User::query()->where('id', $id)->with('roles')->first(['id', 'name']);
 
-//        $posts = Post::query()->offset(2)
-//            ->take(12);
         $commentsCounted = $user->comments()->count();
         $postsCounted = $user->posts()->count();
 
