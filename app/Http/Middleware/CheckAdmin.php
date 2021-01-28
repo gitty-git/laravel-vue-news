@@ -10,11 +10,15 @@ class CheckAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        $userRoles = Auth::user()->roles->pluck('name');
+        $userRoles = Auth::user()->roles->pluck('role');
 
-        if (!$userRoles->contains('admin')) {
-            return redirect('home');
+        if ($userRoles->contains('admin')) {
+            return redirect('admin');
+        }
+        elseif ($userRoles->contains('user')) {
+            return redirect('user/profile');
         }
         return $next($request);
+//        redirect('no-permission');
     }
 }

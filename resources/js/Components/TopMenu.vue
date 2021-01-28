@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex mb-2 justify-between text-red-500 w-full text-sm">
+        <div class="flex mb-2 justify-between w-full text-sm">
             <div class="w-1/4 flex items-center">
                 <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
                     <g id="Ellipse_1" data-name="Ellipse 1" fill="#fff" stroke="#a9a9a9" stroke-width="2">
@@ -36,7 +36,7 @@
                     <a class="hover:text-gray-500 mx-2 rounded duration-200" :href="'/register'">Register</a>
                 </div >
 
-                <a v-else class="hover:text-gray-500 rounded duration-200" :href="'/user/profile'">
+                <a v-else class="hover:text-gray-500 rounded duration-200" :href="'/dashboard'">
                     {{ user.name }}
                 </a>
             </div>

@@ -234,10 +234,6 @@
         },
 
         methods: {
-            changeUserType() {
-                this.$inertia.post
-            },
-
             switchToTeam(team) {
                 this.$inertia.put(route('current-team.update'), {
                     'team_id': team.id

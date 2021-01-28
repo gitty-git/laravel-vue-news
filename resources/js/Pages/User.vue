@@ -11,6 +11,9 @@ export default {
         }
     },
     methods: {
+        scrollTo() {
+            document.getElementById('comments').scrollIntoView();
+        },
         loadMorePosts() {
             if (this.localPosts.next_page_url) {
                 axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
@@ -54,8 +57,9 @@ export default {
 
 <template>
     <div>
+<!--        {{user.email}}-->
         <div class="flex pt-4 items-center">
-            <img :src="user.profile_photo_url" alt="">
+            <img class="w-24 h-24" :src="user.profile_photo_url" alt="">
 
             <div class="flex-col ml-4">
                 <div class="flex items-center">
@@ -76,17 +80,22 @@ export default {
                     <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
                     <span v-else>No posts,</span>
 
-                    <span v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
-                    <span v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
-                    <span v-else>No comments.</span>
+                    <span @click="scrollTo">
+                        <span class="underline cursor-pointer" v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
+                        <span class="underline cursor-pointer" v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
+                        <span class="underline cursor-pointer" v-else>No comments.</span>
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div v-if="localPosts.data.length > 0" class="font-sans font-bold text-sm mt-2 flex justify-between items-end">
+<!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t-4 mt-4 border-gray-400 w-full"></div>-->
+<!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t mt-0.5 border-gray-200 w-full"></div>-->
+
+        <div v-if="localPosts.data.length > 0" class="font-sans mt-2 font-bold text-sm flex justify-between items-end">
             <div>
                 <div v-if="localPosts.data.length > 1"
-                     class="mt-2">Last {{ localPosts.data.length }} posts:
+                     class="mt-2"><span v-if="postsCounted !== localPosts.data.length">Last</span> {{ localPosts.data.length }} posts:
                 </div>
                 <div v-else-if="localPosts.data.length === 1"
                      class="mt-2">{{ localPosts.data.length }} post:
@@ -131,7 +140,7 @@ export default {
                 </div>
 
                 <!--RIGHT-->
-                <div class="w-1/2 pl-4 border-l-2 border-gray-200">
+                <div :class="{'border-none' : posts.data.length === 1}" class="w-1/2 pl-4 border-l-2 border-gray-200">
                     <div v-for="post in localPosts.data.filter((x, i) => (i % 2 !== 0))"
                          class="border-gray-200 border-b-2 py-4 first-child last-child">
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
@@ -174,10 +183,10 @@ export default {
         <div v-if="localComments.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
 
         <!--COMMENTS-->
-        <div v-if="localComments.data.length > 0" class="flex mt-2 text-sm justify-between font-sans font-bold">
+        <div id="comments" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
-                     class="font-sans">Last {{ localComments.data.length }} comments:
+                     class="font-sans"><span v-if="commentsCounted !== localComments.data.length">Last</span> {{ localComments.data.length }} comments:
                 </div>
                 <div v-else-if="localComments.data.length === 1"
                      class="mt-2 font-sans">{{ localComments.data.length }} comment:
@@ -214,7 +223,7 @@ export default {
             </div>
         </div>
 
-        <!--LOAD MORE POSTS-->
+        <!--LOAD MORE COMMENTS-->
         <div class="mt-4 flex justify-center" v-if="localComments.next_page_url">
             <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                 <div @click="loadMoreComments">

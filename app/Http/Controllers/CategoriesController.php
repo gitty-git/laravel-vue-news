@@ -42,6 +42,7 @@ class CategoriesController extends Controller
             $primaryPosts = $category->posts()->latest()->where('is_published', 1)->where('type', 'primary_post')
                 ->with('user')->with('category')->limit(2)->get();
             $posts = $category->posts()->latest()->where('is_published', 1)->where('type', 'post')->with('user')->paginate(20);
+
             return Inertia::render('Category',
                 compact('category', 'posts', 'primaryPosts')
             );

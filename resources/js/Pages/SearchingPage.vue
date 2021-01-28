@@ -53,7 +53,7 @@
                 </div>
 
                 <!--RIGHT-->
-                <div class="w-1/2 pl-4 border-l-2 border-gray-200">
+                <div :class="{'border-none' : posts.data.length === 1}" class="w-1/2 pl-4 border-l-2 border-gray-200">
                     <div v-for="post in localPosts.data.filter((x, i) => (i % 2 !== 0))"
                          class="border-gray-200 border-b-2 py-4 first-child last-child">
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
