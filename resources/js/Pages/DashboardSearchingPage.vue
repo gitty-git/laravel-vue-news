@@ -1,15 +1,16 @@
 <template>
     <div>
-        <div class="uppercase mt-2 font-bold">
-            <div v-if="usersCounted > 0 || postsCounted > 0">
+        <div class="uppercase mt-2 font-bold flex justify-between">
+            <span v-if="usersCounted > 0 || postsCounted > 0">
                 By request "{{ search }}" found {{ postsCounted }}
                 <span v-if="postsCounted === 1">post</span>
                 <span v-else>posts</span>
                 and {{ commentsCounted }}
                 <span v-if="usersCounted === 1">comment</span>
                 <span v-else>comments</span> in your records
-            </div>
+            </span>
             <div v-else>By Request "{{ search }}" Nothing Found in your records</div>
+            <inertia-link class="ml-1 text-sm underline text-gray-400 font-normal normal-case" :href="'/dashboard'" >Back to previous page</inertia-link>
         </div>
 
         <div v-if="localPosts.data.length > 0" class="mt-4 font-bold text-sm">

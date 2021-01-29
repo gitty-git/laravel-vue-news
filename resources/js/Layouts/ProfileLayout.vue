@@ -2,28 +2,7 @@
     <div class="flex flex-col items-center h-screen justify-between">
         <div class="w-1200">
             <div class="flex mt-4 justify-between items-end">
-                <!--SEARCH-->
-                <div class="w-1/3 mb-2 flex items-center">
-                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
-                        <g id="Ellipse_1" data-name="Ellipse 1" fill="#fff" stroke="#a9a9a9" stroke-width="2">
-                            <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
-                            <circle cx="4.5" cy="4.5" r="3.5" fill="none"/>
-                        </g>
-                        <line id="Line_34" data-name="Line 34" x2="4" y2="4" transform="translate(7.5 7.5)" fill="none"
-                              stroke="#a9a9a9" stroke-width="2"/>
-                    </svg>
-
-                    <form method="get" action="/user/profile/search/" class="flex">
-                        <input required name="search" v-model="searchInput"
-                               class="duration-200 text-sm hover:border-black hover:border-b-2 outline-none"
-                               autocomplete="off"
-                               placeholder="Search my records" type="text">
-                        <!--                    <div v-if="searchInput.length > 0">></div>-->
-                    </form>
-                </div>
-
-                <!--LOGO-->
-                <div class="flex w-1/3 justify-center items-center">
+                <div class="flex text-sm items-end">
                     <inertia-link href="/" class="text-4xl uppercase font-logo font-light">News Demo</inertia-link>
                 </div>
 
@@ -46,55 +25,28 @@
 
                                 <template #content>
                                     <!-- Account Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        Manage Account
-                                    </div>
+<!--                                    <div class="block px-4 py-2 text-xs text-gray-400">-->
+<!--                                        Manage Account-->
+<!--                                    </div>-->
+                                    <jet-dropdown-link :href="route('profile.show')">
+                                        Favorites
+                                    </jet-dropdown-link>
 
                                     <jet-dropdown-link :href="route('profile.show')">
-                                        Profile
+                                        My Activity
                                     </jet-dropdown-link>
 
-                                    <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.jetstream.hasApiFeatures">
-                                        API Tokens
+                                    <jet-dropdown-link :href="route('profile.show')">
+                                        Edit Profile
                                     </jet-dropdown-link>
 
-                                    <div class="border-t border-gray-100"></div>
+                                    <jet-dropdown-link :href="route('profile.show')">
+                                        Administration
+                                    </jet-dropdown-link>
 
-                                    <!-- Team Management -->
-                                    <template v-if="$page.jetstream.hasTeamFeatures">
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Manage Team
-                                        </div>
-
-                                        <!-- Team Settings -->
-                                        <jet-dropdown-link :href="route('teams.show', $page.user.current_team)">
-                                            Team Settings
-                                        </jet-dropdown-link>
-
-                                        <jet-dropdown-link :href="route('teams.create')" v-if="$page.jetstream.canCreateTeams">
-                                            Create New Team
-                                        </jet-dropdown-link>
-
-                                        <div class="border-t border-gray-100"></div>
-
-                                        <!-- Team Switcher -->
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Switch Teams
-                                        </div>
-
-                                        <template v-for="team in $page.user.all_teams">
-                                            <form @submit.prevent="switchToTeam(team)" :key="team.id">
-                                                <jet-dropdown-link as="button">
-                                                    <div class="flex items-center">
-                                                        <svg v-if="team.id == $page.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                        <div>{{ team.name }}</div>
-                                                    </div>
-                                                </jet-dropdown-link>
-                                            </form>
-                                        </template>
-
-                                        <div class="border-t border-gray-100"></div>
-                                    </template>
+                                    <jet-dropdown-link :href="route('profile.show')">
+                                        Redaction
+                                    </jet-dropdown-link>
 
                                     <!-- Authentication -->
                                     <form @submit.prevent="logout">

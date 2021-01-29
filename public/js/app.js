@@ -2472,7 +2472,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     contentClasses: {
       "default": function _default() {
-        return ['py-1', 'bg-white'];
+        return ['bg-white'];
       }
     }
   },
@@ -3429,54 +3429,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4172,16 +4124,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4616,6 +4558,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -48561,7 +48504,7 @@ var render = function() {
                   expression: "open"
                 }
               ],
-              staticClass: "absolute z-50 mt-2 rounded-md shadow-lg",
+              staticClass: "absolute z-50 mt-2 shadow-lg",
               class: [_vm.widthClass, _vm.alignmentClasses],
               staticStyle: { display: "none" },
               on: {
@@ -48573,10 +48516,7 @@ var render = function() {
             [
               _c(
                 "div",
-                {
-                  staticClass: "rounded-md shadow-xs",
-                  class: _vm.contentClasses
-                },
+                { staticClass: "shadow-xs", class: _vm.contentClasses },
                 [_vm._t("content")],
                 2
               )
@@ -50348,103 +50288,9 @@ var render = function() {
         { staticClass: "w-1200" },
         [
           _c("div", { staticClass: "flex mt-4 justify-between items-end" }, [
-            _c("div", { staticClass: "w-1/3 mb-2 flex items-center" }, [
-              _c(
-                "svg",
-                {
-                  staticClass: "mr-2",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "15",
-                    height: "15",
-                    viewBox: "0 0 14 14"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "Ellipse_1",
-                        "data-name": "Ellipse 1",
-                        fill: "#fff",
-                        stroke: "#a9a9a9",
-                        "stroke-width": "2"
-                      }
-                    },
-                    [
-                      _c("circle", {
-                        attrs: {
-                          cx: "4.5",
-                          cy: "4.5",
-                          r: "4.5",
-                          stroke: "none"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("circle", {
-                        attrs: { cx: "4.5", cy: "4.5", r: "3.5", fill: "none" }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("line", {
-                    attrs: {
-                      id: "Line_34",
-                      "data-name": "Line 34",
-                      x2: "4",
-                      y2: "4",
-                      transform: "translate(7.5 7.5)",
-                      fill: "none",
-                      stroke: "#a9a9a9",
-                      "stroke-width": "2"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  staticClass: "flex",
-                  attrs: { method: "get", action: "/user/profile/search/" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.searchInput,
-                        expression: "searchInput"
-                      }
-                    ],
-                    staticClass:
-                      "duration-200 text-sm hover:border-black hover:border-b-2 outline-none",
-                    attrs: {
-                      required: "",
-                      name: "search",
-                      autocomplete: "off",
-                      placeholder: "Search my records",
-                      type: "text"
-                    },
-                    domProps: { value: _vm.searchInput },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.searchInput = $event.target.value
-                      }
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "flex w-1/3 justify-center items-center" },
+              { staticClass: "flex text-sm items-end" },
               [
                 _c(
                   "inertia-link",
@@ -50521,14 +50367,13 @@ var render = function() {
                             fn: function() {
                               return [
                                 _c(
-                                  "div",
+                                  "jet-dropdown-link",
                                   {
-                                    staticClass:
-                                      "block px-4 py-2 text-xs text-gray-400"
+                                    attrs: { href: _vm.route("profile.show") }
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                        Manage Account\n                                    "
+                                      "\n                                        Favorites\n                                    "
                                     )
                                   ]
                                 ),
@@ -50540,176 +50385,46 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                        Profile\n                                    "
+                                      "\n                                        My Activity\n                                    "
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm.$page.jetstream.hasApiFeatures
-                                  ? _c(
-                                      "jet-dropdown-link",
-                                      {
-                                        attrs: {
-                                          href: _vm.route("api-tokens.index")
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        API Tokens\n                                    "
-                                        )
-                                      ]
+                                _c(
+                                  "jet-dropdown-link",
+                                  {
+                                    attrs: { href: _vm.route("profile.show") }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Edit Profile\n                                    "
                                     )
-                                  : _vm._e(),
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _c("div", {
-                                  staticClass: "border-t border-gray-100"
-                                }),
+                                _c(
+                                  "jet-dropdown-link",
+                                  {
+                                    attrs: { href: _vm.route("profile.show") }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Administration\n                                    "
+                                    )
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _vm.$page.jetstream.hasTeamFeatures
-                                  ? [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "block px-4 py-2 text-xs text-gray-400"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                            Manage Team\n                                        "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "jet-dropdown-link",
-                                        {
-                                          attrs: {
-                                            href: _vm.route(
-                                              "teams.show",
-                                              _vm.$page.user.current_team
-                                            )
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                            Team Settings\n                                        "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm.$page.jetstream.canCreateTeams
-                                        ? _c(
-                                            "jet-dropdown-link",
-                                            {
-                                              attrs: {
-                                                href: _vm.route("teams.create")
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            Create New Team\n                                        "
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c("div", {
-                                        staticClass: "border-t border-gray-100"
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "block px-4 py-2 text-xs text-gray-400"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                            Switch Teams\n                                        "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._l(_vm.$page.user.all_teams, function(
-                                        team
-                                      ) {
-                                        return [
-                                          _c(
-                                            "form",
-                                            {
-                                              key: team.id,
-                                              on: {
-                                                submit: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.switchToTeam(team)
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "jet-dropdown-link",
-                                                { attrs: { as: "button" } },
-                                                [
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "flex items-center"
-                                                    },
-                                                    [
-                                                      team.id ==
-                                                      _vm.$page.user
-                                                        .current_team_id
-                                                        ? _c(
-                                                            "svg",
-                                                            {
-                                                              staticClass:
-                                                                "mr-2 h-5 w-5 text-green-400",
-                                                              attrs: {
-                                                                fill: "none",
-                                                                "stroke-linecap":
-                                                                  "round",
-                                                                "stroke-linejoin":
-                                                                  "round",
-                                                                "stroke-width":
-                                                                  "2",
-                                                                stroke:
-                                                                  "currentColor",
-                                                                viewBox:
-                                                                  "0 0 24 24"
-                                                              }
-                                                            },
-                                                            [
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                                }
-                                                              })
-                                                            ]
-                                                          )
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      _c("div", [
-                                                        _vm._v(
-                                                          _vm._s(team.name)
-                                                        )
-                                                      ])
-                                                    ]
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ]
-                                      }),
-                                      _vm._v(" "),
-                                      _c("div", {
-                                        staticClass: "border-t border-gray-100"
-                                      })
-                                    ]
-                                  : _vm._e(),
+                                _c(
+                                  "jet-dropdown-link",
+                                  {
+                                    attrs: { href: _vm.route("profile.show") }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Redaction\n                                    "
+                                    )
+                                  ]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "form",
@@ -51872,73 +51587,41 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "flex justify-between items-center" }, [
-      _c("div", { staticClass: "flex mt-4 items-center" }, [
-        _c("img", {
-          staticClass: "w-24 h-24",
-          attrs: { src: _vm.user.profile_photo_url, alt: "" }
-        }),
+    _c("div", { staticClass: "flex justify-between mt-2" }, [
+      _c("div", [
+        _c("span", { staticClass: "font-bold" }, [
+          _vm._v("\n                MY ACTIVITY\n            ")
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "flex-col ml-4" }, [
-          _c("div", { staticClass: "flex items-center" }, [
-            _c("div", { staticClass: "font-sans font-bold uppercase mr-2" }, [
-              _vm._v(_vm._s(_vm.user.name))
-            ]),
+        _c(
+          "span",
+          { staticClass: "font-sans text-xs uppercase text-gray-400" },
+          [
+            _vm._v("\n                -\n                "),
+            _vm.postsCounted > 1
+              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
+              : _vm.postsCounted === 1
+              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
+              : _c("span", [_vm._v("No posts,")]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex" },
-              _vm._l(_vm.roles, function(role) {
-                return _c("div", [
-                  role.role === "admin" || role.role === "redactor"
-                    ? _c(
-                        "div",
-                        {
-                          staticClass:
-                            "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(role.role) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "font-sans text-xs uppercase text-gray-400" },
-            [
-              _vm.postsCounted > 1
-                ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
-                : _vm.postsCounted === 1
-                ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
-                : _c("span", [_vm._v("No posts,")]),
-              _vm._v(" "),
-              _c("span", { on: { click: _vm.scrollTo } }, [
-                _vm.commentsCounted > 1
-                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                      _vm._v(_vm._s(_vm.commentsCounted) + " comments.")
-                    ])
-                  : _vm.commentsCounted === 1
-                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                      _vm._v(_vm._s(_vm.commentsCounted) + " comment.")
-                    ])
-                  : _c("span", { staticClass: "underline cursor-pointer" }, [
-                      _vm._v("No comments.")
-                    ])
-              ])
-            ]
-          )
-        ])
-      ])
+            _c("span", { on: { click: _vm.scrollTo } }, [
+              _vm.commentsCounted > 1
+                ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                    _vm._v(_vm._s(_vm.commentsCounted) + " comments.")
+                  ])
+                : _vm.commentsCounted === 1
+                ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                    _vm._v(_vm._s(_vm.commentsCounted) + " comment.")
+                  ])
+                : _c("span", { staticClass: "underline cursor-pointer" }, [
+                    _vm._v("No comments.")
+                  ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
     ]),
     _vm._v(" "),
     _vm.localPosts.data.length > 0
@@ -51951,28 +51634,27 @@ var render = function() {
           [
             _c("div", [
               _vm.localPosts.data.length > 1
-                ? _c("div", { staticClass: "mt-2" }, [
-                    _vm._v("Your "),
+                ? _c("div", [
+                    _vm._v("\n                My "),
                     _vm.postsCounted !== _vm.localPosts.data.length
                       ? _c("span", [_vm._v("last")])
                       : _vm._e(),
                     _vm._v(" " + _vm._s(_vm.localPosts.data.length) + " posts"),
                     _vm.postsCounted !== _vm.localPosts.data.length
-                      ? _c("span", { staticClass: "font-normal" }, [
+                      ? _c("span", { staticClass: "text-gray-400" }, [
                           _vm._v(" out of " + _vm._s(_vm.postsCounted))
                         ])
-                      : _vm._e(),
-                    _vm._v(":\n                ")
+                      : _vm._e()
                   ])
                 : _vm.localPosts.data.length === 1
-                ? _c("div", { staticClass: "mt-2" }, [
+                ? _c("div", [
                     _vm._v(
-                      "Your " +
+                      "\n                My " +
                         _vm._s(_vm.localPosts.data.length) +
-                        " post:\n                "
+                        " post:\n            "
                     )
                   ])
-                : _c("div", { staticClass: "mt-2 " }, [_vm._v("No posts")])
+                : _c("div", [_vm._v("No posts")])
             ])
           ]
         )
@@ -52029,23 +51711,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                                " +
+                                    "\n                                            " +
                                       _vm._s(
-                                        "\n                                            " +
+                                        "\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                            " +
+                                          "\n                                        " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                            " +
+                                          ",\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                            "
+                                          "\n                                        "
                                       ) +
-                                      "\n                                            "
+                                      "\n                                        "
                                   )
                                 ])
                               ])
@@ -52115,23 +51797,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                                " +
+                                    "\n                                            " +
                                       _vm._s(
-                                        "\n                                            " +
+                                        "\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                            " +
+                                          "\n                                        " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                            " +
+                                          ",\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                            "
+                                          "\n                                        "
                                       ) +
-                                      "\n                                            "
+                                      "\n                                        "
                                   )
                                 ])
                               ])
@@ -52161,7 +51843,7 @@ var render = function() {
               [
                 _c("div", { on: { click: _vm.loadMorePosts } }, [
                   _vm._v(
-                    "\n                        Show More Posts\n                    "
+                    "\n                    Show More Posts\n                "
                   )
                 ])
               ]
@@ -52173,9 +51855,7 @@ var render = function() {
     _vm.localComments.data.length > 0
       ? _c("div", [
           _vm.localPosts.data.length !== 0
-            ? _c("div", {
-                staticClass: "border-t-4 mb-2 border-gray-400 w-full"
-              })
+            ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
             : _vm._e()
         ])
       : _vm._e(),
@@ -52192,7 +51872,7 @@ var render = function() {
             _c("div", [
               _vm.localComments.data.length > 1
                 ? _c("div", { staticClass: "font-sans" }, [
-                    _vm._v("Your "),
+                    _vm._v("My "),
                     _vm.commentsCounted !== _vm.localComments.data.length
                       ? _c("span", [_vm._v("last")])
                       : _vm._e(),
@@ -52200,18 +51880,17 @@ var render = function() {
                       " " + _vm._s(_vm.localComments.data.length) + " comments"
                     ),
                     _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", { staticClass: "font-normal" }, [
+                      ? _c("span", { staticClass: "text-gray-400" }, [
                           _vm._v(" out of " + _vm._s(_vm.commentsCounted))
                         ])
-                      : _vm._e(),
-                    _vm._v(":\n                ")
+                      : _vm._e()
                   ])
                 : _vm.localComments.data.length === 1
                 ? _c("div", { staticClass: "mt-2 font-sans" }, [
                     _vm._v(
-                      "Your" +
+                      "My" +
                         _vm._s(_vm.localComments.data.length) +
-                        " comment:\n                "
+                        " comment:\n            "
                     )
                   ])
                 : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
@@ -52239,19 +51918,19 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            " +
+                      "\n                        " +
                         _vm._s(
-                          "\n                        " +
+                          "\n                    " +
                             new Date(
                               comment.created_at
                             ).toLocaleString("default", { month: "long" }) +
-                            "\n                        " +
+                            "\n                    " +
                             new Date(comment.created_at).getDate() +
                             ", " +
                             new Date(comment.created_at).getFullYear() +
-                            "\n                        "
+                            "\n                    "
                         ) +
-                        "\n                            comment:\n                        "
+                        "\n                        comment:\n                    "
                     )
                   ]
                 ),
@@ -52315,9 +51994,7 @@ var render = function() {
             },
             [
               _c("div", { on: { click: _vm.loadMoreComments } }, [
-                _vm._v(
-                  "\n                    Load More Comments\n                "
-                )
+                _vm._v("\n                Load More Comments\n            ")
               ])
             ]
           )
@@ -52325,7 +52002,30 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "form",
+      { attrs: { method: "get", action: "/user/profile/search/" } },
+      [
+        _c("input", {
+          staticClass:
+            "duration-200 px-2 py-1 bg-gray-100 text-sm hover:border-black hover:border-b-2 outline-none",
+          attrs: {
+            required: "",
+            name: "search",
+            autocomplete: "off",
+            placeholder: "Search in my activity",
+            type: "text"
+          }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -52953,37 +52653,52 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uppercase mt-2 font-bold" }, [
-      _vm.usersCounted > 0 || _vm.postsCounted > 0
-        ? _c("div", [
-            _vm._v(
-              '\n            By request "' +
-                _vm._s(_vm.search) +
-                '" found ' +
-                _vm._s(_vm.postsCounted) +
-                "\n            "
-            ),
-            _vm.postsCounted === 1
-              ? _c("span", [_vm._v("post")])
-              : _c("span", [_vm._v("posts")]),
-            _vm._v(
-              "\n            and " +
-                _vm._s(_vm.commentsCounted) +
-                "\n            "
-            ),
-            _vm.usersCounted === 1
-              ? _c("span", [_vm._v("comment")])
-              : _c("span", [_vm._v("comments")]),
-            _vm._v(" in your records\n        ")
-          ])
-        : _c("div", [
-            _vm._v(
-              'By Request "' +
-                _vm._s(_vm.search) +
-                '" Nothing Found in your records'
-            )
-          ])
-    ]),
+    _c(
+      "div",
+      { staticClass: "uppercase mt-2 font-bold flex justify-between" },
+      [
+        _vm.usersCounted > 0 || _vm.postsCounted > 0
+          ? _c("span", [
+              _vm._v(
+                '\n            By request "' +
+                  _vm._s(_vm.search) +
+                  '" found ' +
+                  _vm._s(_vm.postsCounted) +
+                  "\n            "
+              ),
+              _vm.postsCounted === 1
+                ? _c("span", [_vm._v("post")])
+                : _c("span", [_vm._v("posts")]),
+              _vm._v(
+                "\n            and " +
+                  _vm._s(_vm.commentsCounted) +
+                  "\n            "
+              ),
+              _vm.usersCounted === 1
+                ? _c("span", [_vm._v("comment")])
+                : _c("span", [_vm._v("comments")]),
+              _vm._v(" in your records\n        ")
+            ])
+          : _c("div", [
+              _vm._v(
+                'By Request "' +
+                  _vm._s(_vm.search) +
+                  '" Nothing Found in your records'
+              )
+            ]),
+        _vm._v(" "),
+        _c(
+          "inertia-link",
+          {
+            staticClass:
+              "ml-1 text-sm underline text-gray-400 font-normal normal-case",
+            attrs: { href: "/dashboard" }
+          },
+          [_vm._v("Back to previous page")]
+        )
+      ],
+      1
+    ),
     _vm._v(" "),
     _vm.localPosts.data.length > 0
       ? _c("div", { staticClass: "mt-4 font-bold text-sm" }, [
@@ -71554,8 +71269,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["InertiaApp"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__["InertiaForm"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODULE_3___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('top-menu', __webpack_require__(/*! ./Components/TopMenu */ "./resources/js/Components/TopMenu.vue")["default"]); // Vue.component('top-menu', require('./Pages/TopMenu').default)
-
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('top-menu', __webpack_require__(/*! ./Components/TopMenu */ "./resources/js/Components/TopMenu.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('post-item', __webpack_require__(/*! ./Components/PostItem */ "./resources/js/Components/PostItem.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('primary-post-item', __webpack_require__(/*! ./Components/PrimaryPostItem */ "./resources/js/Components/PrimaryPostItem.vue")["default"]);
 var app = document.getElementById('app');

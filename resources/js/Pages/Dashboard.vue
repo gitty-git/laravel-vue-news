@@ -1,55 +1,45 @@
 <template>
     <div>
-        <div class="flex justify-between items-center">
-            <div class="flex mt-4 items-center">
-                <img class="w-24 h-24" :src="user.profile_photo_url" alt="">
-
-                <div class="flex-col ml-4">
-                    <div class="flex items-center">
-                        <div class="font-sans font-bold uppercase mr-2">{{user.name}}</div>
-
-                        <div class="flex">
-                            <div v-for="role in roles">
-                                <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                                     v-if="role.role === 'admin' || role.role === 'redactor'">
-                                    {{role.role}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="font-sans text-xs uppercase text-gray-400">
-                        <span v-if="postsCounted > 1">{{ postsCounted }} posts,</span>
-                        <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
-                        <span v-else>No posts,</span>
-
-                        <span @click="scrollTo">
-                            <span class="underline cursor-pointer" v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
-                            <span class="underline cursor-pointer" v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
-                            <span class="underline cursor-pointer" v-else>No comments.</span>
-                        </span>
-                    </div>
-<!--                    <div class="flex mt-2 items-start justify-start">-->
-<!--                        <button class="text-xs px-3 py-1 mr-2 hover:bg-gray-800 hover:text-white duration-200 border rounded-full font-bold uppercase text-xs">Edit Account</button>-->
-<!--                        <button class="text-xs px-3 py-1 mr-2 border text-green-800 border-green-300 rounded-full uppercase font-bold hover:bg-green-500 hover:text-white duration-200">Go to Admin Panel</button>-->
-<!--                        <button class="text-xs px-3 py-1 border text-red-600 border-red-300 rounded-full uppercase font-bold hover:bg-red-500 hover:text-white duration-200">Logout</button>-->
-<!--                    </div>-->
-                </div>
+        <div class="flex justify-between mt-2">
+            <div>
+                <span class="font-bold">
+                    MY ACTIVITY
+                </span>
+                <span class="font-sans text-xs uppercase text-gray-400">
+                    -
+                    <span v-if="postsCounted > 1">{{ postsCounted }} posts,</span>
+                    <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
+                    <span v-else>No posts,</span>
+                    <span @click="scrollTo">
+                        <span class="underline cursor-pointer" v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
+                        <span class="underline cursor-pointer" v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
+                        <span class="underline cursor-pointer" v-else>No comments.</span>
+                    </span>
+                </span>
             </div>
+
+            <form method="get" action="/user/profile/search/">
+                <input required name="search"
+                       class="duration-200 px-2 py-1 bg-gray-100 text-sm hover:border-black hover:border-b-2 outline-none"
+                       autocomplete="off"
+                       placeholder="Search in my activity" type="text">
+                <!--                    <div v-if="searchInput.length > 0">></div>-->
+            </form>
         </div>
 
-        <!--YOUR POSTS-->
+        <!--My POSTS-->
         <div v-if="localPosts.data.length > 0" class="font-sans mt-2 font-bold text-sm flex justify-between items-end">
             <div>
-                <div v-if="localPosts.data.length > 1"
-                     class="mt-2">Your <span v-if="postsCounted !== localPosts.data.length">last</span> {{ localPosts.data.length }} posts<span class="font-normal" v-if="postsCounted !== localPosts.data.length"> out of {{postsCounted}}</span>:
+                <div v-if="localPosts.data.length > 1">
+                    My <span v-if="postsCounted !== localPosts.data.length">last</span> {{ localPosts.data.length }} posts<span class="text-gray-400" v-if="postsCounted !== localPosts.data.length"> out of {{postsCounted}}</span>
                 </div>
-                <div v-else-if="localPosts.data.length === 1"
-                     class="mt-2">Your {{ localPosts.data.length }} post:
+                <div v-else-if="localPosts.data.length === 1">
+                    My {{ localPosts.data.length }} post:
                 </div>
-                <div v-else class="mt-2 ">No posts</div>
+                <div v-else>No posts</div>
             </div>
         </div>
+
         <!--POSTS-->
         <div class="my-4">
             <div class="flex border-gray-200 font-serif">
@@ -127,17 +117,17 @@
         </div>
 
         <div v-if="localComments.data.length > 0">
-            <div class="border-t-4 mb-2 border-gray-400 w-full" v-if="localPosts.data.length !== 0"></div>
+            <div class="border-t-4 border-gray-400 w-full" v-if="localPosts.data.length !== 0"></div>
         </div>
 
         <!--COMMENTS-->
         <div id="comments" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
-                     class="font-sans">Your <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="font-normal" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>:
+                     class="font-sans">My <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="text-gray-400" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>
                 </div>
                 <div v-else-if="localComments.data.length === 1"
-                     class="mt-2 font-sans">Your{{ localComments.data.length }} comment:
+                     class="mt-2 font-sans">My{{ localComments.data.length }} comment:
                 </div>
                 <div v-else class="mt-2 font-sans font-bold">No comments</div>
             </div>

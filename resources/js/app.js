@@ -13,7 +13,6 @@ Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
 Vue.component('top-menu', require('./Components/TopMenu').default)
-// Vue.component('top-menu', require('./Pages/TopMenu').default)
 Vue.component('post-item', require('./Components/PostItem').default)
 Vue.component('primary-post-item', require('./Components/PrimaryPostItem').default)
 
