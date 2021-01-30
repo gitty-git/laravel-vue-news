@@ -6,9 +6,13 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\Post;
+use App\Models\PostLike;
 use App\Models\Role;
 use App\Models\User;
+use Database\Factories\PostLikeFactory;
+use Database\Factories\PostLikesFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,7 +51,25 @@ class DatabaseSeeder extends Seeder
         Post::factory(50)->create(['type' => 'primary_post']);
         Post::factory(200)->create(['type' => 'post']);
 
-        Comment::factory(600)->create();
-        CommentReply::factory(1000)->create();
+        Comment::factory(500)->create();
+        CommentReply::factory(500)->create();
+
+        User::all()->each(function ($user) {
+            Post::all()->random(50)->each(function ($post) use ($user) {
+                $post->likes()->attach($user->id);
+            });
+        });
+
+        User::all()->random(25)->each(function ($user) {
+            Comment::all()->random(100)->each(function ($comment) use ($user) {
+                $comment->likes()->attach($user->id);
+            });
+        });
+
+        User::all()->random(25)->each(function ($user) {
+            CommentReply::all()->random(100)->each(function ($comment) use ($user) {
+                $comment->likes()->attach($user->id);
+            });
+        });
     }
 }

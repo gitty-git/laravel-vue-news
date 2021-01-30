@@ -77,4 +77,16 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\Models\Comment');
     }
+
+    public function post_likes(){
+        return $this->belongsToMany( Post::class, 'users_posts_likes', 'user_id', 'post_id');
+    }
+
+    public function comment_likes(){
+        return $this->belongsToMany( Comment::class, 'users_comments_likes', 'user_id', 'comment_id');
+    }
+
+    public function comment_reply_likes(){
+        return $this->belongsToMany( Comment::class, 'users_comments_replies_likes', 'user_id', 'comment_reply_id');
+    }
 }

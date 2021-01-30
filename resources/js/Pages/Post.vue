@@ -1,26 +1,28 @@
 <template>
     <div>
-        <div class="uppercase mt-2 font-bold">{{ post.category.name }}</div>
-
         <!--POST-->
         <div class="w-full mt-4 flex justify-center">
             <div class="post-width">
-                <div class="font-serif font-bold text-3xl mb-4 text-center">{{post.title}}</div>
+                <div class="font-serif font-bold text-3xl mb-4 text-center">{{ post.title }}</div>
 
-                <div class="font-serif text-xl leading-9 text-gray-600 mt-8 mb-2">{{post.brief}}</div>
+                <div class="font-serif text-xl leading-9 text-gray-600 mt-8 mb-2">{{ post.brief }}</div>
 
                 <!--CREATED AT-->
                 <div class="flex font-sans uppercase text-gray-400">
                     <div class="text-xs">
-                        {{`
+                        {{
+                            `
                             ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
                             ${new Date(post.created_at).getDate()}, ${new Date(post.created_at).getFullYear()}
-                        `}}
+                        `
+                        }}
                     </div>
                     <div>
                         <div class="text-xs">
                             &nbsp;by
-                            <inertia-link class="underline font-bold hover:text-gray-600 duration-200" :href="'/user/' + post.user.id">{{ post.user.name }}</inertia-link>
+                            <inertia-link class="underline font-bold hover:text-gray-600 duration-200"
+                                          :href="'/user/' + post.user.id">{{ post.user.name }}
+                            </inertia-link>
                         </div>
                     </div>
 
@@ -32,6 +34,17 @@
                 </div>
 
                 <div class="font-serif text-xl leading-9 text-gray-600 my-8">{{ post.body }}</div>
+
+
+
+                <div class="justify-center flex mb-8" >
+                    <div class="flex cursor-pointer" @click.prevent="setPostLike">
+                        <like-red-heart class="w-6" v-if="localPostLiked"/>
+                        <like-empty-heart class="w-6" v-else/>
+                        <div v-if="localPostLikes > 1" class="ml-2">{{ localPostLikes }} likes</div>
+                        <div v-else-if="localPostLikes === 0" class="ml-2">{{ localPostLikes }} likes</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -40,40 +53,61 @@
             <div class="post-width">
                 <div v-if="post.comments_count < 1" class="uppercase mb-4 font-sans font-bold">No comments yet</div>
 
-                <div v-else-if="post.comments_count === 1" class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comment:</div>
+                <div v-else-if="post.comments_count === 1" class="uppercase mb-4 font-sans font-bold">
+                    {{ post.comments_count }} Comment:
+                </div>
 
                 <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments:</div>
 
                 <div class="" v-for="comment in localComments.data" :key="comment.id">
                     <div class="py-4 border-t-2 border-gray-200">
-                        <div class="flex">
+                        <div class="flex w-full">
                             <img class="w-12 h-12 mr-4" :src="comment.user.profile_photo_url" alt="">
 
-                            <div>
+                            <div class="w-full">
                                 <div class="mb-2">
                                     <inertia-link class="font-bold text-gray-900 hover:text-gray-400 duration-200"
-                                                  :href="`/user/${comment.user.id}` ">{{ comment.user.name }}</inertia-link>
+                                                  :href="`/user/${comment.user.id}` ">{{ comment.user.name }}
+                                    </inertia-link>
                                     {{ time_ago(comment.created_at) }}
                                 </div>
 
-                                <div class="mb-2">
+                                <div class="mb-2 w-full">
                                     {{ comment.text }}
                                 </div>
-                            </div>
-                        </div>
 
-                        <!--show replies button-->
-                        <div v-if="comment.comment_replies.length > 0" class="cursor-pointer font-sans flex justify-end"
-                             @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
-                        >
-                            <div v-if="comment.comment_replies.length === 1">
-                                <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">Hide reply</div>
-                                <div class="hover:text-gray-400 duration-200" v-else>Show 1 reply</div>
-                            </div>
+                                <div class="flex mt-2 w-full items-end justify-between">
+                                    <div class="flex items-start">
+                                        <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
+                                            <like-empty-heart class="text-black"/>
+                                            <div class="font-sans ml-2 font-normal border-r-2 pr-2">{{ comment.likes_count }} likes</div>
+                                        </div>
 
-                            <div v-else>
-                                <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">Hide replies</div>
-                                <div class="hover:text-gray-400 duration-200" v-else>Show {{ comment.comment_replies.length }} replies</div>
+                                        <div class="font-sans ml-2 font-normal pr-2">Reply</div>
+                                    </div>
+
+                                    <!--show replies button-->
+                                    <div v-if="comment.comment_replies.length > 0"
+                                         class="cursor-pointer font-sans flex justify-end"
+                                         @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
+                                    >
+                                        <div v-if="comment.comment_replies.length === 1">
+                                            <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">
+                                                Hide reply
+                                            </div>
+                                            <div class="hover:text-gray-400 duration-200" v-else>Show 1 reply</div>
+                                        </div>
+
+                                        <div v-else>
+                                            <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">
+                                                Hide replies
+                                            </div>
+                                            <div class="hover:text-gray-400 duration-200" v-else>Show
+                                                {{ comment.comment_replies.length }} replies
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,12 +122,18 @@
                                 <div>
                                     <div class="mb-2">
                                         <inertia-link class="font-bold text-gray-900 hover:text-gray-400 duration-200"
-                                                      :href="`/user/${reply.user.id}` ">{{ reply.user.name }}</inertia-link>
+                                                      :href="`/user/${reply.user.id}` ">{{ reply.user.name }}
+                                        </inertia-link>
                                         {{ time_ago(reply.created_at) }}
                                     </div>
 
                                     <div class="">
                                         {{ reply.text }}
+                                    </div>
+
+                                    <div class="flex items-start mt-2">
+                                        <like-empty-heart class="text-black"/>
+                                        <div class="font-sans ml-2 font-normal">{{ reply.likes.length }} likes</div>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +141,8 @@
                     </div>
                 </div>
                 <div class="flex justify-center" v-if="this.localComments.next_page_url">
-                    <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
+                    <div
+                        class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
                         <div @click="loadMoreComments">
                             Load More Comments
                         </div>
@@ -114,16 +155,38 @@
 
 <script>
 import NewsLayout from "@/Layouts/NewsLayout";
+
 export default {
     layout: NewsLayout,
     name: "Post",
-    props: ["post", "categories", "comments", "user"],
+    props: ["post", "categories", "comments", "user", 'postLiked'],
     data() {
         return {
             localComments: this.comments,
+            localPostLikes: this.post.likes_count,
+            localPostLiked: this.postLiked,
         }
     },
     methods: {
+        setPostLike() {
+            axios.post(`/posts/${this.post.id}/post-like`).then((res) => {
+                this.localPostLikes = res.data.postLikesCount
+                this.localPostLiked = res.data.postLiked
+            })
+        },
+
+        setCommentLike(id) {
+            axios.post(`/posts/${id}/comment-like`).then((res) => {
+                this.localComments.data.map(obj => {if (obj.id === res.data.comment.id) {
+                    Object.assign(obj, res.data.comment)
+                }})
+            })
+        },
+
+        setReplyCommentLike() {
+
+        },
+
         loadMoreComments() {
             if (this.localComments.next_page_url) {
                 axios.get(this.localComments.next_page_url).then(response => {
@@ -194,11 +257,11 @@ export default {
 </script>
 
 <style scoped>
-    .post-width {
-        width: 900px;
-    }
+.post-width {
+    width: 900px;
+}
 
-    /*.last-child-comment:last-child {*/
-    /*    border-bottom: none;*/
-    /*}*/
+/*.last-child-comment:last-child {*/
+/*    border-bottom: none;*/
+/*}*/
 </style>

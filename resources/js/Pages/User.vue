@@ -57,7 +57,7 @@ export default {
 
 <template>
     <div>
-<!--        {{user.email}}-->
+        {{user.email}}
         <div class="flex pt-4 items-center">
             <img class="w-24 h-24" :src="user.profile_photo_url" alt="">
 
