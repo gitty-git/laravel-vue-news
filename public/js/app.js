@@ -5121,11 +5121,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
   name: "Post",
-  props: ["post", "categories", "comments", "user", 'postLiked'],
+  props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
   data: function data() {
     return {
       localComments: this.comments,
@@ -5148,20 +5152,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post("/posts/".concat(id, "/comment-like")).then(function (res) {
         _this2.localComments.data.map(function (obj) {
           if (obj.id === res.data.comment.id) {
-            Object.assign(obj, res.data.comment);
+            obj.liked = res.data.comment.liked;
+            obj.likes_count = res.data.comment.likes_count;
           }
         });
       });
     },
-    setReplyCommentLike: function setReplyCommentLike() {},
-    loadMoreComments: function loadMoreComments() {
+    setCommentReplyLike: function setCommentReplyLike(id) {
       var _this3 = this;
+
+      axios.post("/posts/".concat(id, "/comment-reply-like")).then(function (res) {
+        console.log(res.data.commentReply.id);
+
+        _this3.localComments.data.map(function (obj) {
+          return obj.comment_replies.map(function (obj2) {
+            if (obj2.id === res.data.commentReply.id) {
+              // console.log(res.data.commentReply.likes_count)
+              obj2.liked = res.data.commentReply.liked;
+              obj2.likes = res.data.commentReply.likes;
+            }
+          });
+        });
+      });
+    },
+    loadMoreComments: function loadMoreComments() {
+      var _this4 = this;
 
       if (this.localComments.next_page_url) {
         axios.get(this.localComments.next_page_url).then(function (response) {
           console.log(response);
-          _this3.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
-            data: [].concat(_toConsumableArray(_this3.localComments.data), _toConsumableArray(response.data.data))
+          _this4.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this4.localComments.data), _toConsumableArray(response.data.data))
           });
         });
       }
@@ -53744,9 +53765,13 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("like-empty-heart", {
-                                      staticClass: "text-black"
-                                    }),
+                                    comment.liked === 0
+                                      ? _c("like-empty-heart", {
+                                          staticClass: "text-black"
+                                        })
+                                      : _c("like-red-heart", {
+                                          staticClass: "text-black"
+                                        }),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -53919,11 +53944,25 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "flex items-start mt-2" },
+                                    {
+                                      staticClass:
+                                        "flex items-start mt-2 cursor-pointer",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.setCommentReplyLike(
+                                            reply.id
+                                          )
+                                        }
+                                      }
+                                    },
                                     [
-                                      _c("like-empty-heart", {
-                                        staticClass: "text-black"
-                                      }),
+                                      reply.liked === 0
+                                        ? _c("like-empty-heart", {
+                                            staticClass: "text-black"
+                                          })
+                                        : _c("like-red-heart", {
+                                            staticClass: "text-black"
+                                          }),
                                       _vm._v(" "),
                                       _c(
                                         "div",

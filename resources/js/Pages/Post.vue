@@ -77,9 +77,11 @@
                                 </div>
 
                                 <div class="flex mt-2 w-full items-end justify-between">
+                                    <!--likes-->
                                     <div class="flex items-start">
                                         <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
-                                            <like-empty-heart class="text-black"/>
+                                            <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
+                                            <like-red-heart v-else class="text-black"/>
                                             <div class="font-sans ml-2 font-normal border-r-2 pr-2">{{ comment.likes_count }} likes</div>
                                         </div>
 
@@ -88,8 +90,8 @@
 
                                     <!--show replies button-->
                                     <div v-if="comment.comment_replies.length > 0"
-                                         class="cursor-pointer font-sans flex justify-end"
                                          @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
+                                         class="cursor-pointer font-sans flex justify-end"
                                     >
                                         <div v-if="comment.comment_replies.length === 1">
                                             <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">
@@ -131,8 +133,10 @@
                                         {{ reply.text }}
                                     </div>
 
-                                    <div class="flex items-start mt-2">
-                                        <like-empty-heart class="text-black"/>
+                                    <!--likes-->
+                                    <div class="flex items-start mt-2 cursor-pointer" @click="setCommentReplyLike(reply.id)">
+                                        <like-empty-heart v-if="reply.liked === 0" class="text-black"/>
+                                        <like-red-heart v-else class="text-black"/>
                                         <div class="font-sans ml-2 font-normal">{{ reply.likes.length }} likes</div>
                                     </div>
                                 </div>
@@ -159,7 +163,7 @@ import NewsLayout from "@/Layouts/NewsLayout";
 export default {
     layout: NewsLayout,
     name: "Post",
-    props: ["post", "categories", "comments", "user", 'postLiked'],
+    props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
     data() {
         return {
             localComments: this.comments,
@@ -167,6 +171,7 @@ export default {
             localPostLiked: this.postLiked,
         }
     },
+
     methods: {
         setPostLike() {
             axios.post(`/posts/${this.post.id}/post-like`).then((res) => {
@@ -178,13 +183,24 @@ export default {
         setCommentLike(id) {
             axios.post(`/posts/${id}/comment-like`).then((res) => {
                 this.localComments.data.map(obj => {if (obj.id === res.data.comment.id) {
-                    Object.assign(obj, res.data.comment)
+                    obj.liked = res.data.comment.liked
+                    obj.likes_count = res.data.comment.likes_count
                 }})
             })
         },
 
-        setReplyCommentLike() {
-
+        setCommentReplyLike(id) {
+            axios.post(`/posts/${id}/comment-reply-like`).then((res) => {
+                console.log(res.data.commentReply.id)
+                this.localComments.data.map(obj => obj.comment_replies.map(obj2 => {
+                    if (obj2.id === res.data.commentReply.id) {
+                        // console.log(res.data.commentReply.likes_count)
+                        obj2.liked = res.data.commentReply.liked
+                        obj2.likes = res.data.commentReply.likes
+                    }
+                 })
+                )
+            })
         },
 
         loadMoreComments() {

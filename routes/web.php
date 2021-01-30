@@ -54,6 +54,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/posts/{id}/post-like', [PostsController::class, 'postLike']);
     Route::post('/posts/{id}/comment-like', [PostsController::class, 'commentLike']);
+    Route::post('/posts/{id}/comment-reply-like', [PostsController::class, 'commentReplyLike']);
 });
 
 Route::resource('/user', UsersController::class);

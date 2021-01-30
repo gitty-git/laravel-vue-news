@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\CommentReply;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,8 +49,9 @@ class PostsController extends Controller
             ->withCount('likes')
             ->with('user')->paginate(20);
 
-//        if (Auth::user()) $commentLiked = true ? $post->likes->contains(Auth::user()->id) : false;
-//        else $commentLiked = false;
+        $commentReplies = CommentReply::query()->where('post_id', $post->id)->latest()
+            ->withCount('likes')
+            ->with('user')->paginate(20);
 
         if ($request->wantsJson()) {
             return $comments;
@@ -57,7 +59,7 @@ class PostsController extends Controller
 
         if ($post) {
             return Inertia::render('Post',
-                compact('post', 'comments', 'postLiked')
+                compact('post', 'comments', 'postLiked', 'commentReplies')
             );
         }
         else {
@@ -103,16 +105,36 @@ class PostsController extends Controller
         $comment = Comment::where('id', $id)->first();
 
         if (!$comment->likes->contains(Auth::user()->id)) {
-            $commentLiked = true;
+            $comment->toggleLike()->save();
             $comment->likes()->attach(Auth::user()->id);
         }
         else {
-            $commentLiked = false;
+            $comment->toggleLike()->save();
             $comment->likes()->detach(Auth::user()->id);
         }
 
-        $comment = Comment::where('id', $id)->withCount('likes')->first();
+        $comment = Comment::where('id', $id)
+            ->withCount('likes')->first();
 
-        return response(compact('commentLiked', 'comment'));
+        return response(compact( 'comment'));
+    }
+
+    public function commentReplyLike ($id)
+    {
+        $commentReply = CommentReply::where('id', $id)->first();
+
+        if (!$commentReply->likes->contains(Auth::user()->id)) {
+            $commentReply->toggleLike()->save();
+            $commentReply->likes()->attach(Auth::user()->id);
+        }
+        else {
+            $commentReply->toggleLike()->save();
+            $commentReply->likes()->detach(Auth::user()->id);
+        }
+
+        $commentReply = CommentReply::where('id', $id)
+            ->with('likes')->first();
+
+        return response(compact( 'commentReply'));
     }
 }

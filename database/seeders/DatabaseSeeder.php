@@ -60,8 +60,10 @@ class DatabaseSeeder extends Seeder
             });
         });
 
+
         User::all()->random(25)->each(function ($user) {
             Comment::all()->random(100)->each(function ($comment) use ($user) {
+//                $comment->liked = true; --- CHECK THIS!
                 $comment->likes()->attach($user->id);
             });
         });
