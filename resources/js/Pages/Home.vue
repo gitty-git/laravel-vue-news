@@ -9,8 +9,8 @@
 
                     <div class="text-13 text-gray-600">{{ firstPrimaryPost.brief }}</div>
 
-                    <div class="mt-4">
-                        <img :src="firstPrimaryPost.image" alt="">
+                    <div class="mt-4 bg-gray-100">
+                        <img class="w-full" :src="'/storage/' + firstPrimaryPost.image" alt="">
 
                         <div class="mt-2 w-full text-xs text-gray-400 text-right">
                             {{ firstPrimaryPost.image_description }}

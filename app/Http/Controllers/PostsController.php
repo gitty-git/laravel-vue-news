@@ -20,12 +20,18 @@ class PostsController extends Controller
 
     public function create()
     {
-        //
+        return Inertia::render('Post/Create');
     }
 
     public function store(Request $request)
     {
-        //
+//        $request->user_id = Auth::user()->id;['user_id' => Auth::user()->id]
+
+//        Post::query()->user_id = Auth::user()->id;
+
+        $post = Post::query()->create($this->validateRequest());
+
+        $this->storeImage($post);
     }
 
 
@@ -37,7 +43,7 @@ class PostsController extends Controller
             ->with('likes')
             ->withCount('comments')
             ->withCount('likes')
-            ->first();
+            ->firstOrFail();
 
         if (Auth::user()) $postLiked = true ? $post->likes->contains(Auth::user()->id) : false;
         else $postLiked = false;
@@ -58,7 +64,7 @@ class PostsController extends Controller
         }
 
         if ($post) {
-            return Inertia::render('Post',
+            return Inertia::render('Post/Show',
                 compact('post', 'comments', 'postLiked', 'commentReplies')
             );
         }
@@ -136,5 +142,30 @@ class PostsController extends Controller
             ->with('likes')->first();
 
         return response(compact( 'commentReply'));
+    }
+
+    protected function validateRequest()
+    {
+        \request()['user_id'] = Auth::user()->id;
+        return \request()->validate([
+            'title' => 'required',
+            'brief' => 'required',
+            'image' => 'required|image|max:5000',
+            'body' => 'required',
+            'slug' => 'required',
+            'is_published' => 'required',
+            'type' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required' #Auth::user()->id
+        ]);
+    }
+
+    private function storeImage($post)
+    {
+        if (\request()->has('image')) {
+            $post->update([
+                'image' => \request()->image->store('posts', 'public')
+            ]);
+        };
     }
 }

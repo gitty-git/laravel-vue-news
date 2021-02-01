@@ -35,8 +35,13 @@ Route::get('search', [SearchController::class, 'search']);
 Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::get('/user', [UsersController::class, 'index']);
 //    Route::get( '/dashboard', [AdminController::class, 'index']);
-    Route::get( '/admin', [DashboardController::class, 'admin']);
 //    Route::get( '/user/profile', [DashboardController::class, 'user']);
+//    Route::get('/admin', [DashboardController::class, 'admin']);
+
+    Route::middleware('redactor')->group(function () {
+        Route::get('/add-post', [PostsController::class, 'create']);
+        Route::post('/post/store', [PostsController::class, 'store']);
+    });
 
     Route::get( '/admin/edit-user/{id}', [DashboardController::class, 'editUser']);
 
@@ -69,7 +74,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user/profile/search', [DashboardSearchController::class, 'search']);
     Route::resource('/user/profile/post', PostsController::class);
 
-    Route::middleware('admin')->group(function () {
-        Route::get( '/admin', [AdminController::class, 'index']);
-    });
+//    Route::middleware('admin')->group(function () {
+//        Route::get( '/admin', [AdminController::class, 'index']);
+//    });
 });

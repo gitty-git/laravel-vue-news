@@ -1,5 +1,6 @@
 <template>
     <div>
+        <inertia-link href="/add-post">add</inertia-link>
         <div class="flex justify-between mt-2">
             <div>
                 <span class="font-bold">

@@ -29,7 +29,8 @@
                 </div>
 
                 <div class="my-8">
-                    <img class="mb-2" :src="post.image" alt="">
+<!--                    <img class="mb-2" :src="post.image" alt="">-->
+                    <img class="w-full h-1/3" :src="'/storage/' + post.image" alt="image"/>
                     <div class="w-full font-serif text-xs text-gray-400 text-right">{{ post.image_description }}</div>
                 </div>
 
@@ -41,8 +42,8 @@
                     <div class="flex cursor-pointer" @click.prevent="setPostLike">
                         <like-red-heart class="w-6" v-if="localPostLiked"/>
                         <like-empty-heart class="w-6" v-else/>
-                        <div v-if="localPostLikes > 1" class="ml-2">{{ localPostLikes }} likes</div>
-                        <div v-else-if="localPostLikes === 0" class="ml-2">{{ localPostLikes }} likes</div>
+                        <div v-if="localPostLikes === 1" class="ml-2">{{ localPostLikes }} like</div>
+                        <div v-else class="ml-2">{{ localPostLikes }} likes</div>
                     </div>
                 </div>
             </div>

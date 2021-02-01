@@ -6,13 +6,20 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckAdmin
+class CheckRedactor
 {
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function handle(Request $request, Closure $next)
     {
         $userRoles = Auth::user()->roles->pluck('role');
 
-        if ($userRoles->contains('admin')) {
+        if ($userRoles->contains('redactor') || $userRoles->contains('admin')) {
             return $next($request);
         }
         else {
