@@ -5078,6 +5078,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5106,7 +5111,7 @@ __webpack_require__.r(__webpack_exports__);
         body: null,
         slug: null,
         is_published: true,
-        type: 'post',
+        type: null,
         category_id: null // user_id: 1,
         // primary_post: null,
         // front_page_post: null,
@@ -54105,7 +54110,12 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "text-sm text-gray-500" }, [
                 _vm._v("Select a category of the post. Required.")
-              ])
+              ]),
+              _vm._v(" "),
+              _c("jet-input-error", {
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.type }
+              })
             ],
             1
           ),
@@ -54114,7 +54124,7 @@ var render = function() {
             "div",
             { staticClass: "mb-4" },
             [
-              _vm._v("\n                Title\n                "),
+              _vm._v("\n                    Title\n                    "),
               _c("div", { staticClass: "text-sm text-gray-500" }, [
                 _vm._v("Must be unique, maximum characters: 200. Required.")
               ]),
@@ -54132,8 +54142,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("title") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.title }
               })
             ],
             1
@@ -54143,7 +54153,7 @@ var render = function() {
             "div",
             { staticClass: "mb-4 flex-col flex" },
             [
-              _vm._v("\n                Brief\n                "),
+              _vm._v("\n                    Brief\n                    "),
               _c("div", { staticClass: "text-sm mb-1 text-gray-500" }, [
                 _vm._v(
                   "Short description of the post. Maximum characters: 200. Required."
@@ -54173,8 +54183,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("brief") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.brief }
               })
             ],
             1
@@ -54184,7 +54194,7 @@ var render = function() {
             "div",
             { staticClass: "mb-5" },
             [
-              _vm._v("\n                Image\n                "),
+              _vm._v("\n                    Image\n                    "),
               _c("div", { staticClass: "text-sm text-gray-500" }, [
                 _vm._v(
                   "File must be an image, maximum size: 5MB. Aspect ratio: 3:2. Required."
@@ -54209,7 +54219,7 @@ var render = function() {
                       expression: "imagePreview"
                     }
                   ],
-                  staticClass: "mt-2"
+                  staticClass: "mt-1"
                 },
                 [
                   _c("img", {
@@ -54233,14 +54243,14 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                    Select An Image\n                "
+                    "\n                        Select An Image\n                    "
                   )
                 ]
               ),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("image") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.image }
               })
             ],
             1
@@ -54250,7 +54260,9 @@ var render = function() {
             "div",
             { staticClass: "mb-4" },
             [
-              _vm._v("\n                Image Description\n                "),
+              _vm._v(
+                "\n                    Image Description\n                    "
+              ),
               _c("div", { staticClass: "text-sm text-gray-500" }, [
                 _vm._v(
                   "Brief description of the picture. Maximum characters: 100. Required."
@@ -54274,8 +54286,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("image_description") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.image_description }
               })
             ],
             1
@@ -54285,7 +54297,7 @@ var render = function() {
             "div",
             { staticClass: "mb-4 flex-col flex" },
             [
-              _vm._v("\n                Body\n                "),
+              _vm._v("\n                    Body\n                    "),
               _c("div", { staticClass: "text-sm mb-1 text-gray-500" }, [
                 _vm._v("Optional")
               ]),
@@ -54313,8 +54325,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("body") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.body }
               })
             ],
             1
@@ -54324,7 +54336,7 @@ var render = function() {
             "div",
             { staticClass: "mb-4" },
             [
-              _vm._v("\n                Slug\n                "),
+              _vm._v("\n                    Slug\n                    "),
               _c("div", { staticClass: "text-sm text-gray-500" }, [
                 _vm._v(
                   'Optional, kebab-case. If not inputted, it will be taken from the "Title" field. Maximum characters: 100.'
@@ -54344,101 +54356,105 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("jet-input-error", {
-                staticClass: "mt-2",
-                attrs: { message: _vm.form.error("slug") }
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.slug }
               })
             ],
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-4" }, [
-            _vm._v("\n                Type\n                "),
-            _c("div", { staticClass: "text-sm text-gray-500" }, [
-              _vm._v("Select post type. Required.")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex my-2" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "mr-4 flex items-center",
-                  on: {
-                    click: function($event) {
-                      _vm.form.type = "post"
-                    }
-                  }
-                },
-                [
-                  _c("input", {
-                    staticClass: "mr-2 w-4 h-4",
-                    attrs: { type: "radio", name: "type", id: "post" }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "post" } }, [_vm._v("Post")])
-                ]
-              ),
+          _c(
+            "div",
+            { staticClass: "mb-4" },
+            [
+              _vm._v("\n                    Type\n                    "),
+              _c("div", { staticClass: "text-sm text-gray-500" }, [
+                _vm._v("Select post type. Required.")
+              ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "mr-4 flex items-center",
-                  on: {
-                    click: function($event) {
-                      _vm.form.type = "primary_post"
+              _c("div", { staticClass: "flex my-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "mr-4 flex items-center",
+                    on: {
+                      click: function($event) {
+                        _vm.form.type = "post"
+                      }
                     }
-                  }
-                },
-                [
-                  _c("input", {
-                    staticClass: "mr-2 w-4 h-4",
-                    attrs: { type: "radio", name: "type", id: "primary_post" }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "primary_post" } }, [
-                    _vm._v("Primary Post")
-                  ])
-                ]
-              ),
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "mr-2 w-4 h-4",
+                      attrs: { type: "radio", name: "type", id: "post" }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "post" } }, [_vm._v("Post")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "mr-4 flex items-center",
+                    on: {
+                      click: function($event) {
+                        _vm.form.type = "primary_post"
+                      }
+                    }
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "mr-2 w-4 h-4",
+                      attrs: { type: "radio", name: "type", id: "primary_post" }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "primary_post" } }, [
+                      _vm._v("Primary Post")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "mr-4 flex items-center",
+                    on: {
+                      click: function($event) {
+                        _vm.form.type = "front_page_post"
+                      }
+                    }
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "mr-2 w-4 h-4",
+                      attrs: {
+                        type: "radio",
+                        name: "type",
+                        id: "front_page_post"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "front_page_post" } }, [
+                      _vm._v("Front Page Post")
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "mr-4 flex items-center",
-                  on: {
-                    click: function($event) {
-                      _vm.form.type = "front_page_post"
-                    }
-                  }
-                },
-                [
-                  _c("input", {
-                    staticClass: "mr-2 w-4 h-4",
-                    attrs: {
-                      type: "radio",
-                      name: "type",
-                      id: "front_page_post"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "front_page_post" } }, [
-                    _vm._v("Front Page Post")
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.errors, function(error) {
-            return _c("div", [
-              _vm._v("\n                " + _vm._s(error) + "\n            ")
-            ])
-          }),
+              _c("jet-input-error", {
+                staticClass: "mt-1",
+                attrs: { message: _vm.errors.type }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("jet-button", { staticClass: "mb-4", attrs: { type: "submit" } }, [
             _vm._v("Post")
           ])
         ],
-        2
+        1
       )
     ])
   ])

@@ -28,6 +28,7 @@
                         </template>
                     </jet-dropdown>
                     <div class="text-sm text-gray-500">Select a category of the post. Required.</div>
+                    <jet-input-error :message="errors.type" class="mt-1" />
                 </div>
 
                 <!--Title-->
@@ -35,7 +36,7 @@
                     Title
                     <div class="text-sm text-gray-500">Must be unique, maximum characters: 200. Required.</div>
                     <jet-input id="title" type="text" class="mt-1 block w-full font-serif" v-model="form.title" autocomplete="title" />
-                    <jet-input-error :message="form.error('title')" class="mt-2" />
+                    <jet-input-error :message="errors.title" class="mt-1"/>
                 </div>
 
                 <!--Brief-->
@@ -43,7 +44,7 @@
                     Brief
                     <div class="text-sm mb-1 text-gray-500">Short description of the post. Maximum characters: 200. Required.</div>
                     <textarea class="bg-gray-100 outline-none px-2 py-2 font-serif" v-model="form.brief" name="brief" id="brief" rows="3"></textarea>
-                    <jet-input-error :message="form.error('brief')" class="mt-2" />
+                    <jet-input-error :message="errors.brief" class="mt-1" />
                 </div>
 
                 <!-- Image -->
@@ -56,7 +57,7 @@
                            @change="updateImagePreview">
 
                     <!-- New Image Preview -->
-                    <div class="mt-2" v-show="imagePreview">
+                    <div class="mt-1" v-show="imagePreview">
                         <img class="w-full" :src="imagePreview" alt="">
                     </div>
 
@@ -64,7 +65,7 @@
                         Select An Image
                     </jet-secondary-button>
 
-                    <jet-input-error :message="form.error('image')" class="mt-2" />
+                    <jet-input-error :message="errors.image" class="mt-1" />
                 </div>
 
                 <!--Image Description-->
@@ -72,7 +73,7 @@
                     Image Description
                     <div class="text-sm text-gray-500">Brief description of the picture. Maximum characters: 100. Required.</div>
                     <jet-input id="image_description" type="text" class="mt-1 block w-full font-serif" v-model="form.image_description" autocomplete="image_description" />
-                    <jet-input-error :message="form.error('image_description')" class="mt-2" />
+                    <jet-input-error :message="errors.image_description" class="mt-1" />
                 </div>
 
                 <!--Body-->
@@ -80,7 +81,7 @@
                     Body
                     <div class="text-sm mb-1 text-gray-500">Optional</div>
                     <textarea class="bg-gray-100 outline-none px-2 py-2 font-serif" v-model="form.body" name="body" id="body" cols="10" rows="10"></textarea>
-                    <jet-input-error :message="form.error('body')" class="mt-2" />
+                    <jet-input-error :message="errors.body" class="mt-1" />
                 </div>
 
                 <!--Slug-->
@@ -88,7 +89,7 @@
                     Slug
                     <div class="text-sm text-gray-500">Optional, kebab-case. If not inputted, it will be taken from the "Title" field. Maximum characters: 100.</div>
                     <jet-input id="slug" type="text" class="mt-1 block w-full font-serif" v-model="form.slug" autocomplete="slug" />
-                    <jet-input-error :message="form.error('slug')" class="mt-2" />
+                    <jet-input-error :message="errors.slug" class="mt-1" />
                 </div>
 
                 <!--Type-->
@@ -96,7 +97,6 @@
                     Type
                     <div class="text-sm text-gray-500">Select post type. Required.</div>
                     <div class="flex my-2">
-
                         <div @click="form.type = 'post'" class="mr-4 flex items-center">
                             <input class="mr-2 w-4 h-4" type="radio" name="type" id="post">
                             <label for="post">Post</label>
@@ -112,11 +112,16 @@
                             <label for="front_page_post">Front Page Post</label>
                         </div>
                     </div>
+                    <jet-input-error :message="errors.type" class="mt-1" />
                 </div>
 
-                <div v-for="error in errors">
-                    {{error}}
-                </div>
+<!--                {{ errors.title }}-->
+
+<!--                <div v-if="errors" class="text-red-600">-->
+<!--                    <div class="ml-4 text-sm" v-for="error in errors">-->
+<!--                        - {{error}}-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <jet-button class="mb-4" type="submit">Post</jet-button>
             </form>
@@ -148,7 +153,7 @@ export default {
                 body: null,
                 slug: null,
                 is_published: true,
-                type: 'post',
+                type: null,
                 category_id: null,
                 // user_id: 1,
                 // primary_post: null,

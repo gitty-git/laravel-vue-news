@@ -158,7 +158,8 @@ class PostsController extends Controller
 
         $messages = [
             'title.unique' => 'The title ":input" has already been taken.',
-            'slug.unique' => 'The slug ":input" has already been taken.'
+            'slug.unique' => 'The slug ":input" has already been taken.',
+            'category_id.required' => 'The category field is required.'
         ];
 
         return request()->validate([
