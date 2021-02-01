@@ -1,60 +1,3 @@
-<script>
-import NewsLayout from "@/Layouts/NewsLayout";
-export default {
-    name: "User",
-    layout: NewsLayout,
-    props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
-    data() {
-        return {
-            localPosts: this.posts,
-            localComments: this.comments
-        }
-    },
-    methods: {
-        scrollTo() {
-            document.getElementById('comments').scrollIntoView();
-        },
-        loadMorePosts() {
-            if (this.localPosts.next_page_url) {
-                axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
-                    console.log(response)
-                    this.localPosts = {
-                        ...response.data,
-                        data: [...this.localPosts.data, ...response.data.data]
-                    }
-                })
-            }
-        },
-        loadMoreComments() {
-            if (this.localComments.next_page_url) {
-                axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments'}}).then(response => {
-                    console.log(response)
-                    this.localComments = {
-                        ...response.data,
-                        data: [...this.localComments.data, ...response.data.data]
-                    }
-                })
-            }
-        }
-    },
-    computed: {
-        showComments() {
-            return this.comments
-        }
-    }
-}
-</script>
-
-<style scoped>
-.w-720 {
-    width: 720px;
-}
-
-.last-border-none:last-child {
-    border-bottom: none;
-}
-</style>
-
 <template>
     <div>
         {{user.email}}
@@ -114,7 +57,7 @@ export default {
                     >
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                             <div class="flex">
-                                <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
 
                                 <div class="flex w-2/3 flex-col">
                                     <div class="font-bold mb-2">{{ post.title }}</div>
@@ -145,7 +88,7 @@ export default {
                          class="border-gray-200 border-b-2 py-4 first-child last-child">
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                             <div class="flex">
-                                <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
                                 <div class="flex w-2/3 flex-col">
                                     <div class="font-bold mb-2">{{ post.title }}</div>
 
@@ -212,7 +155,7 @@ export default {
 
                     <div class="w-1/2 pl-4 border-l-2 border-gray-200">
                         <inertia-link :href="'/post/' + comment.post.slug"  class="flex hover:text-gray-600 duration-200">
-                            <img class="w-1/4 mr-4" :src="comment.post.image" alt="">
+                            <img class="w-1/4 mr-4" :src="'/storage/' + comment.post.image" alt="">
                             <div>
                                 <div class="font-serif font-bold mb-2">{{comment.post.title}}</div>
                                 <div class="font-sans text-xs uppercase text-gray-400">by {{comment.post.user.name}}</div>
@@ -233,3 +176,60 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+import NewsLayout from "@/Layouts/NewsLayout";
+export default {
+    name: "User",
+    layout: NewsLayout,
+    props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
+    data() {
+        return {
+            localPosts: this.posts,
+            localComments: this.comments
+        }
+    },
+    methods: {
+        scrollTo() {
+            document.getElementById('comments').scrollIntoView();
+        },
+        loadMorePosts() {
+            if (this.localPosts.next_page_url) {
+                axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
+                    console.log(response)
+                    this.localPosts = {
+                        ...response.data,
+                        data: [...this.localPosts.data, ...response.data.data]
+                    }
+                })
+            }
+        },
+        loadMoreComments() {
+            if (this.localComments.next_page_url) {
+                axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments'}}).then(response => {
+                    console.log(response)
+                    this.localComments = {
+                        ...response.data,
+                        data: [...this.localComments.data, ...response.data.data]
+                    }
+                })
+            }
+        }
+    },
+    computed: {
+        showComments() {
+            return this.comments
+        }
+    }
+}
+</script>
+
+<style scoped>
+.w-720 {
+    width: 720px;
+}
+
+.last-border-none:last-child {
+    border-bottom: none;
+}
+</style>

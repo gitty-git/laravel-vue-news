@@ -21,7 +21,8 @@ class PostsController extends Controller
 
     public function create()
     {
-        return Inertia::render('Post/Create');
+        $categories = Category::query()->get(['id', 'name']);
+        return Inertia::render('Post/Create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -158,7 +159,7 @@ class PostsController extends Controller
             'is_published' => 'required',
             'type' => 'required',
             'category_id' => 'required',
-            'user_id' => 'required' #Auth::user()->id
+            'user_id' => 'required'
         ]);
     }
 

@@ -14,6 +14,10 @@
                 <jet-input-error :message="form.error('brief')" class="mt-2" />
             </div>
 
+            <div>
+                <select name="" id=""></select>
+            </div>
+
             <!-- Image -->
             <div class="col-span-6 sm:col-span-4">
                 <!-- Image File Input -->
@@ -50,34 +54,41 @@
 
 <!--            <jet-input class="mb-2" v-model="form.image_description" type="text" name="image_description"></jet-input>-->
             <div class="flex my-2">
-                <div class="mr-4 flex items-center">
-                    <input class="mr-2 w-5 h-5" v-model="form.type = 'post'" type="radio" name="type" id="post">
+                <div @click="form.type = 'post'" class="mr-4 flex items-center">
+                    <input class="mr-2 w-5 h-5" type="radio" name="type" id="post">
                     <label for="post">Post</label>
                 </div>
 
-                <div class="mr-4 flex items-center">
-                    <input class="mr-2 w-5 h-5" v-model="form.type = 'primary_post'" type="radio" name="type" id="primary_post">
+                <div  @click="form.type = 'primary_post'" class="mr-4 flex items-center">
+                    <input class="mr-2 w-5 h-5" type="radio" name="type" id="primary_post">
                     <label for="primary_post">Primary Post</label>
                 </div>
 
-                <div class="mr-4 flex items-center">
-                    <input class="mr-2 w-5 h-5" v-model="form.type = 'front_page_post'" type="radio" name="type" id="front_page_post">
+                <div  @click="form.type = 'front_page_post'" class="mr-4 flex items-center">
+                    <input class="mr-2 w-5 h-5" type="radio" name="type" id="front_page_post">
                     <label for="front_page_post">Front Page Post</label>
                 </div>
             </div>
 
+            <jet-dropdown align="left" width="48">
+                <template #trigger>
+                    <div class="flex cursor-pointer items-center hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                        <div v-if="form.category_id === null">Category</div>
+                        <div v-else>{{ categoryName }}</div>
+                        <div class="ml-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </template>
 
-<!--            <div class="mt-2 flex">-->
-<!--                <div class="w-5 h-5 bg-gray-100 rounded-full">-->
-<!--                    <div v-if=""></div>-->
-<!--                </div>-->
-<!--                <div class="w-5 h-5 bg-gray-100 rounded-full">-->
-<!--                    <div v-if=""></div>-->
-<!--                </div>-->
-<!--                <div class="w-5 h-5 bg-gray-100 rounded-full">-->
-<!--                    <div v-if=""></div>-->
-<!--                </div>-->
-<!--            </div>-->
+                <template #content>
+                    <div v-for="category in categories">
+                        <div @click="form.category_id = category.id; categoryName = category.name" class="hover:bg-gray-100 duration-200 cursor-pointer py-2 px-4">{{ category.name }}</div>
+                    </div>
+                </template>
+            </jet-dropdown>
 
 
             <div v-for="error in errors">
@@ -95,11 +106,12 @@ import JetButton from '@/Jetstream/Button'
 import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 import JetInput from "@/Jetstream/Input";
 import ProfileLayout from "@/Layouts/ProfileLayout";
+import JetDropdown from "@/Jetstream/Dropdown";
 
 export default {
     layout: ProfileLayout,
-    components: {JetButton, JetSecondaryButton, JetInput, JetInputError},
-    props: ["errors"],
+    components: {JetButton, JetSecondaryButton, JetInput, JetInputError, JetDropdown},
+    props: ["errors", "categories"],
     name: "Create",
     data() {
         return {
@@ -111,8 +123,8 @@ export default {
                 body: null,
                 slug: null,
                 is_published: true,
-                type: null,
-                category_id: 1,
+                type: 'post',
+                category_id: null,
                 // user_id: 1,
                 // primary_post: null,
                 // front_page_post: null,

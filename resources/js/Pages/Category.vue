@@ -7,7 +7,7 @@
             <div v-for="post in primaryPosts" class="font-serif last-only w-1/2">
                 <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                     <div class="flex">
-                        <img class="w-1/2 mr-4 h-full" :src="post.image" alt="">
+                        <img class="w-1/2 mr-4 h-full" :src="'/storage/' + post.image" alt="">
 
                         <div class="flex w-1/2 flex-col">
                             <div class="font-bold text-lg mb-2 w-full">{{ post.title }}</div>
@@ -43,7 +43,7 @@
                 >
                     <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
-                            <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                            <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
 
                             <div class="flex w-2/3 flex-col">
                                 <div class="font-bold mb-2">{{ post.title }}</div>
@@ -74,7 +74,7 @@
                      class="border-gray-200 border-b-2 py-4 first-child last-child">
                     <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                         <div class="flex">
-                            <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                            <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
                             <div class="flex w-2/3 flex-col">
                                 <div class="font-bold mb-2">{{ post.title }}</div>
 

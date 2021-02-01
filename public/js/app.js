@@ -4951,6 +4951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
 /* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
 /* harmony import */ var _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Layouts/ProfileLayout */ "./resources/js/Layouts/ProfileLayout.vue");
+/* harmony import */ var _Jetstream_Dropdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/Dropdown */ "./resources/js/Jetstream/Dropdown.vue");
 //
 //
 //
@@ -5042,6 +5043,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -5053,9 +5066,10 @@ __webpack_require__.r(__webpack_exports__);
     JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__["default"],
     JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__["default"],
     JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__["default"],
-    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_0__["default"]
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_0__["default"],
+    JetDropdown: _Jetstream_Dropdown__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  props: ["errors"],
+  props: ["errors", "categories"],
   name: "Create",
   data: function data() {
     return {
@@ -5067,8 +5081,8 @@ __webpack_require__.r(__webpack_exports__);
         body: null,
         slug: null,
         is_published: true,
-        type: null,
-        category_id: 1 // user_id: 1,
+        type: 'post',
+        category_id: null // user_id: 1,
         // primary_post: null,
         // front_page_post: null,
 
@@ -6462,6 +6476,185 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "User",
@@ -6701,7 +6894,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".w-720[data-v-777c8574] {\n  width: 720px;\n}\n.last-border-none[data-v-777c8574]:last-child {\n  border-bottom: none;\n}\r\n", ""]);
+exports.push([module.i, ".w-720[data-v-777c8574] {\n  width: 720px;\n}\n.last-border-none[data-v-777c8574]:last-child {\n  border-bottom: none;\n}\n", ""]);
 
 // exports
 
@@ -50743,7 +50936,7 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass:
-                                      "flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                                      "flex items-center text-sm font-medium hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
                                   },
                                   [
                                     _c("div", [
@@ -51725,7 +51918,7 @@ var render = function() {
                 _c("div", { staticClass: "flex" }, [
                   _c("img", {
                     staticClass: "w-1/2 mr-4 h-full",
-                    attrs: { src: post.image, alt: "" }
+                    attrs: { src: "/storage/" + post.image, alt: "" }
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "flex w-1/2 flex-col" }, [
@@ -51813,7 +52006,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -51898,7 +52091,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -52109,7 +52302,7 @@ var render = function() {
                         _c("div", { staticClass: "flex" }, [
                           _c("img", {
                             staticClass: "w-1/3 h-full mr-4 mb-4",
-                            attrs: { src: post.image, alt: "" }
+                            attrs: { src: "/storage/" + post.image, alt: "" }
                           }),
                           _vm._v(" "),
                           _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -52197,7 +52390,7 @@ var render = function() {
                         _c("div", { staticClass: "flex" }, [
                           _c("img", {
                             staticClass: "w-1/3 h-full mr-4 mb-4",
-                            attrs: { src: post.image, alt: "" }
+                            attrs: { src: "/storage/" + post.image, alt: "" }
                           }),
                           _vm._v(" "),
                           _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -52381,7 +52574,10 @@ var render = function() {
                       [
                         _c("img", {
                           staticClass: "w-1/4 mr-4",
-                          attrs: { src: comment.post.image, alt: "" }
+                          attrs: {
+                            src: "/storage/" + comment.post.image,
+                            alt: ""
+                          }
                         }),
                         _vm._v(" "),
                         _c("div", [
@@ -53811,6 +54007,8 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "col-span-6 sm:col-span-4" },
@@ -53931,83 +54129,143 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "flex my-2" }, [
-          _c("div", { staticClass: "mr-4 flex items-center" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: (_vm.form.type = "post"),
-                  expression: "form.type = 'post'"
-                }
-              ],
-              staticClass: "mr-2 w-5 h-5",
-              attrs: { type: "radio", name: "type", id: "post" },
-              domProps: { checked: _vm._q((_vm.form.type = "post"), null) },
+          _c(
+            "div",
+            {
+              staticClass: "mr-4 flex items-center",
               on: {
-                change: function($event) {
-                  return _vm.$set(_vm.form, "type = 'post'", null)
+                click: function($event) {
+                  _vm.form.type = "post"
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "post" } }, [_vm._v("Post")])
-          ]),
+            },
+            [
+              _c("input", {
+                staticClass: "mr-2 w-5 h-5",
+                attrs: { type: "radio", name: "type", id: "post" }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "post" } }, [_vm._v("Post")])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "mr-4 flex items-center" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: (_vm.form.type = "primary_post"),
-                  expression: "form.type = 'primary_post'"
-                }
-              ],
-              staticClass: "mr-2 w-5 h-5",
-              attrs: { type: "radio", name: "type", id: "primary_post" },
-              domProps: {
-                checked: _vm._q((_vm.form.type = "primary_post"), null)
-              },
+          _c(
+            "div",
+            {
+              staticClass: "mr-4 flex items-center",
               on: {
-                change: function($event) {
-                  return _vm.$set(_vm.form, "type = 'primary_post'", null)
+                click: function($event) {
+                  _vm.form.type = "primary_post"
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "primary_post" } }, [
-              _vm._v("Primary Post")
-            ])
-          ]),
+            },
+            [
+              _c("input", {
+                staticClass: "mr-2 w-5 h-5",
+                attrs: { type: "radio", name: "type", id: "primary_post" }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "primary_post" } }, [
+                _vm._v("Primary Post")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "mr-4 flex items-center" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: (_vm.form.type = "front_page_post"),
-                  expression: "form.type = 'front_page_post'"
-                }
-              ],
-              staticClass: "mr-2 w-5 h-5",
-              attrs: { type: "radio", name: "type", id: "front_page_post" },
-              domProps: {
-                checked: _vm._q((_vm.form.type = "front_page_post"), null)
-              },
+          _c(
+            "div",
+            {
+              staticClass: "mr-4 flex items-center",
               on: {
-                change: function($event) {
-                  return _vm.$set(_vm.form, "type = 'front_page_post'", null)
+                click: function($event) {
+                  _vm.form.type = "front_page_post"
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "front_page_post" } }, [
-              _vm._v("Front Page Post")
-            ])
-          ])
+            },
+            [
+              _c("input", {
+                staticClass: "mr-2 w-5 h-5",
+                attrs: { type: "radio", name: "type", id: "front_page_post" }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "front_page_post" } }, [
+                _vm._v("Front Page Post")
+              ])
+            ]
+          )
         ]),
+        _vm._v(" "),
+        _c("jet-dropdown", {
+          attrs: { align: "left", width: "48" },
+          scopedSlots: _vm._u([
+            {
+              key: "trigger",
+              fn: function() {
+                return [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "flex cursor-pointer items-center hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                    },
+                    [
+                      _vm.form.category_id === null
+                        ? _c("div", [_vm._v("Category")])
+                        : _c("div", [_vm._v(_vm._s(_vm.categoryName))]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ml-1" }, [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "fill-current h-4 w-4",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 20 20"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                "fill-rule": "evenodd",
+                                d:
+                                  "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z",
+                                "clip-rule": "evenodd"
+                              }
+                            })
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              },
+              proxy: true
+            },
+            {
+              key: "content",
+              fn: function() {
+                return _vm._l(_vm.categories, function(category) {
+                  return _c("div", [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "hover:bg-gray-100 duration-200 cursor-pointer py-2 px-4",
+                        on: {
+                          click: function($event) {
+                            _vm.form.category_id = category.id
+                            _vm.categoryName = category.name
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(category.name))]
+                    )
+                  ])
+                })
+              },
+              proxy: true
+            }
+          ])
+        }),
         _vm._v(" "),
         _vm._l(_vm.errors, function(error) {
           return _c("div", [
@@ -54023,7 +54281,14 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("select", { attrs: { name: "", id: "" } })])
+  }
+]
 render._withStripped = true
 
 
@@ -56284,7 +56549,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -56370,7 +56635,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -56541,7 +56806,10 @@ var render = function() {
                     [
                       _c("img", {
                         staticClass: "w-1/4 mr-4",
-                        attrs: { src: comment.post.image, alt: "" }
+                        attrs: {
+                          src: "/storage/" + comment.post.image,
+                          alt: ""
+                        }
                       }),
                       _vm._v(" "),
                       _c("div", [

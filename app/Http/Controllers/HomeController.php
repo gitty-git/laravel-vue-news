@@ -13,7 +13,8 @@ class HomeController extends Controller
     {
         $categories = Category::query()->get();
 
-        $frontPagePosts = Post::query()->where('is_published', 1)
+        $frontPagePosts = Post::query()
+            ->where('is_published', 1)
             ->where('type', 'front_page_post')
             ->latest()->limit(3)->get();
 

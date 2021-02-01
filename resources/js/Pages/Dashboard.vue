@@ -51,7 +51,7 @@
                     >
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                             <div class="flex">
-                                <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
 
                                 <div class="flex w-2/3 flex-col">
                                     <div class="font-bold mb-2">{{ post.title }}</div>
@@ -82,7 +82,7 @@
                          class="border-gray-200 border-b-2 py-4 first-child last-child">
                         <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                             <div class="flex">
-                                <img class="w-1/3 h-full mr-4 mb-4" :src="post.image" alt="">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
                                 <div class="flex w-2/3 flex-col">
                                     <div class="font-bold mb-2">{{ post.title }}</div>
 
@@ -151,7 +151,7 @@
 
                     <div class="w-1/2 pl-4 border-l-2 border-gray-200">
                         <inertia-link :href="'/post/' + comment.post.slug"  class="flex hover:text-gray-600 duration-200">
-                            <img class="w-1/4 mr-4" :src="comment.post.image" alt="">
+                            <img class="w-1/4 mr-4" :src="'/storage/' + comment.post.image" alt="">
                             <div>
                                 <div class="font-serif font-bold mb-2">{{comment.post.title}}</div>
                                 <div class="font-sans text-xs uppercase text-gray-400">by {{comment.post.user.name}}</div>
