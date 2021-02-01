@@ -8,8 +8,10 @@ use App\Models\CommentReply;
 use App\Models\Post;
 use App\Models\User;
 use App\Rules\ImageRatio;
+use App\Rules\SlugRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PostsController extends Controller
@@ -148,26 +150,34 @@ class PostsController extends Controller
 
     protected function validateRequest()
     {
-        \request()['user_id'] = Auth::user()->id;
-        return \request()->validate([
-            'title' => 'required',
-            'brief' => 'required',
-//            'image' => 'required|image|max:5000|',
+        if (!request()->slug) {
+            request()['slug'] = Str::slug(request()->title, '-');
+        }
+
+        request()['user_id'] = Auth::user()->id;
+
+        $messages = [
+            'title.unique' => 'The title ":input" has already been taken.',
+            'slug.unique' => 'The slug ":input" has already been taken.'
+        ];
+
+        return request()->validate([
+            'category_id' => 'required',
+            'title' => 'required|max:100|unique:posts,title',
+            'brief' => 'required|max:200',
             'image' => ['required', 'image','max:5000', new ImageRatio],
-            'body' => 'required',
-            'slug' => 'required',
+            'image_description' => 'required|max:100',
+            'slug' => ['max:100', 'unique:posts,slug', new SlugRule],
             'is_published' => 'required',
             'type' => 'required',
-            'category_id' => 'required',
             'user_id' => 'required'
-        ]);
+        ], $messages);
     }
-
     private function storeImage($post)
     {
-        if (\request()->has('image')) {
+        if (request()->has('image')) {
             $post->update([
-                'image' => \request()->image->store('posts', 'public')
+                'image' => request()->image->store('posts', 'public')
             ]);
         };
     }

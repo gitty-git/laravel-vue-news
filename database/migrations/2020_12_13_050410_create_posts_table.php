@@ -18,9 +18,9 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->string('title', 100);
             $table->string('brief', 200);
-            $table->string('image');
-            $table->string('image_description')->nullable();
-            $table->text('body');
+            $table->string('image', 100);
+            $table->string('image_description');
+            $table->text('body')->nullable();
             $table->string('slug')->unique();
             $table->enum('is_published', [1, 0])->default(1);
             $table->enum('type', ['post', 'primary_post', 'front_page_post'])->default('post');
