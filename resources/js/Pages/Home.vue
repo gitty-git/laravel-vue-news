@@ -9,7 +9,7 @@
 
                     <div class="text-13 text-gray-600">{{ firstPrimaryPost.brief }}</div>
 
-                    <div class="mt-4 bg-gray-100">
+                    <div class="mt-4">
                         <img class="w-full" :src="'/storage/' + firstPrimaryPost.image" alt="">
 
                         <div class="mt-2 w-full text-xs text-gray-400 text-right">
@@ -29,7 +29,7 @@
                         <div class="text-13 text-gray-600">{{ secondPrimaryPost.brief }}</div>
 
                         <div class="mt-4">
-                            <img :src="secondPrimaryPost.image" alt="">
+                            <img :src="'/storage/' + secondPrimaryPost.image" alt="">
 
                             <div class="mt-2 w-full text-xs text-gray-400 text-right">
                                 {{ secondPrimaryPost.image_description }}
@@ -65,7 +65,7 @@
                             <inertia-link :href="'/post/' + post.slug">
                                 <div class="border-r-2 hover:text-gray-600 duration-200 h-full -ml-4 mr-4 px-4 border-gray-200">
                                     <div class="mb-4">
-                                        <img :src="post.image" alt="" class="w-full">
+                                        <img :src="'/storage/' + post.image" alt="" class="w-full">
                                         <!--                                            <div class="mt-2 w-full text-xs text-gray-400 text-right">{{ post.image_description }}</div>-->
                                     </div>
 

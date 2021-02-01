@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\Post;
 use App\Models\User;
+use App\Rules\ImageRatio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -150,7 +151,8 @@ class PostsController extends Controller
         return \request()->validate([
             'title' => 'required',
             'brief' => 'required',
-            'image' => 'required|image|max:5000',
+//            'image' => 'required|image|max:5000|',
+            'image' => ['required', 'image','max:5000', new ImageRatio],
             'body' => 'required',
             'slug' => 'required',
             'is_published' => 'required',

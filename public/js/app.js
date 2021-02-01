@@ -53494,7 +53494,7 @@ var render = function() {
                 _vm._v(_vm._s(_vm.firstPrimaryPost.brief))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "mt-4 bg-gray-100" }, [
+              _c("div", { staticClass: "mt-4" }, [
                 _c("img", {
                   staticClass: "w-full",
                   attrs: {
@@ -53550,7 +53550,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "mt-4" }, [
                     _c("img", {
-                      attrs: { src: _vm.secondPrimaryPost.image, alt: "" }
+                      attrs: {
+                        src: "/storage/" + _vm.secondPrimaryPost.image,
+                        alt: ""
+                      }
                     }),
                     _vm._v(" "),
                     _c(
@@ -53644,7 +53647,10 @@ var render = function() {
                             _c("div", { staticClass: "mb-4" }, [
                               _c("img", {
                                 staticClass: "w-full",
-                                attrs: { src: post.image, alt: "" }
+                                attrs: {
+                                  src: "/storage/" + post.image,
+                                  alt: ""
+                                }
                               })
                             ]),
                             _vm._v(" "),
