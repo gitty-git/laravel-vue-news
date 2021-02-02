@@ -12,40 +12,38 @@
                         <div class="ml-3 relative">
                             <jet-dropdown align="right" width="48">
                                 <template #trigger>
-                                    <button class="flex items-center text-sm font-medium hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    <button
+                                        class="flex items-center text-sm font-medium hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                                         <div>{{ $page.user.name }}</div>
 
                                         <div class="ml-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                      clip-rule="evenodd"/>
                                             </svg>
                                         </div>
                                     </button>
                                 </template>
 
-                                <template #content>
-                                    <!-- Account Management -->
-<!--                                    <div class="block px-4 py-2 text-xs text-gray-400">-->
-<!--                                        Manage Account-->
-<!--                                    </div>-->
-                                    <jet-dropdown-link :href="route('profile.show')">
-                                        Favorites
+                                <template #content v-if="roles">
+                                    <jet-dropdown-link v-if="roles.filter(o => o.role === 'admin').length > 0"
+                                                       :href="route('profile.show')">
+                                        Administration
                                     </jet-dropdown-link>
 
-                                    <jet-dropdown-link :href="route('profile.show')">
+                                    <jet-dropdown-link :href="route('posts.create')"
+                                                       v-if="roles.filter(o => o.role === 'redactor').length > 0 || roles.filter(o => o.role === 'admin').length">
+                                        Redaction
+                                    </jet-dropdown-link>
+
+                                    <jet-dropdown-link :href="route('my-activity.index')">
                                         My Activity
                                     </jet-dropdown-link>
 
                                     <jet-dropdown-link :href="route('profile.show')">
                                         Edit Profile
-                                    </jet-dropdown-link>
-
-                                    <jet-dropdown-link :href="route('profile.show')">
-                                        Administration
-                                    </jet-dropdown-link>
-
-                                    <jet-dropdown-link :href="route('profile.show')">
-                                        Redaction
                                     </jet-dropdown-link>
 
                                     <!-- Authentication -->
@@ -62,7 +60,7 @@
 
             </div>
 
-<!--            <top-menu class="bg-white"/>-->
+            <!--            <top-menu class="bg-white"/>-->
             <div class="border-t-4 border-gray-400 w-full"></div>
 
             <slot/>
@@ -116,13 +114,12 @@
 </template>
 
 <script>
-import Dropdown from "@/Jetstream/Dropdown";
-import DropdownLink from "@/Jetstream/DropdownLink";
 import JetApplicationMark from "@/Jetstream/ApplicationMark";
 import JetDropdown from "@/Jetstream/Dropdown";
 import JetDropdownLink from "@/Jetstream/DropdownLink";
 import JetNavLink from "@/Jetstream/NavLink";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink";
+
 export default {
     name: "ProfileLayout",
     components: {
@@ -132,16 +129,16 @@ export default {
         JetNavLink,
         JetResponsiveNavLink,
     },
+    data() {
+        return {
+            user: null,
+            roles: null,
+        }
+    },
     mounted() {
         axios.get('/user').then(res => this.user = res.data)
+        axios.get('/roles').then(res => this.roles = res.data)
     },
-    methods: {
-        logout() {
-            axios.post(route('logout').url()).then(response => {
-                window.location = '/';
-            })
-        },
-    }
 }
 </script>
 

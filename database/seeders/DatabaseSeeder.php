@@ -13,6 +13,7 @@ use Database\Factories\PostLikeFactory;
 use Database\Factories\PostLikesFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,7 +44,7 @@ class DatabaseSeeder extends Seeder
         foreach ($categories as $cat) {
             Category::query()->create([
                 'name' => $cat,
-                'slug' => strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $cat)))
+                'slug' => Str::slug($cat)
             ]);
         }
 

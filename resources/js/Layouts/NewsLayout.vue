@@ -60,7 +60,13 @@
 <script>
 export default {
     name: "NewsLayout",
-
+    // methods: {
+    //     logout() {
+    //         axios.post(route('logout').url()).then(response => {
+    //             window.location = '/';
+    //         })
+    //     },
+    // }
 }
 </script>
 

@@ -6,14 +6,15 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
 
     public function index(Request $request)
     {
-        return $request->user();
+        return Auth::user();
     }
 
     public function create()
@@ -26,8 +27,7 @@ class UsersController extends Controller
         //
     }
 
-
-    public function show($id, Request $request)
+    public function show($id, Request $request): \Inertia\Response
     {
         $user = User::query()->where('id', $id)->with('roles')->firstOrFail();
 

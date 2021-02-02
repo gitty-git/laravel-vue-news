@@ -44,7 +44,7 @@ class DashboardSearchController extends Controller
             }
         }
 
-        return Inertia::render('DashboardSearchingPage',
+        return Inertia::render('DashboardSearching',
             compact('posts', 'postsCounted', 'search', 'comments', 'commentsCounted')
         );
     }

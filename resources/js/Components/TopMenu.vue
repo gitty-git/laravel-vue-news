@@ -36,9 +36,48 @@
                     <a class="hover:text-gray-500 mx-2 rounded duration-200" :href="'/register'">Register</a>
                 </div >
 
-                <a v-else class="hover:text-gray-500 rounded duration-200" :href="'/dashboard'">
-                    {{ user.name }}
-                </a>
+                <div v-else class="hover:text-gray-500 rounded duration-200">
+<!--                    {{ user.name }}-->
+                    <jet-dropdown align="right" width="48">
+                        <template #trigger>
+                            <button class="flex items-center text-sm font-medium hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div>{{ $page.user.name }}</div>
+
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </template>
+
+                        <template #content v-if="roles">
+                            <jet-dropdown-link v-if="roles.filter(o => o.role === 'admin').length > 0" :href="route('profile.show')">
+                                Administration
+                            </jet-dropdown-link>
+
+                            <jet-dropdown-link :href="route('posts.create')"
+                                               v-if="roles.filter(o => o.role === 'redactor').length > 0 || roles.filter(o => o.role === 'admin').length > 0">
+                                Redaction
+                            </jet-dropdown-link>
+
+                            <jet-dropdown-link :href="route('my-activity.index')">
+                                My Activity
+                            </jet-dropdown-link>
+
+                            <jet-dropdown-link :href="route('profile.show')">
+                                Edit Profile
+                            </jet-dropdown-link>
+
+                            <!-- Authentication -->
+                            <form @submit.prevent="logout">
+                                <jet-dropdown-link as="button">
+                                    Logout
+                                </jet-dropdown-link>
+                            </form>
+                        </template>
+                    </jet-dropdown>
+                </div>
             </div>
         </div>
 
@@ -47,17 +86,30 @@
 </template>
 
 <script>
+import JetDropdown from "@/Jetstream/Dropdown";
+import JetDropdownLink from "@/Jetstream/DropdownLink";
 export default {
     name: "TopMenu",
+    components: {JetDropdownLink, JetDropdown},
     data: () => ({
         user: null,
         categories: null,
-        searchInput: ''
+        searchInput: null,
+        roles: null,
     }),
     mounted() {
         axios.get('/user').then(res => this.user = res.data)
+        axios.get('/roles').then(res => this.roles = res.data)
         axios.get('/category').then(res => this.categories = res.data)
     },
+
+    methods: {
+        logout() {
+            axios.post(route('logout').url()).then(response => {
+                window.location = '/';
+            })
+        },
+    }
 }
 </script>
 

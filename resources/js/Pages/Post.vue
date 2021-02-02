@@ -155,6 +155,7 @@
                 </div>
             </div>
         </div>
+<!--        {{ post }}-->
     </div>
 </template>
 
@@ -175,14 +176,28 @@ export default {
 
     methods: {
         setPostLike() {
-            axios.post(`/posts/${this.post.id}/post-like`).then((res) => {
+            axios.post(`/post-like/${this.post.id}`).then((res) => {
                 this.localPostLikes = res.data.postLikesCount
                 this.localPostLiked = res.data.postLiked
             })
         },
 
+        // setPostLike() {
+        //     axios.post(route('post-like.store'), {id: this.post.id}).then((res) => {
+        //         this.localPostLikes = res.data.postLikesCount
+        //         this.localPostLiked = res.data.postLiked
+        //     })
+        // },
+
+        // setPostLike() {
+        //     this.$inertia.visit(route('post-like.store'), {method: 'post'}, {id: this.post.id}).then((res) => {
+        //         this.localPostLikes = res.data.postLikesCount
+        //         this.localPostLiked = res.data.postLiked
+        //     })
+        // },
+
         setCommentLike(id) {
-            axios.post(`/posts/${id}/comment-like`).then((res) => {
+            axios.post(`/comment-like/${id}`).then((res) => {
                 this.localComments.data.map(obj => {if (obj.id === res.data.comment.id) {
                     obj.liked = res.data.comment.liked
                     obj.likes_count = res.data.comment.likes_count
@@ -191,11 +206,10 @@ export default {
         },
 
         setCommentReplyLike(id) {
-            axios.post(`/posts/${id}/comment-reply-like`).then((res) => {
+            axios.post(`/comment-reply-like/${id}`).then((res) => {
                 console.log(res.data.commentReply.id)
                 this.localComments.data.map(obj => obj.comment_replies.map(obj2 => {
                     if (obj2.id === res.data.commentReply.id) {
-                        // console.log(res.data.commentReply.likes_count)
                         obj2.liked = res.data.commentReply.liked
                         obj2.likes = res.data.commentReply.likes
                     }

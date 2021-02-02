@@ -10,27 +10,35 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 
-class DashboardController extends Controller
+class MyActivity extends Controller
 {
     public function index(Request $request)
     {
-        $roles = Auth::user()->roles()->get();
         $commentsCounted = Auth::user()->comments()->count();
-        $postsCounted = Auth::user()->posts()->count();
+        $likedPostsCounted = Auth::user()->post_likes()->count();
 
         $posts = Auth::user()->posts()->latest()->paginate(6, ['*'], 'posts');
-        $comments = Auth::user()->comments()->latest()->with('post.user')->paginate(6, ['*'], 'comments');
+        $comments = Auth::user()->comments()->latest()->with('post.user')
+            ->withCount('likes')
+            ->withCount('comment_replies')->paginate(6, ['*'], 'comments');
+        $likedPosts = Auth::user()->post_likes()->latest()->paginate(6, ['*'], 'post_likes');
 
         if ($request->wantsJson()) {
-            if ($request->loadMoreType === 'morePosts') {
-                return $posts;
+            if ($request->loadMoreType === 'moreLikedPosts') {
+                return $likedPosts;
             }
             else if ($request->loadMoreType === 'moreComments') {
                 return $comments;
             }
         }
 
-        return Inertia::render('Dashboard', compact('roles', 'posts', 'comments', 'commentsCounted', 'postsCounted'));
+        return Inertia::render('MyActivity', compact(
+            'comments',
+            'commentsCounted',
+            'likedPosts',
+            'likedPostsCounted'
+
+        ));
     }
 
     public function admin()

@@ -1,6 +1,12 @@
 <template>
     <div class="">
-        <div class="uppercase mt-2 font-sans font-bold">Create Post</div>
+        <div class="uppercase mt-2 font-sans font-bold border-gray-200">
+            <span class="pr-2 mr-2 border-r-2">Create Post</span>
+
+            <inertia-link class="pr-2 mr-2 text-gray-400"
+                          :href="route('posts.index')">My Posts
+            </inertia-link>
+        </div>
         <div class="flex justify-center mt-2">
             <form @submit.prevent="storePost" class="flex flex-col create-width">
                 <!--Category-->
@@ -34,7 +40,7 @@
                 <!--Title-->
                 <div class="mb-4">
                     Title
-                    <div class="text-sm text-gray-500">Must be unique, maximum characters: 200. Required.</div>
+                    <div class="text-sm text-gray-500">Must be unique, maximum characters: 100. Required.</div>
                     <jet-input id="title" type="text" class="mt-1 block w-full font-serif" v-model="form.title" autocomplete="title" />
                     <jet-input-error :message="errors.title" class="mt-1"/>
                 </div>
@@ -115,13 +121,13 @@
                     <jet-input-error :message="errors.type" class="mt-1" />
                 </div>
 
-<!--                {{ errors.title }}-->
+                {{ errors.title }}
 
-<!--                <div v-if="errors" class="text-red-600">-->
-<!--                    <div class="ml-4 text-sm" v-for="error in errors">-->
-<!--                        - {{error}}-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div v-if="errors" class="text-red-600">
+                    <div class="ml-4 text-sm" v-for="error in errors">
+                        - {{error}}
+                    </div>
+                </div>
 
                 <jet-button class="mb-4" type="submit">Post</jet-button>
             </form>
@@ -155,9 +161,6 @@ export default {
                 is_published: true,
                 type: null,
                 category_id: null,
-                // user_id: 1,
-                // primary_post: null,
-                // front_page_post: null,
             }, {
                 bag: 'createPost',
                 resetOnSuccess: false,
@@ -171,7 +174,7 @@ export default {
                 this.form.image = this.$refs.image.files[0]
             }
 
-            this.form.post('/post/store', {
+            this.form.post(route('posts.store'), {
                 preserveScroll: true
             });
         },

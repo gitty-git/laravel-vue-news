@@ -42,7 +42,7 @@ class SearchController extends Controller
             }
         }
 
-        return Inertia::render('SearchingPage',
+        return Inertia::render('Searching',
             compact('posts', 'users', 'postsCounted', 'usersCounted', 'search')
         );
     }
