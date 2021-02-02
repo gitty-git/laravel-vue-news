@@ -52,15 +52,14 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $post = Post::where('id', $request->id);
-        $post->update($this->validateRequest());
-
+        $post = Post::where('id', $request->id)->update($this->validateRequest());
         $this->updateImage($post);
     }
 
     public function destroy(Post $post)
     {
-
+        $post->delete();
+        response($post);
     }
 
     protected function validateRequest(): array

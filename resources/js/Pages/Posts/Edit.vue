@@ -43,7 +43,7 @@
                 </div>
 
                 <!--Title-->
-                <div class="mb-4">
+                <div class="mb-4" id="scroll_to_title">
                     Title
                     <div class="text-sm text-gray-500">Must be unique, maximum characters: 100. Required.</div>
                     <jet-input id="title" type="text" class="mt-1 block w-full font-serif" v-model="form.title" autocomplete="title" />
@@ -131,15 +131,38 @@
                     <jet-input-error :message="errors.type" class="mt-1" />
                 </div>
 
-                {{ errors.title }}
+<!--                {{ errors.title }}-->
 
-                <div v-if="errors" class="text-red-600">
-                    <div class="ml-4 text-sm" v-for="error in errors">
-                        - {{error}}
+<!--                <div v-if="errors" class="text-red-600">-->
+<!--                    <div class="ml-4 text-sm" v-for="error in errors">-->
+<!--                        - {{error}}-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="flex">
+                    <jet-button class="mb-4 w-3/4 mr-2" type="submit">Update</jet-button>
+
+                    <div class="mb-4 w-1/4" v-if="deleteShowed === false" @click="deleteShowed = true">
+                        <jet-danger-button class="w-full">delete</jet-danger-button>
                     </div>
+
+                    <div class="w-1/4 mb-4 flex justify-center" v-if="deleteShowed === true">
+                        <div class="text-xs absolute -mt-6 duration-200">Are You Sure?</div>
+                        <div class="items-center w-full justify-center flex">
+                            <div class="border border-black hover:border-red-700 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs hover:text-white duration-200 rounded-full hover:bg-red-600 py-2"
+                                 @click="route('posts.destroy', { post })"
+                            >
+                                Yes
+                            </div>
+                            <div class="border border-black hover:border-gray-400 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs duration-200 rounded-full hover:text-gray-500 py-2"
+                                 @click="deleteShowed = false">No
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <jet-button class="mb-4" type="submit">Post</jet-button>
             </form>
         </div>
     </div>
@@ -152,14 +175,16 @@ import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 import JetInput from "@/Jetstream/Input";
 import ProfileLayout from "@/Layouts/ProfileLayout";
 import JetDropdown from "@/Jetstream/Dropdown";
+import JetDangerButton from "@/Jetstream/DangerButton";
 
 export default {
     layout: ProfileLayout,
-    components: {JetButton, JetSecondaryButton, JetInput, JetInputError, JetDropdown},
+    components: {JetButton, JetSecondaryButton, JetInput, JetInputError, JetDropdown, JetDangerButton},
     props: ["errors", "categories", "post"],
     name: "Edit",
     data() {
         return {
+            deleteShowed: false,
             form: this.$inertia.form({
                 '_method': 'PUT',
                 id: this.post.id,
@@ -185,25 +210,23 @@ export default {
                 this.form.image = this.$refs.image.files[0]
             }
 
-            return axios.put('/posts/update', this.form)
-
-            // this.form.post(route('posts.update'), {
-            //     preserveScroll: true
-            // });
+            this.form.post('/posts/update', {
+                preserveScroll: true
+            })
         },
 
         selectNewImage() {
-            this.$refs.image.click();
+            this.$refs.image.click()
         },
 
         updateImagePreview() {
-            const reader = new FileReader();
+            const reader = new FileReader()
 
             reader.onload = (e) => {
-                this.imagePreview = e.target.result;
+                this.imagePreview = e.target.result
             };
 
-            reader.readAsDataURL(this.$refs.image.files[0]);
+            reader.readAsDataURL(this.$refs.image.files[0])
         },
     }
 }

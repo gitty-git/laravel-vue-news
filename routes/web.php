@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
         Route::get('/posts/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
         Route::put('/posts/update', [PostsController::class, 'update'])->name('posts.update');
+        Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
 //        Route::resource('posts', PostsController::class)->only('index', 'create', 'store', 'edit', 'update');
     });
 

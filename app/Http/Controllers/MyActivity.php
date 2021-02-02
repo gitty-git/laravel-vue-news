@@ -36,7 +36,7 @@ class MyActivity extends Controller
             'comments',
             'commentsCounted',
             'likedPosts',
-            'likedPostsCounted'
+            'likedPostsCounted  '
 
         ));
     }
