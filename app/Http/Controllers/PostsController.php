@@ -11,7 +11,11 @@ use App\Rules\ImageRatio;
 use App\Rules\SlugRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class PostsController extends Controller
@@ -37,11 +41,11 @@ class PostsController extends Controller
         return Inertia::render('Posts/Create', compact('categories'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $post = Post::query()->create($this->validateRequest());
-
+        $post = Post::query()->create($this->validateRequest($request));
         $this->storeImage($post);
+        return redirect('posts')->with('Posted');
     }
 
     public function edit(Post $post)
@@ -52,23 +56,24 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $post = Post::where('id', $request->id)->update($this->validateRequest());
-        $this->updateImage($post);
+        $post->update($this->validateRequest($request, $post->image));
+        $this->storeImage($post);
+        return redirect('posts')->with('Updated');
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        response($post);
+        return redirect('/posts');
     }
 
-    protected function validateRequest(): array
+    protected function validateRequest($request, $post = null): array
     {
-        if (!request()->slug) {
-            request()['slug'] = Str::slug(request()->title, '-');
+        if (!$request->slug) {
+            $request['slug'] = Str::slug($request->title, '-');
         }
 
-        request()['user_id'] = Auth::user()->id;
+        $request['user_id'] = Auth::user()->id;
 
         $messages = [
             'title.unique' => 'The title ":input" has already been taken.',
@@ -76,13 +81,13 @@ class PostsController extends Controller
             'category_id.required' => 'The category field is required.'
         ];
 
-        return request()->validate([
+        return $request->validate([
             'category_id' => 'required',
-            'title' => 'required|max:100|unique:posts,title,' . request()->id,
+            'title' => 'required|max:100|unique:posts,title,' . $request->id,
             'brief' => 'required|max:200',
-            'image' => ['required' . request()->id, 'image','max:5000', new ImageRatio],
+            'image' => 'image', 'max:5000', new ImageRatio, $post !== null ? '' : 'required',
             'image_description' => 'required|max:100',
-            'slug' => ['max:100', new SlugRule, 'unique:posts,slug,' . request()->id],
+            'slug' => ['max:100', 'unique:posts,slug,' . $request->id],
             'is_published' => 'required',
             'type' => 'required',
             'user_id' => 'required'
@@ -91,19 +96,18 @@ class PostsController extends Controller
 
     private function storeImage($post)
     {
+//        if ($post->image) {
+//            \request()->validate(['image', 'max:5000', new ImageRatio]);
+//        }
+//        else {
+//            \request()->validate(['required', 'image', 'max:5000', new ImageRatio]);
+//        }
         if (request()->has('image')) {
+            $oldFilePath = 'public/' . $post->image;
             $post->update([
                 'image' => request()->image->store('posts', 'public')
             ]);
-        };
-    }
-
-    private function updateImage($post)
-    {
-        if (request()->has('image')) {
-            $post->update([
-                'image' => request()->image->update('posts', 'public')
-            ]);
+            Storage::delete($oldFilePath);
         };
     }
 }

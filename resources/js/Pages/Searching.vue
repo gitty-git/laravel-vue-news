@@ -159,7 +159,6 @@ export default {
         loadMorePosts() {
             if (this.localPosts.next_page_url) {
                 axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
-                    console.log(response)
                     this.localPosts = {
                         ...response.data,
                         data: [...this.localPosts.data, ...response.data.data]
@@ -171,7 +170,6 @@ export default {
         loadMoreUsers() {
             if (this.localUsers.next_page_url) {
                 axios.get(this.localUsers.next_page_url, {params: {loadMoreType: 'moreUsers'}}).then(response => {
-                    console.log(response)
                     this.localUsers = {
                         ...response.data,
                         data: [...this.localUsers.data, ...response.data.data]

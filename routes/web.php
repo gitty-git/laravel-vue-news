@@ -37,6 +37,8 @@ Route::get('/category/{slug}', [CategoriesController::class, 'show']);
 Route::get('/post/{slug}', [PostPageController::class, 'index'])->name('post.index');
 Route::get('/search', [SearchController::class, 'search']);
 
+//Route::resource('/posts', PostsController::class);
+
 Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::get('/user', [UsersController::class, 'index']);
 //    Route::get( '/dashboard', [AdminController::class, 'index']);
@@ -48,7 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
         Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
         Route::get('/posts/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
-        Route::put('/posts/update', [PostsController::class, 'update'])->name('posts.update');
+        Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
         Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
 //        Route::resource('posts', PostsController::class)->only('index', 'create', 'store', 'edit', 'update');
     });

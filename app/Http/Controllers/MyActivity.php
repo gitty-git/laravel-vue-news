@@ -17,7 +17,6 @@ class MyActivity extends Controller
         $commentsCounted = Auth::user()->comments()->count();
         $likedPostsCounted = Auth::user()->post_likes()->count();
 
-        $posts = Auth::user()->posts()->latest()->paginate(6, ['*'], 'posts');
         $comments = Auth::user()->comments()->latest()->with('post.user')
             ->withCount('likes')
             ->withCount('comment_replies')->paginate(6, ['*'], 'comments');
@@ -36,8 +35,7 @@ class MyActivity extends Controller
             'comments',
             'commentsCounted',
             'likedPosts',
-            'likedPostsCounted  '
-
+            'likedPostsCounted'
         ));
     }
 
