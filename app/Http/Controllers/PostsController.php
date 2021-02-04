@@ -81,11 +81,13 @@ class PostsController extends Controller
             'category_id.required' => 'The category field is required.'
         ];
 
+        $required = $post === null ? 'required' : '';
+
         return $request->validate([
             'category_id' => 'required',
             'title' => 'required|max:100|unique:posts,title,' . $request->id,
             'brief' => 'required|max:200',
-            'image' => 'image', 'max:5000', new ImageRatio, $post !== null ? '' : 'required',
+            'image' => [$required, new ImageRatio, 'image', 'max:5000'],
             'image_description' => 'required|max:100',
             'slug' => ['max:100', 'unique:posts,slug,' . $request->id],
             'is_published' => 'required',
@@ -96,12 +98,12 @@ class PostsController extends Controller
 
     private function storeImage($post)
     {
-//        if ($post->image) {
-//            \request()->validate(['image', 'max:5000', new ImageRatio]);
-//        }
-//        else {
-//            \request()->validate(['required', 'image', 'max:5000', new ImageRatio]);
-//        }
+        if ($post->image) {
+            \request()->validate(['image', 'max:5000', new ImageRatio]);
+        }
+        else {
+            \request()->validate(['required', 'image', 'max:5000', new ImageRatio]);
+        }
         if (request()->has('image')) {
             $oldFilePath = 'public/' . $post->image;
             $post->update([
