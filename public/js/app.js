@@ -6038,8 +6038,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -6242,12 +6244,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6256,7 +6253,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
   data: function data() {
     return {
-      bb: false,
+      addCommentFieldShowed: false,
       localComments: this.comments,
       localPostLikes: this.post.likes_count,
       localPostLiked: this.postLiked,
@@ -6266,7 +6263,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
+  directives: {
+    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
   methods: {
+    hideField: function hideField() {
+      this.addCommentFieldShowed = false;
+    },
     setPostLike: function setPostLike() {
       var _this = this;
 
@@ -6282,7 +6285,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.localComments.data.unshift(res.data);
       });
       this.comment.text = '';
-      this.bb = false;
+      this.addCommentFieldShowed = false;
     },
     setCommentLike: function setCommentLike(id) {
       var _this3 = this;
@@ -49802,6 +49805,87 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-click-outside/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-click-outside/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function validate(binding) {
+  if (typeof binding.value !== 'function') {
+    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
+    return false
+  }
+
+  return true
+}
+
+function isPopup(popupItem, elements) {
+  if (!popupItem || !elements)
+    return false
+
+  for (var i = 0, len = elements.length; i < len; i++) {
+    try {
+      if (popupItem.contains(elements[i])) {
+        return true
+      }
+      if (elements[i].contains(popupItem)) {
+        return false
+      }
+    } catch(e) {
+      return false
+    }
+  }
+
+  return false
+}
+
+function isServer(vNode) {
+  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
+}
+
+exports = module.exports = {
+  bind: function (el, binding, vNode) {
+    if (!validate(binding)) return
+
+    // Define Handler and cache it on the element
+    function handler(e) {
+      if (!vNode.context) return
+
+      // some components may have related popup item, on which we shall prevent the click outside event handler.
+      var elements = e.path || (e.composedPath && e.composedPath())
+      elements && elements.length > 0 && elements.unshift(e.target)
+
+      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
+
+      el.__vueClickOutside__.callback(e)
+    }
+
+    // add Event Listeners
+    el.__vueClickOutside__ = {
+      handler: handler,
+      callback: binding.value
+    }
+    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+    !isServer(vNode) && document.addEventListener(clickHandler, handler)
+  },
+
+  update: function (el, binding) {
+    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
+  },
+
+  unbind: function (el, binding, vNode) {
+    // Remove Event Listeners
+    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+    !isServer(vNode) && el.__vueClickOutside__ && document.removeEventListener(clickHandler, el.__vueClickOutside__.handler)
+    delete el.__vueClickOutside__
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Components/LikeEmptyHeart.vue?vue&type=template&id=0d2b3e0a&scoped=true&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Components/LikeEmptyHeart.vue?vue&type=template&id=0d2b3e0a&scoped=true& ***!
@@ -55823,25 +55907,53 @@ var render = function() {
                   _c(
                     "div",
                     {
+                      directives: [
+                        {
+                          name: "click-outside",
+                          rawName: "v-click-outside",
+                          value: _vm.hideField,
+                          expression: "hideField"
+                        }
+                      ],
                       staticClass: "w-full h-auto",
                       on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.addComment($event)
+                        },
+                        focus: function($event) {
+                          _vm.addCommentFieldShowed = false
+                        },
                         click: function($event) {
-                          _vm.bb = true
+                          _vm.addCommentFieldShowed = true
                         }
                       }
                     },
                     [
                       _c("textarea-autosize", {
                         staticClass:
-                          "outline-none py-2 border-b-2 border-white w-full",
+                          "outline-none py-1 border-b-2 border-white w-full",
                         class: {
-                          "border-b-2 border-gray-400 duration-200":
-                            _vm.bb === true
+                          "border-b-2 outline-none border-gray-400 duration-200":
+                            _vm.addCommentFieldShowed === true
                         },
                         attrs: {
                           type: "text",
                           placeholder:
-                            _vm.bb === true ? "" : "Leave a comment...",
+                            _vm.addCommentFieldShowed === true
+                              ? ""
+                              : "Leave a comment...",
                           "max-height": 300,
                           rows: "1"
                         },
@@ -55857,16 +55969,16 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm.bb === true
+                  _vm.addCommentFieldShowed === true
                     ? _c("div", { staticClass: "flex justify-center" }, [
                         _c(
                           "div",
                           {
                             staticClass:
-                              "flex items-center mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2",
+                              "flex items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2",
                             on: {
                               click: function($event) {
-                                _vm.bb = false
+                                _vm.addCommentFieldShowed = false
                                 _vm.comment.text = null
                               }
                             }
@@ -55878,7 +55990,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "border flex mb-2 items-center justify-center mr-2 text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans px-2 py-1",
+                              "flex h-6 pt-2 items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans",
                             on: {
                               click: function($event) {
                                 $event.preventDefault()

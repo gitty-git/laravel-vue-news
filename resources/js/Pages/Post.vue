@@ -61,26 +61,20 @@
                 <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments:</div>
 
                 <div class="flex flex-col items-center justify-center w-full">
-<!--                    <span v-if="showAddCommentArea === false" @click="showAddCommentArea = true"-->
-<!--                          class="font-sans mt-2 mb-3 px-3 py-2 border text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full text-xs uppercase">-->
-<!--                        leave a comment-->
-<!--                    </span>-->
-                    <div  class="w-full items-end flex mb-4">
-                        <div class="w-full h-auto" @click="bb = true">
-                            <textarea-autosize class="outline-none py-2 border-b-2 border-white w-full" :class="{'border-b-2 border-gray-400 duration-200' : bb === true}"
+                    <div class="w-full items-end flex mb-4">
+                        <div @keyup.enter="addComment" class="w-full h-auto" v-click-outside="hideField" @focus="addCommentFieldShowed = false" @click="addCommentFieldShowed = true">
+                            <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full" :class="{'border-b-2 outline-none border-gray-400 duration-200' : addCommentFieldShowed === true}"
                                                type="text" v-model="comment.text"
-                                               :placeholder="bb === true ? '' : 'Leave a comment...'"
+                                               :placeholder="addCommentFieldShowed === true ? '' : 'Leave a comment...'"
                                                :max-height="300"
                                                rows="1"
                             />
                         </div>
-<!--                        <div :class="{'border border-gray-400 duration 200': bb === true}" class="duration-200 border border-white absolute -mt-6 post-width"></div>-->
+                        <div class="flex justify-center" v-if="addCommentFieldShowed === true">
+                            <div class="flex items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2"
+                                    @click="addCommentFieldShowed = false; comment.text = null">&#10006;</div>
 
-                        <div class="flex justify-center" v-if="bb === true">
-                            <div class="flex items-center mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2"
-                                    @click="bb = false; comment.text = null">&#10006;</div>
-
-                            <div class="border flex mb-2 items-center justify-center mr-2 text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans px-2 py-1"
+                            <div class="flex h-6 pt-2 items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans"
                                     @click.prevent="addComment">add</div>
 
                         </div>
@@ -188,6 +182,7 @@
 
 <script>
 import NewsLayout from "@/Layouts/NewsLayout";
+import ClickOutside from 'vue-click-outside'
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
@@ -196,7 +191,7 @@ export default {
     props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
     data() {
         return {
-            bb: false,
+            addCommentFieldShowed: false,
             localComments: this.comments,
             localPostLikes: this.post.likes_count,
             localPostLiked: this.postLiked,
@@ -207,7 +202,15 @@ export default {
         }
     },
 
+    directives: {
+        ClickOutside
+    },
+
     methods: {
+        hideField () {
+            this.addCommentFieldShowed = false
+        },
+
         setPostLike() {
             axios.post(`/post-like/${this.post.id}`).then((res) => {
                 this.localPostLikes = res.data.postLikesCount
@@ -219,7 +222,7 @@ export default {
             axios.post(route('comments.store'), this.comment)
                 .then(res => this.localComments.data.unshift(res.data))
             this.comment.text = ''
-            this.bb = false
+            this.addCommentFieldShowed = false
         },
 
         setCommentLike(id) {
