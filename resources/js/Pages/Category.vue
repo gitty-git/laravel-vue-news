@@ -4,7 +4,7 @@
 
         <!--PRIMARY POSTS-->
         <div class="flex border-b-2 py-4 mb-4 border-gray-200">
-            <div v-for="post in primaryPosts" class="font-serif last-only w-1/2">
+            <div v-for="post in primaryPosts" :class="{'last-only' : primaryPosts.length > 1}" class="font-serif w-1/2">
                 <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
                     <div class="flex">
                         <img class="w-1/2 mr-4 h-full" :src="'/storage/' + post.image" alt="">

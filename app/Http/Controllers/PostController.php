@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class PostPageController extends Controller
+class PostController extends Controller
 {
-    public function index($slug, Request $request)
+    public function show($slug, Request $request)
     {
         $post = Post::query()->where('slug', $slug)
             ->with('category')

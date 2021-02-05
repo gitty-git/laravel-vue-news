@@ -16,7 +16,7 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('text');
+            $table->string('text', 255);
             $table->boolean('active')->default(false);
             $table->boolean('liked')->default(false);
 

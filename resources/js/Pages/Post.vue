@@ -7,6 +7,8 @@
 
                 <div class="font-serif text-xl leading-9 text-gray-600 mt-8 mb-2">{{ post.brief }}</div>
 
+
+
                 <!--CREATED AT-->
                 <div class="flex font-sans uppercase text-gray-400">
                     <div class="text-xs">
@@ -36,8 +38,6 @@
 
                 <div class="font-serif text-xl leading-9 text-gray-600 my-8">{{ post.body }}</div>
 
-
-
                 <div class="justify-center flex mb-8" >
                     <div class="flex cursor-pointer" @click.prevent="setPostLike">
                         <like-red-heart class="w-6" v-if="localPostLiked"/>
@@ -60,10 +60,37 @@
 
                 <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments:</div>
 
-                <div class="" v-for="comment in localComments.data" :key="comment.id">
+                <div class="flex flex-col items-center justify-center w-full">
+<!--                    <span v-if="showAddCommentArea === false" @click="showAddCommentArea = true"-->
+<!--                          class="font-sans mt-2 mb-3 px-3 py-2 border text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full text-xs uppercase">-->
+<!--                        leave a comment-->
+<!--                    </span>-->
+                    <div  class="w-full items-end flex mb-4">
+                        <div class="w-full h-auto" @click="bb = true">
+                            <textarea-autosize class="outline-none py-2 border-b-2 border-white w-full" :class="{'border-b-2 border-gray-400 duration-200' : bb === true}"
+                                               type="text" v-model="comment.text"
+                                               :placeholder="bb === true ? '' : 'Leave a comment...'"
+                                               :max-height="300"
+                                               rows="1"
+                            />
+                        </div>
+<!--                        <div :class="{'border border-gray-400 duration 200': bb === true}" class="duration-200 border border-white absolute -mt-6 post-width"></div>-->
+
+                        <div class="flex justify-center" v-if="bb === true">
+                            <div class="flex items-center mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2"
+                                    @click="bb = false; comment.text = null">&#10006;</div>
+
+                            <div class="border flex mb-2 items-center justify-center mr-2 text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans px-2 py-1"
+                                    @click.prevent="addComment">add</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="" v-for="comment in localComments.data" >
                     <div class="py-4 border-t-2 border-gray-200">
                         <div class="flex w-full">
-                            <img class="w-12 h-12 mr-4" :src="comment.user.profile_photo_url" alt="">
+                            <img class="w-12 h-12 mr-4" v-if="comment.user.profile_photo_url" :src="comment.user.profile_photo_url" alt="">
 
                             <div class="w-full">
                                 <div class="mb-2">
@@ -161,6 +188,7 @@
 
 <script>
 import NewsLayout from "@/Layouts/NewsLayout";
+import {Inertia} from "@inertiajs/inertia";
 
 export default {
     layout: NewsLayout,
@@ -168,9 +196,14 @@ export default {
     props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
     data() {
         return {
+            bb: false,
             localComments: this.comments,
             localPostLikes: this.post.likes_count,
             localPostLiked: this.postLiked,
+            comment: {
+                text: null,
+                post_id: this.post.id,
+            },
         }
     },
 
@@ -182,19 +215,12 @@ export default {
             })
         },
 
-        // setPostLike() {
-        //     axios.post(route('post-like.store'), {id: this.post.id}).then((res) => {
-        //         this.localPostLikes = res.data.postLikesCount
-        //         this.localPostLiked = res.data.postLiked
-        //     })
-        // },
-
-        // setPostLike() {
-        //     this.$inertia.visit(route('post-like.store'), {method: 'post'}, {id: this.post.id}).then((res) => {
-        //         this.localPostLikes = res.data.postLikesCount
-        //         this.localPostLiked = res.data.postLiked
-        //     })
-        // },
+        addComment() {
+            axios.post(route('comments.store'), this.comment)
+                .then(res => this.localComments.data.unshift(res.data))
+            this.comment.text = ''
+            this.bb = false
+        },
 
         setCommentLike(id) {
             axios.post(`/comment-like/${id}`).then((res) => {
@@ -291,7 +317,6 @@ export default {
 .post-width {
     width: 900px;
 }
-
 /*.last-child-comment:last-child {*/
 /*    border-bottom: none;*/
 /*}*/

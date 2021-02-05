@@ -6,7 +6,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CommentLikeController extends Controller
+class LikeCommentController extends Controller
 {
     public function store($id)
     {

@@ -45,7 +45,7 @@
         </div>
 
         <div>
-            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="comment in localComments.data">
+            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in localComments.data" :key="comment.id">
                 <div class="my-4 flex">
                     <div class="w-1/2 mr-4">
                         <div class="font-sans text-xs uppercase text-gray-400 mb-2">
@@ -55,15 +55,26 @@
                                     ${new Date(comment.created_at).getDate()}, ${new Date(comment.created_at).getFullYear()}
                                 `}}
                             </span>
-
-                            <span class="pr-2 mr-2 border-r-2">
+                                <span class="pr-2 mr-2 border-r-2">
                                 <span v-if="comment.comment_replies_count === 1">{{comment.comment_replies_count}} reply</span>
                                 <span v-else>{{comment.comment_replies_count}} replies</span>
                             </span>
 
-                            <span>
+                            <span class="pr-2 mr-2 border-r-2">
                                 <span v-if="comment.likes_count === 1">{{comment.likes_count}} like</span>
                                 <span v-else>{{comment.likes_count}} likes</span>
+                            </span>
+
+                            <span class="cursor-pointer duration-200 hover:text-gray-700" v-if="comment.active === 0"
+                                  @click="comment.active = 1">
+                                Delete
+                            </span>
+
+                            <span v-else>
+                                <span class="mr-2">Sure?</span>
+                                <span class="pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500"
+                                      @click="deleteComment(comment)">Yes</span>
+                                <span class="cursor-pointer duration-200 hover:text-gray-700" @click="comment.active = 0">No</span>
                             </span>
                         </div>
 
@@ -104,6 +115,9 @@
             </div>
         </div>
 
+        <div v-for="posts in likedPosts">
+
+        </div>
     </div>
 </template>
 
@@ -122,9 +136,10 @@
         data() {
             return {
                 localPosts: this.likedPosts,
-                localComments: this.comments
+                localComments: this.comments,
             }
         },
+
         methods: {
             scrollTo() {
                 document.getElementById('likedPosts').scrollIntoView();
@@ -153,6 +168,13 @@
                     })
                 }
             },
+
+            deleteComment(comment) {
+                axios.delete(route('comments.destroy', comment))
+                    .then(res => { if (res)
+                        this.comments.data.splice(this.comments.data.map(item => item.id).indexOf(comment.id), 1)
+                    })
+            }
         }
     }
 </script>

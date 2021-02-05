@@ -7,12 +7,15 @@ import Vue from 'vue';
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaForm } from 'laravel-jetstream';
 import {Inertia} from "@inertiajs/inertia";
+import TextareaAutosize from 'vue-textarea-autosize'
 import PortalVue from 'portal-vue';
 
 Vue.mixin({ methods: { route } });
 Vue.use(plugin)
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
+Vue.use(TextareaAutosize)
+
 Vue.component('top-menu', require('./Components/TopMenu').default)
 Vue.component('like-red-heart', require('./Components/LikeRedHeart').default)
 Vue.component('like-empty-heart', require('./Components/LikeEmptyHeart').default)

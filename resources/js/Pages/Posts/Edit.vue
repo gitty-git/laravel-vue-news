@@ -1,6 +1,5 @@
 <template>
     <div class="">
-        <div @click="storePost">SOTTTTTOTOOTER</div>
         <div class="uppercase mt-2 font-sans font-bold border-gray-20">
             <inertia-link class="border-r-2 pr-2 mr-2 text-gray-400"
                           :href="route('posts.create')">Create Post</inertia-link>
@@ -70,7 +69,7 @@
 
                     <!-- Current Image Preview -->
                     <div class="mt-2" v-show="!imagePreview">
-                        <img :src="'/storage/' + post.image" alt="Current Post Image" class="rounded-full h-20 w-20 object-cover">
+                        <img :src="'/storage/' + post.image" alt="Current Post Image" class="w-full">
                     </div>
 
                     <!-- New Image Preview -->
@@ -79,7 +78,7 @@
                     </div>
 
                     <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewImage">
-                        Select An Image
+                        Change Image
                     </jet-secondary-button>
 
                     <jet-input-error :message="errors.image" class="mt-1" />

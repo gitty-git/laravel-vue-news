@@ -6,7 +6,7 @@ use App\Models\CommentReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CommentReplyLikeController extends Controller
+class LikeCommentReplyController extends Controller
 {
     public function store ($id)
     {

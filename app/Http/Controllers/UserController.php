@@ -11,23 +11,7 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-
-    public function index(Request $request)
-    {
-        return Auth::user();
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id, Request $request): \Inertia\Response
+    public function show($id, Request $request)
     {
         $user = User::query()->where('id', $id)->with('roles')->firstOrFail();
 
@@ -47,18 +31,5 @@ class UserController extends Controller
         }
 
         return Inertia::render('User', compact('posts', 'comments', 'user', 'postsCounted', 'commentsCounted'));
-    }
-    public function edit($id)
-    {
-        //
-    }
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

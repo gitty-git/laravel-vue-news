@@ -136,8 +136,8 @@ export default {
         }
     },
     mounted() {
-        axios.get('/user').then(res => this.user = res.data)
-        axios.get('/roles').then(res => this.roles = res.data)
+        axios.get(route('users.index')).then(res => this.user = res.data)
+        axios.get(route('roles.index')).then(res => this.roles = res.data)
     },
 }
 </script>

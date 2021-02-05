@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class PostLikeController extends Controller
+class LikePostController extends Controller
 {
     public function store($id)
     {

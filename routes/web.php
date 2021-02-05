@@ -1,17 +1,20 @@
 <?php
 
-use App\Http\Controllers\CommentLikeController;
-use App\Http\Controllers\CommentReplyLikeController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\LikeCommentController;
+use App\Http\Controllers\LikeCommentReplyController;
 use App\Http\Controllers\MyActivity;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardSearchController;
-use App\Http\Controllers\PostLikeController;
-use App\Http\Controllers\PostPageController;
+use App\Http\Controllers\LikePostController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostsByCategory;
 use App\Http\Controllers\PostsController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,28 +34,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/category', [CategoriesController::class, 'index']);
-Route::get('/category/{slug}', [CategoriesController::class, 'show']);
+Route::get('/categories', [CategoriesController::class, 'index'])->name('categories.index');
+Route::get('/category/{slug}', [PostsByCategory::class, 'show']);
 
-Route::get('/post/{slug}', [PostPageController::class, 'index'])->name('post.index');
+Route::get('/post/{slug}', [PostController::class, 'show'])->name('post.show');
 Route::get('/search', [SearchController::class, 'search']);
 
 //Route::resource('/posts', PostsController::class);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::get('/user', [UsersController::class, 'index']);
 //    Route::get( '/dashboard', [AdminController::class, 'index']);
 //    Route::get( '/user/profile', [DashboardController::class, 'user']);
 //    Route::get('/admin', [DashboardController::class, 'admin']);
+    Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
+    Route::resource('/users', UsersController::class);
+    Route::resource('comments', CommentsController::class);
+
 
     Route::middleware('redactor')->group(function () {
-        Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
-        Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
-        Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
-        Route::get('/posts/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
-        Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
-        Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
-//        Route::resource('posts', PostsController::class)->only('index', 'create', 'store', 'edit', 'update');
+        Route::resource('/posts', PostsController::class);
     });
 
     // POSTS LIKES CONTROLLER
@@ -71,13 +73,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //        Route::get( '/dashboard', [DashboardController::class, 'index']);
 //    });
 
-    Route::post('/post-like/{id}', [PostLikeController::class, 'store']);
-    Route::post('/comment-like/{id}', [CommentLikeController::class, 'store']);
-    Route::post('/comment-reply-like/{id}', [CommentReplyLikeController::class, 'store']);
+    Route::post('/post-like/{id}', [LikePostController::class, 'store']);
+    Route::post('/comment-like/{id}', [LikeCommentController::class, 'store']);
+    Route::post('/comment-reply-like/{id}', [LikeCommentReplyController::class, 'store']);
 });
 
 Route::resource('/user', UserController::class);
-Route::get('/roles', [RoleController::class, 'index']);
 
 //Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //    return Inertia\Inertia::render('Dashboard');
@@ -85,7 +86,6 @@ Route::get('/roles', [RoleController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/my-activity', [MyActivity::class, 'index'])->name('my-activity.index');
-
     Route::get('/user/profile/search', [DashboardSearchController::class, 'search']);
 //    Route::resource('/user/profile/post', PostsController::class);
 

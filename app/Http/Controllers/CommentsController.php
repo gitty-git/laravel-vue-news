@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class CommentsController extends Controller
 {
@@ -27,15 +29,35 @@ class CommentsController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+//        Comment::query()->where('user_id', Auth::user()->id)->where('post_id')
+//        dd($request);
+//        $comment = Comment::query()->create($this->validateRequest($request));
+//        dd($request->text);
+        $comment = Comment::query()
+            ->create(['user_id' => Auth::user()->id, 'post_id' => $request->post_id, 'text' => $request->text])->fresh();
+
+        return Comment::query()
+            ->with('comment_replies')
+            ->with('comment_replies.user')
+            ->with('comment_replies.likes')
+            ->withCount('likes')
+            ->with('user')
+            ->find($comment->id);
+
+//        return $responseComment;
+
+//        return $comment::query()
+//            ->where('user_id', Auth::user()->id)
+//            ->where('post_id', $request->post_id)
+//            ->with('comment_replies')
+//            ->with('comment_replies.user')
+//            ->with('comment_replies.likes')
+//            ->withCount('likes')
+//            ->with('user')
+//            ->firstOrFail();
     }
 
     public function show($id)
@@ -68,14 +90,19 @@ class CommentsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        if (Auth::user()->isNot($comment->user)) {
+            abort(403);
+        }
+
+        $comment->delete();
+    }
+
+    private function validateRequest($request)
+    {
+        return $request->validate([
+            'text' => 'required|max:255|text'
+        ]);
     }
 }

@@ -132,5 +132,4 @@ class MyActivity extends Controller
         User::query()->where('id', $id)->delete();
         return redirect('/admin');
     }
-
 }

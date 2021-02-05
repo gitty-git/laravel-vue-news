@@ -50,12 +50,18 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
+        if (Auth::user()->isNot($post->user)) {
+            abort(403);
+        }
         $categories = Category::query()->get(['id', 'name']);
         return Inertia::render('Posts/Edit', compact('categories', 'post'));
     }
 
     public function update(Request $request, Post $post)
     {
+        if (Auth::user()->isNot($post->user)) {
+            abort(403);
+        }
         $post->update($this->validateRequest($request, $post->image));
         $this->storeImage($post);
         return redirect('posts')->with('Updated');
@@ -63,6 +69,9 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        if (Auth::user()->isNot($post->user)) {
+            abort(403);
+        }
         $post->delete();
         return redirect('/posts');
     }
@@ -98,12 +107,6 @@ class PostsController extends Controller
 
     private function storeImage($post)
     {
-        if ($post->image) {
-            \request()->validate(['image', 'max:5000', new ImageRatio]);
-        }
-        else {
-            \request()->validate(['required', 'image', 'max:5000', new ImageRatio]);
-        }
         if (request()->has('image')) {
             $oldFilePath = 'public/' . $post->image;
             $post->update([

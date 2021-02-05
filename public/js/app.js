@@ -3230,13 +3230,13 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/user').then(function (res) {
+    axios.get(route('users.index')).then(function (res) {
       return _this.user = res.data;
     });
-    axios.get('/roles').then(function (res) {
+    axios.get(route('roles.index')).then(function (res) {
       return _this.roles = res.data;
     });
-    axios.get('/category').then(function (res) {
+    axios.get(route('categories.index')).then(function (res) {
       return _this.categories = res.data;
     });
   },
@@ -4644,10 +4644,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/user').then(function (res) {
+    axios.get(route('users.index')).then(function (res) {
       return _this.user = res.data;
     });
-    axios.get('/roles').then(function (res) {
+    axios.get(route('roles.index')).then(function (res) {
       return _this.roles = res.data;
     });
   }
@@ -5948,6 +5948,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5999,6 +6013,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       }
+    },
+    deleteComment: function deleteComment(comment) {
+      var _this3 = this;
+
+      axios["delete"](route('comments.destroy', comment)).then(function (res) {
+        if (res) _this3.comments.data.splice(_this3.comments.data.map(function (item) {
+          return item.id;
+        }).indexOf(comment.id), 1);
+      });
     }
   }
 });
@@ -6015,6 +6038,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -6196,6 +6221,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -6203,9 +6256,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
   data: function data() {
     return {
+      bb: false,
       localComments: this.comments,
       localPostLikes: this.post.likes_count,
-      localPostLiked: this.postLiked
+      localPostLiked: this.postLiked,
+      comment: {
+        text: null,
+        post_id: this.post.id
+      }
     };
   },
   methods: {
@@ -6217,23 +6275,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.localPostLiked = res.data.postLiked;
       });
     },
-    // setPostLike() {
-    //     axios.post(route('post-like.store'), {id: this.post.id}).then((res) => {
-    //         this.localPostLikes = res.data.postLikesCount
-    //         this.localPostLiked = res.data.postLiked
-    //     })
-    // },
-    // setPostLike() {
-    //     this.$inertia.visit(route('post-like.store'), {method: 'post'}, {id: this.post.id}).then((res) => {
-    //         this.localPostLikes = res.data.postLikesCount
-    //         this.localPostLiked = res.data.postLiked
-    //     })
-    // },
-    setCommentLike: function setCommentLike(id) {
+    addComment: function addComment() {
       var _this2 = this;
 
+      axios.post(route('comments.store'), this.comment).then(function (res) {
+        return _this2.localComments.data.unshift(res.data);
+      });
+      this.comment.text = '';
+      this.bb = false;
+    },
+    setCommentLike: function setCommentLike(id) {
+      var _this3 = this;
+
       axios.post("/comment-like/".concat(id)).then(function (res) {
-        _this2.localComments.data.map(function (obj) {
+        _this3.localComments.data.map(function (obj) {
           if (obj.id === res.data.comment.id) {
             obj.liked = res.data.comment.liked;
             obj.likes_count = res.data.comment.likes_count;
@@ -6242,12 +6297,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     setCommentReplyLike: function setCommentReplyLike(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/comment-reply-like/".concat(id)).then(function (res) {
         console.log(res.data.commentReply.id);
 
-        _this3.localComments.data.map(function (obj) {
+        _this4.localComments.data.map(function (obj) {
           return obj.comment_replies.map(function (obj2) {
             if (obj2.id === res.data.commentReply.id) {
               obj2.liked = res.data.commentReply.liked;
@@ -6258,13 +6313,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     loadMoreComments: function loadMoreComments() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.localComments.next_page_url) {
         axios.get(this.localComments.next_page_url).then(function (response) {
           console.log(response);
-          _this4.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
-            data: [].concat(_toConsumableArray(_this4.localComments.data), _toConsumableArray(response.data.data))
+          _this5.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this5.localComments.data), _toConsumableArray(response.data.data))
           });
         });
       }
@@ -6568,7 +6623,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/DangerButton */ "./resources/js/Jetstream/DangerButton.vue");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__);
-//
 //
 //
 //
@@ -50743,7 +50797,7 @@ var render = function() {
     "button",
     {
       staticClass:
-        "inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150",
+        "inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150",
       attrs: { type: _vm.type }
     },
     [_vm._t("default")],
@@ -53677,7 +53731,10 @@ var render = function() {
       _vm._l(_vm.primaryPosts, function(post) {
         return _c(
           "div",
-          { staticClass: "font-serif last-only w-1/2" },
+          {
+            staticClass: "font-serif w-1/2",
+            class: { "last-only": _vm.primaryPosts.length > 1 }
+          },
           [
             _c(
               "inertia-link",
@@ -55227,271 +55284,341 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "flex justify-between mt-2" }, [
-      _c("div", { staticClass: "font-bold" }, [
-        _c(
-          "span",
-          { staticClass: "font-bold mr-2 pr-2 border-r-2 border-gray-200" },
-          [_vm._v("\n                MY ACTIVITY\n            ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass:
-              "font-sans text-xs uppercase text-gray-400 mr-2 pr-2 border-r-2 border-gray-200"
-          },
-          [
-            _c("span", [
-              _vm.commentsCounted > 1
-                ? _c("span", [
-                    _vm._v(_vm._s(_vm.commentsCounted) + " comments")
-                  ])
-                : _vm.commentsCounted === 1
-                ? _c("span", [_vm._v(_vm._s(_vm.commentsCounted) + " comment")])
-                : _c("span", [_vm._v("No comments")])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass: "font-sans text-xs uppercase text-gray-400 mr-2 pr-2"
-          },
-          [
-            _c("span", { on: { click: _vm.scrollTo } }, [
-              _vm.likedPostsCounted > 1
-                ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v(_vm._s(_vm.likedPostsCounted) + " liked posts")
-                  ])
-                : _vm.likedPostsCounted === 1
-                ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v(_vm._s(_vm.likedPostsCounted) + " liked post")
-                  ])
-                : _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v("No liked posts")
-                  ])
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ]),
-    _vm._v(" "),
-    _vm.localComments.data.length > 0
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "flex pt-2 text-sm justify-between font-sans font-bold",
-            attrs: { id: "comments" }
-          },
-          [
-            _c("div", [
-              _vm.localComments.data.length > 1
-                ? _c("div", { staticClass: "font-sans" }, [
-                    _vm._v("My "),
-                    _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", [_vm._v("last")])
-                      : _vm._e(),
-                    _vm._v(
-                      " " + _vm._s(_vm.localComments.data.length) + " comments"
-                    ),
-                    _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", { staticClass: "text-gray-400" }, [
-                          _vm._v(" out of " + _vm._s(_vm.commentsCounted))
-                        ])
-                      : _vm._e()
-                  ])
-                : _vm.localComments.data.length === 1
-                ? _c("div", { staticClass: "mt-2 font-sans" }, [
-                    _vm._v(
-                      "My" +
-                        _vm._s(_vm.localComments.data.length) +
-                        " comment:\n            "
-                    )
-                  ])
-                : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
-                    _vm._v("No comments")
-                  ])
-            ])
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      _vm._l(_vm.localComments.data, function(comment) {
-        return _c(
-          "div",
-          { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
-          [
-            _c("div", { staticClass: "my-4 flex" }, [
-              _c("div", { staticClass: "w-1/2 mr-4" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "font-sans text-xs uppercase text-gray-400 mb-2"
-                  },
-                  [
-                    _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(
-                            "\n                                " +
-                              new Date(
-                                comment.created_at
-                              ).toLocaleString("default", { month: "long" }) +
-                              "\n                                " +
-                              new Date(comment.created_at).getDate() +
-                              ", " +
-                              new Date(comment.created_at).getFullYear() +
-                              "\n                            "
-                          ) +
-                          "\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
-                      comment.comment_replies_count === 1
-                        ? _c("span", [
-                            _vm._v(
-                              _vm._s(comment.comment_replies_count) + " reply"
-                            )
-                          ])
-                        : _c("span", [
-                            _vm._v(
-                              _vm._s(comment.comment_replies_count) + " replies"
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      comment.likes_count === 1
-                        ? _c("span", [
-                            _vm._v(_vm._s(comment.likes_count) + " like")
-                          ])
-                        : _c("span", [
-                            _vm._v(_vm._s(comment.likes_count) + " likes")
-                          ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-2 font-serif" }, [
-                  _vm._v('"' + _vm._s(comment.text) + '"')
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "flex hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + comment.post.slug }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "w-1/4 mr-4",
-                        attrs: {
-                          src: "/storage/" + comment.post.image,
-                          alt: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "font-serif font-bold mb-2" },
-                          [_vm._v(_vm._s(comment.post.title))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "font-sans text-xs uppercase text-gray-400"
-                          },
-                          [_vm._v("by " + _vm._s(comment.post.user.name))]
-                        )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            ])
-          ]
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _vm.localComments.next_page_url
-      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "flex justify-between mt-2" }, [
+        _c("div", { staticClass: "font-bold" }, [
           _c(
-            "div",
+            "span",
+            { staticClass: "font-bold mr-2 pr-2 border-r-2 border-gray-200" },
+            [_vm._v("\n                MY ACTIVITY\n            ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
             {
               staticClass:
-                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                "font-sans text-xs uppercase text-gray-400 mr-2 pr-2 border-r-2 border-gray-200"
             },
             [
-              _c("div", { on: { click: _vm.loadMoreComments } }, [
-                _vm._v("\n                Load More Comments\n            ")
+              _c("span", [
+                _vm.commentsCounted > 1
+                  ? _c("span", [
+                      _vm._v(_vm._s(_vm.commentsCounted) + " comments")
+                    ])
+                  : _vm.commentsCounted === 1
+                  ? _c("span", [
+                      _vm._v(_vm._s(_vm.commentsCounted) + " comment")
+                    ])
+                  : _c("span", [_vm._v("No comments")])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "font-sans text-xs uppercase text-gray-400 mr-2 pr-2"
+            },
+            [
+              _c("span", { on: { click: _vm.scrollTo } }, [
+                _vm.likedPostsCounted > 1
+                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v(_vm._s(_vm.likedPostsCounted) + " liked posts")
+                    ])
+                  : _vm.likedPostsCounted === 1
+                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v(_vm._s(_vm.likedPostsCounted) + " liked post")
+                    ])
+                  : _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v("No liked posts")
+                    ])
               ])
             ]
           )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.localComments.data.length > 0
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "flex pt-2 text-sm justify-between font-sans font-bold",
-            attrs: { id: "likedPosts" }
-          },
-          [
-            _c("div", [
-              _vm.localComments.data.length > 1
-                ? _c("div", { staticClass: "font-sans" }, [
-                    _vm._v("My "),
-                    _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", [_vm._v("last")])
-                      : _vm._e(),
-                    _vm._v(
-                      " " + _vm._s(_vm.localComments.data.length) + " comments"
-                    ),
-                    _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", { staticClass: "text-gray-400" }, [
-                          _vm._v(" out of " + _vm._s(_vm.commentsCounted))
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]),
+      _vm._v(" "),
+      _vm.localComments.data.length > 0
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "flex pt-2 text-sm justify-between font-sans font-bold",
+              attrs: { id: "comments" }
+            },
+            [
+              _c("div", [
+                _vm.localComments.data.length > 1
+                  ? _c("div", { staticClass: "font-sans" }, [
+                      _vm._v("My "),
+                      _vm.commentsCounted !== _vm.localComments.data.length
+                        ? _c("span", [_vm._v("last")])
+                        : _vm._e(),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.localComments.data.length) +
+                          " comments"
+                      ),
+                      _vm.commentsCounted !== _vm.localComments.data.length
+                        ? _c("span", { staticClass: "text-gray-400" }, [
+                            _vm._v(" out of " + _vm._s(_vm.commentsCounted))
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm.localComments.data.length === 1
+                  ? _c("div", { staticClass: "mt-2 font-sans" }, [
+                      _vm._v(
+                        "My" +
+                          _vm._s(_vm.localComments.data.length) +
+                          " comment:\n            "
+                      )
+                    ])
+                  : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
+                      _vm._v("No comments")
+                    ])
+              ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._l(_vm.localComments.data, function(comment, id) {
+          return _c(
+            "div",
+            {
+              key: comment.id,
+              staticClass: "border-gray-200 border-b-2 last-border-none mt-4"
+            },
+            [
+              _c("div", { staticClass: "my-4 flex" }, [
+                _c("div", { staticClass: "w-1/2 mr-4" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "font-sans text-xs uppercase text-gray-400 mb-2"
+                    },
+                    [
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(
+                              "\n                                " +
+                                new Date(
+                                  comment.created_at
+                                ).toLocaleString("default", { month: "long" }) +
+                                "\n                                " +
+                                new Date(comment.created_at).getDate() +
+                                ", " +
+                                new Date(comment.created_at).getFullYear() +
+                                "\n                            "
+                            ) +
+                            "\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.comment_replies_count === 1
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) + " reply"
+                              )
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) +
+                                  " replies"
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.likes_count === 1
+                          ? _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " like")
+                            ])
+                          : _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " likes")
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      comment.active === 0
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "cursor-pointer duration-200 hover:text-gray-700",
+                              on: {
+                                click: function($event) {
+                                  comment.active = 1
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Delete\n                        "
+                              )
+                            ]
+                          )
+                        : _c("span", [
+                            _c("span", { staticClass: "mr-2" }, [
+                              _vm._v("Sure?")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteComment(comment)
+                                  }
+                                }
+                              },
+                              [_vm._v("Yes")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "cursor-pointer duration-200 hover:text-gray-700",
+                                on: {
+                                  click: function($event) {
+                                    comment.active = 0
+                                  }
+                                }
+                              },
+                              [_vm._v("No")]
+                            )
+                          ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-2 font-serif" }, [
+                    _vm._v('"' + _vm._s(comment.text) + '"')
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass: "flex hover:text-gray-600 duration-200",
+                        attrs: { href: "/post/" + comment.post.slug }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "w-1/4 mr-4",
+                          attrs: {
+                            src: "/storage/" + comment.post.image,
+                            alt: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "font-serif font-bold mb-2" },
+                            [_vm._v(_vm._s(comment.post.title))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans text-xs uppercase text-gray-400"
+                            },
+                            [_vm._v("by " + _vm._s(comment.post.user.name))]
+                          )
                         ])
-                      : _vm._e()
-                  ])
-                : _vm.localComments.data.length === 1
-                ? _c("div", { staticClass: "mt-2 font-sans" }, [
-                    _vm._v(
-                      "My" +
-                        _vm._s(_vm.localComments.data.length) +
-                        " comment:\n            "
+                      ]
                     )
-                  ])
-                : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
-                    _vm._v("No comments")
-                  ])
-            ])
-          ]
-        )
-      : _vm._e()
-  ])
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm.localComments.next_page_url
+        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+              },
+              [
+                _c("div", { on: { click: _vm.loadMoreComments } }, [
+                  _vm._v("\n                Load More Comments\n            ")
+                ])
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.localComments.data.length > 0
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "flex pt-2 text-sm justify-between font-sans font-bold",
+              attrs: { id: "likedPosts" }
+            },
+            [
+              _c("div", [
+                _vm.localComments.data.length > 1
+                  ? _c("div", { staticClass: "font-sans" }, [
+                      _vm._v("My "),
+                      _vm.commentsCounted !== _vm.localComments.data.length
+                        ? _c("span", [_vm._v("last")])
+                        : _vm._e(),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.localComments.data.length) +
+                          " comments"
+                      ),
+                      _vm.commentsCounted !== _vm.localComments.data.length
+                        ? _c("span", { staticClass: "text-gray-400" }, [
+                            _vm._v(" out of " + _vm._s(_vm.commentsCounted))
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm.localComments.data.length === 1
+                  ? _c("div", { staticClass: "mt-2 font-sans" }, [
+                      _vm._v(
+                        "My" +
+                          _vm._s(_vm.localComments.data.length) +
+                          " comment:\n            "
+                      )
+                    ])
+                  : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
+                      _vm._v("No comments")
+                    ])
+              ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.likedPosts, function(posts) {
+        return _c("div")
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -55686,23 +55813,106 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.post.comments_count) + " Comments:")]
                 ),
             _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-col items-center justify-center w-full"
+              },
+              [
+                _c("div", { staticClass: "w-full items-end flex mb-4" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "w-full h-auto",
+                      on: {
+                        click: function($event) {
+                          _vm.bb = true
+                        }
+                      }
+                    },
+                    [
+                      _c("textarea-autosize", {
+                        staticClass:
+                          "outline-none py-2 border-b-2 border-white w-full",
+                        class: {
+                          "border-b-2 border-gray-400 duration-200":
+                            _vm.bb === true
+                        },
+                        attrs: {
+                          type: "text",
+                          placeholder:
+                            _vm.bb === true ? "" : "Leave a comment...",
+                          "max-height": 300,
+                          rows: "1"
+                        },
+                        model: {
+                          value: _vm.comment.text,
+                          callback: function($$v) {
+                            _vm.$set(_vm.comment, "text", $$v)
+                          },
+                          expression: "comment.text"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.bb === true
+                    ? _c("div", { staticClass: "flex justify-center" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex items-center mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2",
+                            on: {
+                              click: function($event) {
+                                _vm.bb = false
+                                _vm.comment.text = null
+                              }
+                            }
+                          },
+                          [_vm._v("✖")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "border flex mb-2 items-center justify-center mr-2 text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans px-2 py-1",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addComment($event)
+                              }
+                            }
+                          },
+                          [_vm._v("add")]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ]
+            ),
+            _vm._v(" "),
             _vm._l(_vm.localComments.data, function(comment) {
               return _c(
                 "div",
-                { key: comment.id },
+                {},
                 [
                   _c(
                     "div",
                     { staticClass: "py-4 border-t-2 border-gray-200" },
                     [
                       _c("div", { staticClass: "flex w-full" }, [
-                        _c("img", {
-                          staticClass: "w-12 h-12 mr-4",
-                          attrs: {
-                            src: comment.user.profile_photo_url,
-                            alt: ""
-                          }
-                        }),
+                        comment.user.profile_photo_url
+                          ? _c("img", {
+                              staticClass: "w-12 h-12 mr-4",
+                              attrs: {
+                                src: comment.user.profile_photo_url,
+                                alt: ""
+                              }
+                            })
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("div", { staticClass: "w-full" }, [
                           _c(
@@ -56537,8 +56747,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("div", { on: { click: _vm.storePost } }, [_vm._v("SOTTTTTOTOOTER")]),
-    _vm._v(" "),
     _c(
       "div",
       { staticClass: "uppercase mt-2 font-sans font-bold border-gray-20" },
@@ -56782,7 +56990,7 @@ var render = function() {
                 },
                 [
                   _c("img", {
-                    staticClass: "rounded-full h-20 w-20 object-cover",
+                    staticClass: "w-full",
                     attrs: {
                       src: "/storage/" + _vm.post.image,
                       alt: "Current Post Image"
@@ -56824,11 +57032,7 @@ var render = function() {
                     }
                   }
                 },
-                [
-                  _vm._v(
-                    "\n                    Select An Image\n                "
-                  )
-                ]
+                [_vm._v("\n                    Change Image\n                ")]
               ),
               _vm._v(" "),
               _c("jet-input-error", {
@@ -57950,19 +58154,17 @@ var render = function() {
           "div",
           { staticClass: "max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" },
           [
-            _vm.$page.jetstream.canUpdateProfileInformation
-              ? _c(
-                  "div",
-                  [
-                    _c("update-profile-information-form", {
-                      attrs: { user: _vm.$page.user }
-                    }),
-                    _vm._v(" "),
-                    _c("jet-section-border")
-                  ],
-                  1
-                )
-              : _vm._e(),
+            _c(
+              "div",
+              [
+                _c("update-profile-information-form", {
+                  attrs: { user: _vm.$page.user }
+                }),
+                _vm._v(" "),
+                _c("jet-section-border")
+              ],
+              1
+            ),
             _vm._v(" "),
             _vm.$page.jetstream.canUpdatePassword
               ? _c(
@@ -59597,6 +59799,277 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*!
+ * vue-textarea-autosize v1.1.1 
+ * (c) 2019 Saymon
+ * Released under the MIT License.
+ */
+//
+//
+//
+//
+//
+//
+//
+var script = {
+  name: 'TextareaAutosize',
+  props: {
+    value: {
+      type: [String, Number],
+      default: ''
+    },
+    autosize: {
+      type: Boolean,
+      default: true
+    },
+    minHeight: {
+      type: [Number],
+      'default': null
+    },
+    maxHeight: {
+      type: [Number],
+      'default': null
+    },
+
+    /*
+     * Force !important for style properties
+     */
+    important: {
+      type: [Boolean, Array],
+      default: false
+    }
+  },
+  data: function data() {
+    return {
+      // data property for v-model binding with real textarea tag
+      val: null,
+      // works when content height becomes more then value of the maxHeight property
+      maxHeightScroll: false,
+      height: 'auto'
+    };
+  },
+  computed: {
+    computedStyles: function computedStyles() {
+      if (!this.autosize) return {};
+      return {
+        resize: !this.isResizeImportant ? 'none' : 'none !important',
+        height: this.height,
+        overflow: this.maxHeightScroll ? 'auto' : !this.isOverflowImportant ? 'hidden' : 'hidden !important'
+      };
+    },
+    isResizeImportant: function isResizeImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('resize');
+    },
+    isOverflowImportant: function isOverflowImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('overflow');
+    },
+    isHeightImportant: function isHeightImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('height');
+    }
+  },
+  watch: {
+    value: function value(val) {
+      this.val = val;
+    },
+    val: function val(_val) {
+      this.$nextTick(this.resize);
+      this.$emit('input', _val);
+    },
+    minHeight: function minHeight() {
+      this.$nextTick(this.resize);
+    },
+    maxHeight: function maxHeight() {
+      this.$nextTick(this.resize);
+    },
+    autosize: function autosize(val) {
+      if (val) this.resize();
+    }
+  },
+  methods: {
+    resize: function resize() {
+      var _this = this;
+
+      var important = this.isHeightImportant ? 'important' : '';
+      this.height = "auto".concat(important ? ' !important' : '');
+      this.$nextTick(function () {
+        var contentHeight = _this.$el.scrollHeight + 1;
+
+        if (_this.minHeight) {
+          contentHeight = contentHeight < _this.minHeight ? _this.minHeight : contentHeight;
+        }
+
+        if (_this.maxHeight) {
+          if (contentHeight > _this.maxHeight) {
+            contentHeight = _this.maxHeight;
+            _this.maxHeightScroll = true;
+          } else {
+            _this.maxHeightScroll = false;
+          }
+        }
+
+        var heightVal = contentHeight + 'px';
+        _this.height = "".concat(heightVal).concat(important ? ' !important' : '');
+      });
+      return this;
+    }
+  },
+  created: function created() {
+    this.val = this.value;
+  },
+  mounted: function mounted() {
+    this.resize();
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.val),expression:"val"}],style:(_vm.computedStyles),domProps:{"value":(_vm.val)},on:{"focus":_vm.resize,"input":function($event){if($event.target.composing){ return; }_vm.val=$event.target.value;}}})};
+var __vue_staticRenderFns__ = [];
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var TextareaAutosize = normalizeComponent_1(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+var version = '1.1.1';
+
+var install = function install(Vue) {
+  Vue.component('TextareaAutosize', TextareaAutosize);
+};
+
+var plugin = {
+  install: install,
+  version: version
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(plugin);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (plugin);
 
 
 /***/ }),
@@ -75406,11 +75879,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_jetstream__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
-/* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(portal_vue__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-textarea-autosize */ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js");
+/* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
+/* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(portal_vue__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
 
 
 
@@ -75424,7 +75899,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["plugin"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__["InertiaForm"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODULE_4___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODULE_5___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_4__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('top-menu', __webpack_require__(/*! ./Components/TopMenu */ "./resources/js/Components/TopMenu.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('like-red-heart', __webpack_require__(/*! ./Components/LikeRedHeart */ "./resources/js/Components/LikeRedHeart.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('like-empty-heart', __webpack_require__(/*! ./Components/LikeEmptyHeart */ "./resources/js/Components/LikeEmptyHeart.vue")["default"]);
