@@ -3,7 +3,7 @@
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikeCommentController;
 use App\Http\Controllers\LikeCommentReplyController;
-use App\Http\Controllers\MyActivity;
+use App\Http\Controllers\MyActivityController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardSearchController;
 use App\Http\Controllers\LikePostController;
@@ -59,15 +59,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // POSTS LIKES CONTROLLER
 
-    Route::get( '/admin/edit-user/{id}', [MyActivity::class, 'editUser']);
+    Route::get( '/admin/edit-user/{id}', [MyActivityController::class, 'editUser']);
 
-    Route::get('/admin/set-admin/{id}', [MyActivity::class, 'setAdmin']);
-    Route::get('/admin/unset-admin/{id}', [MyActivity::class, 'unsetAdmin']);
+    Route::get('/admin/set-admin/{id}', [MyActivityController::class, 'setAdmin']);
+    Route::get('/admin/unset-admin/{id}', [MyActivityController::class, 'unsetAdmin']);
 
-    Route::get('/admin/set-redactor/{id}', [MyActivity::class, 'setRedactor']);
-    Route::get('/admin/unset-redactor/{id}', [MyActivity::class, 'unsetRedactor']);
+    Route::get('/admin/set-redactor/{id}', [MyActivityController::class, 'setRedactor']);
+    Route::get('/admin/unset-redactor/{id}', [MyActivityController::class, 'unsetRedactor']);
 
-    Route::delete('admin/delete-user/{id}', [MyActivity::class, 'destroy']);
+    Route::delete('admin/delete-user/{id}', [MyActivityController::class, 'destroy']);
 
 //    Route::middleware('admin')->group(function () {
 //        Route::get( '/dashboard', [DashboardController::class, 'index']);
@@ -85,7 +85,7 @@ Route::resource('/user', UserController::class);
 //})->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/my-activity', [MyActivity::class, 'index'])->name('my-activity.index');
+    Route::get('/my-activity', [MyActivityController::class, 'index'])->name('my-activity.index');
     Route::get('/user/profile/search', [DashboardSearchController::class, 'search']);
 //    Route::resource('/user/profile/post', PostsController::class);
 

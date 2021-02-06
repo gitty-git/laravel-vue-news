@@ -55,27 +55,35 @@
                 <div v-if="post.comments_count < 1" class="uppercase mb-4 font-sans font-bold">No comments yet</div>
 
                 <div v-else-if="post.comments_count === 1" class="uppercase mb-4 font-sans font-bold">
-                    {{ post.comments_count }} Comment:
+                    {{ post.comments_count }} Comment
                 </div>
 
-                <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments:</div>
+                <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments</div>
 
-                <div class="flex flex-col items-center justify-center w-full">
+                <div v-if="!user" class="font-sans mb-4 text-gray-400">You must <a class="underline" :href="'/login'">Login</a> or <a class="underline" :href="'/register'">Register</a> before you can leave a comment. </div>
+
+                <div v-if="user" class="flex flex-col font items-center justify-center w-full">
                     <div class="w-full items-end flex mb-4">
-                        <div @keyup.enter="addComment" class="w-full h-auto" v-click-outside="hideField" @focus="addCommentFieldShowed = false" @click="addCommentFieldShowed = true">
-                            <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full" :class="{'border-b-2 outline-none border-gray-400 duration-200' : addCommentFieldShowed === true}"
+<!--                        <div class="font-sans mb-4 text-gray-400">Leave a comment...</div>-->
+                        <div @keyup.enter="addComment" class="w-3/4 h-auto"
+                             v-click-outside="hideField"
+                             @focus="addCommentFieldShowed = false"
+                             @click="addCommentFieldShowed = true; comment.text = cachedCommentText">
+
+                            <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full"
+                                               :class="{'border-b-2 outline-none border-gray-400 duration-200' : addCommentFieldShowed === true}"
                                                type="text" v-model="comment.text"
                                                :placeholder="addCommentFieldShowed === true ? '' : 'Leave a comment...'"
                                                :max-height="300"
                                                rows="1"
                             />
                         </div>
-                        <div class="flex justify-center" v-if="addCommentFieldShowed === true">
-                            <div class="flex items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2"
-                                    @click="addCommentFieldShowed = false; comment.text = null">&#10006;</div>
+                        <div class="flex justify-center w-1/4" v-if="addCommentFieldShowed === true">
+                            <div class="flex w-1/2 items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3 py-2"
+                                    @click="addCommentFieldShowed = false; comment.text = null">Cancel</div>
 
-                            <div class="flex h-6 pt-2 items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded-full uppercase text-xs font-sans"
-                                    @click.prevent="addComment">add</div>
+                            <div class="flex w-1/2 font-bold border items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans"
+                                    @click.prevent="addComment">Add Comment</div>
 
                         </div>
                     </div>
@@ -104,10 +112,10 @@
                                         <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
                                             <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
                                             <like-red-heart v-else class="text-black"/>
-                                            <div class="font-sans ml-2 font-normal border-r-2 pr-2">{{ comment.likes_count }} likes</div>
+                                            <div class="font-sans ml-2 font-normal pr-2">{{ comment.likes_count }} likes</div>
                                         </div>
 
-                                        <div class="font-sans ml-2 font-normal pr-2">Reply</div>
+                                        <div v-if="user" class="font-sans cursor-pointer font-normal border-l-2 pl-2">Reply</div>
                                     </div>
 
                                     <!--show replies button-->
@@ -191,6 +199,7 @@ export default {
     props: ["post", "categories", "comments", "user", "postLiked", "commentLiked"],
     data() {
         return {
+            cachedCommentText: null,
             addCommentFieldShowed: false,
             localComments: this.comments,
             localPostLikes: this.post.likes_count,
@@ -209,6 +218,8 @@ export default {
     methods: {
         hideField () {
             this.addCommentFieldShowed = false
+            this.cachedCommentText = this.comment.text
+            this.comment.text = ''
         },
 
         setPostLike() {
@@ -222,7 +233,9 @@ export default {
             axios.post(route('comments.store'), this.comment)
                 .then(res => this.localComments.data.unshift(res.data))
             this.comment.text = ''
+            this.cachedCommentText = ''
             this.addCommentFieldShowed = false
+            this.post.comments_count += 1
         },
 
         setCommentLike(id) {

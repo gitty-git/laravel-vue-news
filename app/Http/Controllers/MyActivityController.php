@@ -10,16 +10,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 
-class MyActivity extends Controller
+class MyActivityController extends Controller
 {
+    public function moreComments($itemsCount) {
+        return Auth::user()->comments()->latest()->with('post.user')
+            ->withCount('likes')
+            ->withCount('comment_replies')->paginate($itemsCount, ['*'], 'comments');
+    }
+
     public function index(Request $request)
     {
+//        dd($request->loadMoreType);
+//        dd($request);
         $commentsCounted = Auth::user()->comments()->count();
         $likedPostsCounted = Auth::user()->post_likes()->count();
 
-        $comments = Auth::user()->comments()->latest()->with('post.user')
-            ->withCount('likes')
-            ->withCount('comment_replies')->paginate(6, ['*'], 'comments');
+//        $comments = Auth::user()->comments()->latest()->with('post.user')
+//            ->withCount('likes')
+//            ->withCount('comment_replies')->paginate($itemsCount, ['*'], 'comments');
+
+        $comments = $this->moreComments(6);
+
         $likedPosts = Auth::user()->post_likes()->latest()->paginate(6, ['*'], 'post_likes');
 
         if ($request->wantsJson()) {
@@ -27,7 +38,7 @@ class MyActivity extends Controller
                 return $likedPosts;
             }
             else if ($request->loadMoreType === 'moreComments') {
-                return $comments;
+                return $this->moreComments($request->itemsCount);
             }
         }
 

@@ -7,8 +7,8 @@
                 </span>
                 <span class="font-sans text-xs uppercase text-gray-400 mr-2 pr-2 border-r-2 border-gray-200">
                     <span>
-                        <span v-if="commentsCounted > 1">{{ commentsCounted }} comments</span>
-                        <span v-else-if="commentsCounted === 1">{{ commentsCounted }} comment</span>
+                        <span v-if="localCommentsCounted > 1">{{ localCommentsCounted }} comments</span>
+                        <span v-else-if="localCommentsCounted === 1">{{ localCommentsCounted }} comment</span>
                         <span v-else>No comments</span>
                     </span>
                 </span>
@@ -35,7 +35,8 @@
         <div id="comments" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
-                     class="font-sans">My <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="text-gray-400" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>
+                     class="font-sans">My <span v-if="localCommentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments
+                    <span class="text-gray-400" v-if="localCommentsCounted !== localComments.data.length"> out of {{localCommentsCounted}}</span>
                 </div>
                 <div v-else-if="localComments.data.length === 1"
                      class="mt-2 font-sans">My{{ localComments.data.length }} comment:
@@ -45,7 +46,7 @@
         </div>
 
         <div>
-            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in localComments.data" :key="comment.id">
+            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in localComments.data" :key="id">
                 <div class="my-4 flex">
                     <div class="w-1/2 mr-4">
                         <div class="font-sans text-xs uppercase text-gray-400 mb-2">
@@ -106,7 +107,7 @@
         <div id="likedPosts" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
-                     class="font-sans">My <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="text-gray-400" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>
+                     class="font-sans">My <span v-if="localCommentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="text-gray-400" v-if="localCommentsCounted !== localComments.data.length"> out of {{localCommentsCounted}}</span>
                 </div>
                 <div v-else-if="localComments.data.length === 1"
                      class="mt-2 font-sans">My{{ localComments.data.length }} comment:
@@ -137,6 +138,8 @@
             return {
                 localPosts: this.likedPosts,
                 localComments: this.comments,
+                localCommentsCounted: this.commentsCounted,
+                itemsCount: 5
             }
         },
 
@@ -148,7 +151,6 @@
             loadMorePosts() {
                 if (this.localPosts.next_page_url) {
                     axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
-                        console.log(response)
                         this.localPosts = {
                             ...response.data,
                             data: [...this.localPosts.data, ...response.data.data]
@@ -158,9 +160,9 @@
             },
 
             loadMoreComments() {
+                // console.log(itemsCount)
                 if (this.localComments.next_page_url) {
-                    axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments'}}).then(response => {
-                        console.log(response)
+                    axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments', itemsCount: this.itemsCount}}).then(response => {
                         this.localComments = {
                             ...response.data,
                             data: [...this.localComments.data, ...response.data.data]
@@ -172,7 +174,10 @@
             deleteComment(comment) {
                 axios.delete(route('comments.destroy', comment))
                     .then(res => { if (res)
-                        this.comments.data.splice(this.comments.data.map(item => item.id).indexOf(comment.id), 1)
+                        this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
+                        this.localCommentsCounted -= 1
+                        this.itemsCount = 1
+                        this.loadMoreComments()
                     })
             }
         }

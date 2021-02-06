@@ -19,8 +19,7 @@
                         </div>
 
                         <div class="font-serif text-sm text-gray-700">
-                            Sit quaerat impedit inventore minus architecto id. Sit ipsum quis blanditiis odio laudantium
-                            ea.
+                            Molestias illum impedit ea voluptatem sunt earum sint.
                         </div>
                     </div>
 
