@@ -6298,6 +6298,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6318,7 +6327,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       reply: {
         text: []
-      }
+      },
+      showedMsg: false
     };
   },
   directives: {
@@ -6327,11 +6337,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     hideAddCommentField: function hideAddCommentField() {
       this.addCommentFieldShowed = false;
-      this.cachedCommentText = this.comment.text;
-      this.comment.text = '';
-    },
-    hideAddReplyField: function hideAddReplyField(comment) {
-      comment.reply_field = 0;
       this.cachedCommentText = this.comment.text;
       this.comment.text = '';
     },
@@ -6346,6 +6351,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addComment: function addComment() {
       var _this2 = this;
 
+      // this.comment = `${this.comment}\n`;
       axios.post(route('comments.store'), this.comment).then(function (res) {
         return _this2.localComments.data.unshift(res.data);
       });
@@ -6354,19 +6360,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addCommentFieldShowed = false;
       this.post.comments_count += 1;
     },
-    addReply: function addReply(i, comment_id) {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"].post(route('replies.store'), {
-        text: this.reply.text[i],
-        comment_id: comment_id,
-        post_id: this.post.id
-      });
-      console.log(this.reply.text[i], comment_id);
-    },
-    setCommentLike: function setCommentLike(id) {
+    // send() {
+    //     console.log(this.comment);
+    // },
+    addReply: function addReply(i, comment) {
       var _this3 = this;
 
+      this.reply.text[i] = "".concat(this.reply.text[i], "\n");
+      axios.post(route('replies.store'), {
+        text: this.reply.text[i],
+        comment_id: comment.id,
+        post_id: this.post.id
+      }).then(function (res) {
+        return _this3.localComments.data[i].comment_replies.unshift(res.data);
+      });
+      this.reply.text[i] = '';
+      comment.reply_field = 3;
+      setTimeout(function () {
+        return comment.reply_field = 0;
+      }, 3000);
+    },
+    setCommentLike: function setCommentLike(id) {
+      var _this4 = this;
+
       axios.post("/comment-like/".concat(id)).then(function (res) {
-        _this3.localComments.data.map(function (obj) {
+        _this4.localComments.data.map(function (obj) {
           if (obj.id === res.data.comment.id) {
             obj.liked = res.data.comment.liked;
             obj.likes_count = res.data.comment.likes_count;
@@ -6375,12 +6393,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     setCommentReplyLike: function setCommentReplyLike(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/comment-reply-like/".concat(id)).then(function (res) {
         console.log(res.data.commentReply.id);
 
-        _this4.localComments.data.map(function (obj) {
+        _this5.localComments.data.map(function (obj) {
           return obj.comment_replies.map(function (obj2) {
             if (obj2.id === res.data.commentReply.id) {
               obj2.liked = res.data.commentReply.liked;
@@ -6391,13 +6409,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     loadMoreComments: function loadMoreComments() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.localComments.next_page_url) {
         axios.get(this.localComments.next_page_url).then(function (response) {
           console.log(response);
-          _this5.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
-            data: [].concat(_toConsumableArray(_this5.localComments.data), _toConsumableArray(response.data.data))
+          _this6.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
+            data: [].concat(_toConsumableArray(_this6.localComments.data), _toConsumableArray(response.data.data))
           });
         });
       }
@@ -8533,7 +8551,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".post-width[data-v-9704806e] {\n  width: 900px;\n}\n.input-font-sans[data-v-9704806e]::-webkit-input-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-ms-input-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-moz-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]::-moz-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n\n/*.last-child-comment:last-child {*/\n\n/*    border-bottom: none;*/\n\n/*}*/\n", ""]);
+exports.push([module.i, ".post-width[data-v-9704806e] {\n  width: 900px;\n}\n.input-font-sans[data-v-9704806e]::-webkit-input-placeholder {\n  font-family: 'Fira Sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-ms-input-placeholder {\n  font-family: 'Fira Sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-moz-placeholder {\n  font-family: 'Fira Sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]::-moz-placeholder {\n  font-family: 'Fira Sans', Arial, Helvetica, sans-serif;\n}\n\n/*.last-child-comment:last-child {*/\n\n/*    border-bottom: none;*/\n\n/*}*/\n", ""]);
 
 // exports
 
@@ -56035,12 +56053,34 @@ var render = function() {
                               }
                               return _vm.addComment($event)
                             },
-                            focus: function($event) {
-                              _vm.addCommentFieldShowed = false
+                            mousedown: function($event) {
+                              _vm.comment.text = _vm.cachedCommentText
+                            },
+                            keydown: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              if (
+                                $event.ctrlKey ||
+                                $event.shiftKey ||
+                                $event.altKey ||
+                                $event.metaKey
+                              ) {
+                                return null
+                              }
+                              $event.preventDefault()
                             },
                             click: function($event) {
                               _vm.addCommentFieldShowed = true
-                              _vm.comment.text = _vm.cachedCommentText
                             }
                           }
                         },
@@ -56175,18 +56215,21 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "flex mt-2 w-full items-end justify-between"
+                                "flex mt-2 w-full items-start justify-between"
                             },
                             [
                               _c(
                                 "div",
-                                { staticClass: "flex items-start w-full" },
+                                { staticClass: "flex w-full items-start" },
                                 [
                                   _c(
                                     "div",
                                     {
                                       staticClass:
-                                        "flex items-start cursor-pointer",
+                                        "flex items-start cursor-pointer mr-2",
+                                      class: {
+                                        "border-r-2 border-gray-400": _vm.user
+                                      },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -56239,118 +56282,212 @@ var render = function() {
                                             "div",
                                             {
                                               staticClass:
-                                                "font-sans ml-2 font-normal pr-2"
+                                                "ml-2 flex font-normal pr-2 font-sans"
                                             },
                                             [
-                                              _vm._v(
-                                                _vm._s(comment.likes_count) +
-                                                  " likes"
-                                              )
+                                              _c("div", [
+                                                _vm._v(
+                                                  _vm._s(comment.likes_count)
+                                                )
+                                              ]),
+                                              _c("div", [_vm._v(" likes")])
                                             ]
                                           )
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "w-full mr-2 -mb-2 items-end flex"
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "click-outside",
-                                              rawName: "v-click-outside",
-                                              value: (comment.reply_field = 0),
-                                              expression:
-                                                "comment.reply_field = 0"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          on: {
-                                            click: function($event) {
-                                              comment.reply_field = 1
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("textarea-autosize", {
-                                            ref: "reply",
-                                            refInFor: true,
-                                            staticClass:
-                                              "outline-none border-b-2 border-white w-full input-font-sans",
-                                            class: {
-                                              "border-b-2 outline-none border-gray-400 duration-200":
-                                                comment.reply_field === 1
-                                            },
-                                            attrs: {
-                                              type: "text",
-                                              "max-height": 300,
-                                              rows: "1",
-                                              placeholder:
-                                                comment.reply_field === 1
-                                                  ? ""
-                                                  : "Reply..."
-                                            },
-                                            model: {
-                                              value: _vm.reply.text[i],
-                                              callback: function($$v) {
-                                                _vm.$set(_vm.reply.text, i, $$v)
-                                              },
-                                              expression: "reply.text[i]"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
+                                  _vm.user
+                                    ? _c(
                                         "div",
                                         {
                                           staticClass:
-                                            "flex justify-center w-1/4"
+                                            "w-full -mb-4 mr-2 items-end flex duration-200"
                                         },
                                         [
                                           _c(
                                             "div",
                                             {
-                                              staticClass:
-                                                "flex w-1/2 mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3",
+                                              staticClass: "w-full",
                                               on: {
-                                                click: function($event) {
-                                                  comment.reply_field = 0
-                                                  _vm.reply.text = null
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Cancel")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans",
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
+                                                keyup: function($event) {
+                                                  if (
+                                                    !$event.type.indexOf(
+                                                      "key"
+                                                    ) &&
+                                                    _vm._k(
+                                                      $event.keyCode,
+                                                      "enter",
+                                                      13,
+                                                      $event.key,
+                                                      "Enter"
+                                                    )
+                                                  ) {
+                                                    return null
+                                                  }
                                                   return _vm.addReply(
                                                     i,
-                                                    comment.id
+                                                    comment
                                                   )
+                                                },
+                                                keydown: function($event) {
+                                                  if (
+                                                    !$event.type.indexOf(
+                                                      "key"
+                                                    ) &&
+                                                    _vm._k(
+                                                      $event.keyCode,
+                                                      "enter",
+                                                      13,
+                                                      $event.key,
+                                                      "Enter"
+                                                    )
+                                                  ) {
+                                                    return null
+                                                  }
+                                                  if (
+                                                    $event.ctrlKey ||
+                                                    $event.shiftKey ||
+                                                    $event.altKey ||
+                                                    $event.metaKey
+                                                  ) {
+                                                    return null
+                                                  }
+                                                  $event.preventDefault()
                                                 }
                                               }
                                             },
-                                            [_vm._v("Reply")]
-                                          )
+                                            [
+                                              comment.reply_field === 3
+                                                ? _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "font-sans text-green-500 h-8 duration-200",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          comment.reply_field = 1
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("Reply Added.")]
+                                                  )
+                                                : _vm._e(),
+                                              _vm._v(" "),
+                                              comment.reply_field !== 3
+                                                ? _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "h-8",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          comment.reply_field = 1
+                                                        },
+                                                        focusout: function(
+                                                          $event
+                                                        ) {
+                                                          comment.reply_field = 0
+                                                          _vm.reply.text[i] = ""
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("textarea-autosize", {
+                                                        ref: "reply",
+                                                        refInFor: true,
+                                                        staticClass:
+                                                          "outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans",
+                                                        class: {
+                                                          "border-b-2 outline-none border-gray-400 duration-200":
+                                                            comment.reply_field ===
+                                                            1
+                                                        },
+                                                        attrs: {
+                                                          type: "text",
+                                                          "max-height": 300,
+                                                          rows: "1",
+                                                          placeholder:
+                                                            comment.reply_field ===
+                                                            1
+                                                              ? ""
+                                                              : "Reply"
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.reply.text[i],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.reply.text,
+                                                              i,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "reply.text[i]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          comment.reply_field === 1
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "flex justify-center w-1/4 mr-2"
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "flex w-1/2 mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          comment.reply_field = 0
+                                                          _vm.reply.text[i] = ""
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("Cancel")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          $event.preventDefault()
+                                                          return _vm.addReply(
+                                                            i,
+                                                            comment
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("Reply")]
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
                                         ]
                                       )
-                                    ]
-                                  )
+                                    : _vm._e()
                                 ]
                               ),
                               _vm._v(" "),
@@ -56535,19 +56672,28 @@ var render = function() {
                                             1
                                           ),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "font-sans ml-2 font-normal"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(reply.likes.length) +
-                                              " likes"
+                                      reply.likes
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "font-sans ml-2 font-normal"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(reply.likes.length) +
+                                                  " likes"
+                                              )
+                                            ]
                                           )
-                                        ]
-                                      )
+                                        : _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "font-sans ml-2 font-normal"
+                                            },
+                                            [_vm._v("0 likes")]
+                                          )
                                     ]
                                   )
                                 ])

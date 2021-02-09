@@ -69,10 +69,12 @@
                 <div v-if="user" class="flex flex-col font items-center justify-center w-full">
                     <div class="w-full items-end flex mb-4">
 <!--                        <div class="font-sans mb-4 text-gray-400">Leave a comment...</div>-->
-                        <div @keyup.enter="addComment" class="w-3/4 h-auto"
+<!--                        @keyup.enter="addComment"-->
+                        <div @keyup.enter="addComment"  class="w-3/4 h-auto"
                              v-click-outside="hideAddCommentField"
-                             @focus="addCommentFieldShowed = false"
-                             @click="addCommentFieldShowed = true; comment.text = cachedCommentText">
+                             @mousedown="comment.text = cachedCommentText"
+                             @keydown.enter.exact.prevent
+                             @click="addCommentFieldShowed = true">
 
                             <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full input-font-sans"
                                                :class="{'border-b-2 outline-none border-gray-400 duration-200' : addCommentFieldShowed === true}"
@@ -93,7 +95,7 @@
                 </div>
 
                 <div class="" v-for="(comment, i) in localComments.data" >
-                    <div class="py-4 border-t-2 border-gray-200">
+                    <div class="py-4 border-t-2 border-gray-200" >
                         <div class="flex w-full">
                             <img class="w-12 h-12 mr-4" v-if="comment.user.profile_photo_url" :src="comment.user.profile_photo_url" alt="">
 
@@ -109,9 +111,11 @@
                                     {{ comment.text }}
                                 </div>
 
-                                <div class="flex mt-2 w-full items-end justify-between">
-                                    <div class="flex items-start w-full">
-                                        <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
+                                <div class="flex mt-2 w-full items-start justify-between">
+                                    <div class="flex w-full items-start">
+                                        <div class="flex items-start cursor-pointer mr-2"
+                                             :class="{'border-r-2 border-gray-400' : user}"
+                                             @click.prevent="setCommentLike(comment.id)">
                                             <div v-if="user">
                                                 <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
                                                 <like-red-heart v-else class="text-black"/>
@@ -123,32 +127,36 @@
                                             <div v-if="comment.likes_count === 1" class="ml-2 flex font-normal pr-2 font-sans">
                                                 <div>{{ comment.likes_count }}</div><div>&nbsp;like</div>
                                             </div>
-                                            <div v-else class="font-sans ml-2 font-normal pr-2">{{ comment.likes_count }} likes</div>
+                                            <div v-else class="ml-2 flex font-normal pr-2 font-sans">
+                                                <div>{{ comment.likes_count }}</div><div>&nbsp;likes</div>
+                                            </div>
                                         </div>
 
-<!--                                        <div v-if="comment.reply_field !== 1 && user" @click="comment.reply_field = 1"-->
-<!--                                             class="font-sans cursor-pointer font-normal border-l-2 pl-2"-->
-<!--                                             v-click-outside="hideAddReplyField(comment)"-->
-<!--                                        >Reply</div>-->
-
                                         <!--REPLY FIELD-->
-                                        <div  class="w-full mr-2 -mb-2 items-end flex">
-                                            <div class="w-full" @click="comment.reply_field = 1" v-click-outside="comment.reply_field = 0">
-                                                <textarea-autosize class="outline-none border-b-2 border-white w-full input-font-sans"
-                                                                   :class="{'border-b-2 outline-none border-gray-400 duration-200' : comment.reply_field === 1}"
-                                                                   type="text" v-model="reply.text[i]"
-                                                                   :max-height="300"
-                                                                   rows="1" ref="reply"
-                                                                   :placeholder="comment.reply_field === 1 ? '' :'Reply...'"
-                                                />
+                                        <div v-if="user" class="w-full -mb-4 mr-2 items-end flex duration-200">
+                                            <div @keyup.enter="addReply(i, comment);" class="w-full" @keydown.enter.exact.prevent>
+                                                <div class="font-sans text-green-500 h-8 duration-200" @click="comment.reply_field = 1" v-if="comment.reply_field === 3">Reply Added.</div>
+<!--                                                <div class="font-sans">Reply</div>-->
+                                                <div v-if="comment.reply_field !== 3"
+                                                     class="h-8"
+                                                     @click="comment.reply_field = 1"
+                                                     @focusout="comment.reply_field = 0; reply.text[i] = ''">
+                                                    <textarea-autosize class="outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans"
+                                                                       :class="{'border-b-2 outline-none border-gray-400 duration-200' : comment.reply_field === 1}"
+                                                                       type="text" v-model="reply.text[i]"
+                                                                       :max-height="300"
+                                                                       rows="1" ref="reply"
+                                                                       :placeholder="comment.reply_field === 1 ? '' :'Reply'"
+                                                    />
+                                                </div>
                                             </div>
 
-                                            <div class="flex justify-center w-1/4" >
+                                            <div class="flex justify-center w-1/4 mr-2" v-if="comment.reply_field === 1">
                                                 <div class="flex w-1/2 mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3"
-                                                     @click="comment.reply_field = 0; reply.text = null">Cancel</div>
+                                                     @click="comment.reply_field = 0; reply.text[i] = ''">Cancel</div>
 
                                                 <div class="flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans"
-                                                     @click.prevent="addReply(i, comment.id)">Reply</div>
+                                                     @click.prevent="addReply(i, comment)">Reply</div>
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +215,8 @@
                                         <div v-else>
                                             <like-empty-heart class="text-black"/>
                                         </div>
-                                        <div class="font-sans ml-2 font-normal">{{ reply.likes.length }} likes</div>
+                                        <div v-if="reply.likes" class="font-sans ml-2 font-normal">{{ reply.likes.length }} likes</div>
+                                        <div v-else class="font-sans ml-2 font-normal">0 likes</div>
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +259,8 @@ export default {
             },
             reply: {
                 text: [],
-            }
+            },
+            showedMsg: false
         }
     },
 
@@ -265,12 +275,6 @@ export default {
             this.comment.text = ''
         },
 
-        hideAddReplyField (comment) {
-            comment.reply_field = 0
-            this.cachedCommentText = this.comment.text
-            this.comment.text = ''
-        },
-
         setPostLike() {
             axios.post(`/post-like/${this.post.id}`).then((res) => {
                 this.localPostLikes = res.data.postLikesCount
@@ -278,7 +282,10 @@ export default {
             })
         },
 
+
+
         addComment() {
+            // this.comment = `${this.comment}\n`;
             axios.post(route('comments.store'), this.comment)
                 .then(res => this.localComments.data.unshift(res.data))
             this.comment.text = ''
@@ -287,9 +294,17 @@ export default {
             this.post.comments_count += 1
         },
 
-        addReply(i, comment_id) {
-            Inertia.post(route('replies.store'), {text: this.reply.text[i], comment_id: comment_id, post_id: this.post.id})
-            console.log(this.reply.text[i], comment_id)
+        // send() {
+        //     console.log(this.comment);
+        // },
+
+        addReply(i, comment) {
+            this.reply.text[i] = `${this.reply.text[i]}\n`;
+            axios.post(route('replies.store'), {text: this.reply.text[i], comment_id: comment.id, post_id: this.post.id})
+                .then(res => this.localComments.data[i].comment_replies.unshift(res.data))
+            this.reply.text[i] = ''
+            comment.reply_field = 3
+            setTimeout(() => comment.reply_field = 0,3000);
         },
 
         setCommentLike(id) {
@@ -389,19 +404,19 @@ export default {
 }
 
 .input-font-sans::-webkit-input-placeholder {
-    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
 }
 
 .input-font-sans:-ms-input-placeholder {
-    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
 }
 
 .input-font-sans:-moz-placeholder {
-    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
 }
 
 .input-font-sans::-moz-placeholder {
-    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
 }
 /*.last-child-comment:last-child {*/
 /*    border-bottom: none;*/

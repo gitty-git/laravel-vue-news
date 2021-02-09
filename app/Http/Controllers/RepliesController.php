@@ -14,13 +14,16 @@ class RepliesController extends Controller
     {
 //        dd($request);
 
-        CommentReply::query()->create([
+        $commentReply = CommentReply::query()->create([
             'user_id' => auth()->id(),
             'post_id' => $request->post_id,
             'comment_id' => $request->comment_id,
             'text' => $request->text,
-        ]);
-//        return $replay = Replay::query()
-//            ->create(['comment_id' => Auth::user()->id, 'post_id' => $request->post_id, 'text' => $request->text])->fresh();
+        ])->fresh();
+
+        return CommentReply::query()
+            ->withCount('likes')
+            ->with('user')
+            ->find($commentReply->id);
     }
 }
