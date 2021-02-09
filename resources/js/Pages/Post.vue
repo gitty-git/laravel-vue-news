@@ -7,8 +7,6 @@
 
                 <div class="font-serif text-xl leading-9 text-gray-600 mt-8 mb-2">{{ post.brief }}</div>
 
-
-
                 <!--CREATED AT-->
                 <div class="flex font-sans uppercase text-gray-400">
                     <div class="text-xs">
@@ -60,7 +58,13 @@
 
                 <div v-else class="uppercase mb-4 font-sans font-bold">{{ post.comments_count }} Comments</div>
 
-                <div v-if="!user" class="font-sans mb-4 text-gray-400">You must <a class="underline" :href="'/login'">Login</a> or <a class="underline" :href="'/register'">Register</a> before you can leave a comment. </div>
+                <div v-if="!user" class="font-sans mb-4 text-gray-400">
+                    You must
+                    <a class="underline" :href="'/login'">Login</a>
+                    or
+                    <a class="underline" :href="'/register'">Register</a>
+                    before you can leave a comment.
+                </div>
 
                 <div v-if="user" class="flex flex-col font items-center justify-center w-full">
                     <div class="w-full items-end flex mb-4">
@@ -88,7 +92,7 @@
                     </div>
                 </div>
 
-                <div class="" v-for="comment in localComments.data" >
+                <div class="" v-for="(comment, i) in localComments.data" >
                     <div class="py-4 border-t-2 border-gray-200">
                         <div class="flex w-full">
                             <img class="w-12 h-12 mr-4" v-if="comment.user.profile_photo_url" :src="comment.user.profile_photo_url" alt="">
@@ -108,8 +112,14 @@
                                 <div class="flex mt-2 w-full items-end justify-between">
                                     <div class="flex items-start w-full">
                                         <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
-                                            <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
-                                            <like-red-heart v-else class="text-black"/>
+                                            <div v-if="user">
+                                                <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
+                                                <like-red-heart v-else class="text-black"/>
+                                            </div>
+                                            <div v-else>
+                                                <like-empty-heart class="text-black"/>
+                                            </div>
+
                                             <div v-if="comment.likes_count === 1" class="ml-2 flex font-normal pr-2 font-sans">
                                                 <div>{{ comment.likes_count }}</div><div>&nbsp;like</div>
                                             </div>
@@ -126,7 +136,7 @@
                                             <div class="w-full" @click="comment.reply_field = 1" v-click-outside="comment.reply_field = 0">
                                                 <textarea-autosize class="outline-none border-b-2 border-white w-full input-font-sans"
                                                                    :class="{'border-b-2 outline-none border-gray-400 duration-200' : comment.reply_field === 1}"
-                                                                   type="text" v-model="reply.text"
+                                                                   type="text" v-model="reply.text[i]"
                                                                    :max-height="300"
                                                                    rows="1" ref="reply"
                                                                    :placeholder="comment.reply_field === 1 ? '' :'Reply...'"
@@ -138,7 +148,7 @@
                                                      @click="comment.reply_field = 0; reply.text = null">Cancel</div>
 
                                                 <div class="flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans"
-                                                     @click.prevent="addComment">Reply</div>
+                                                     @click.prevent="addReply(i, comment.id)">Reply</div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,8 +200,13 @@
 
                                     <!--likes-->
                                     <div class="flex items-start mt-2 cursor-pointer" @click="setCommentReplyLike(reply.id)">
-                                        <like-empty-heart v-if="reply.liked === 0" class="text-black"/>
-                                        <like-red-heart v-else class="text-black"/>
+                                        <div v-if="user">
+                                            <like-empty-heart v-if="reply.liked === 0" class="text-black"/>
+                                            <like-red-heart v-else class="text-black"/>
+                                        </div>
+                                        <div v-else>
+                                            <like-empty-heart class="text-black"/>
+                                        </div>
                                         <div class="font-sans ml-2 font-normal">{{ reply.likes.length }} likes</div>
                                     </div>
                                 </div>
@@ -234,7 +249,7 @@ export default {
                 post_id: this.post.id,
             },
             reply: {
-                text: null,
+                text: [],
             }
         }
     },
@@ -270,6 +285,11 @@ export default {
             this.cachedCommentText = ''
             this.addCommentFieldShowed = false
             this.post.comments_count += 1
+        },
+
+        addReply(i, comment_id) {
+            Inertia.post(route('replies.store'), {text: this.reply.text[i], comment_id: comment_id, post_id: this.post.id})
+            console.log(this.reply.text[i], comment_id)
         },
 
         setCommentLike(id) {

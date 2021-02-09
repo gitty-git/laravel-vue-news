@@ -6283,6 +6283,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6302,7 +6317,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         post_id: this.post.id
       },
       reply: {
-        text: null
+        text: []
       }
     };
   },
@@ -6338,6 +6353,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.cachedCommentText = '';
       this.addCommentFieldShowed = false;
       this.post.comments_count += 1;
+    },
+    addReply: function addReply(i, comment_id) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"].post(route('replies.store'), {
+        text: this.reply.text[i],
+        comment_id: comment_id,
+        post_id: this.post.id
+      });
+      console.log(this.reply.text[i], comment_id);
     },
     setCommentLike: function setCommentLike(id) {
       var _this3 = this;
@@ -55955,19 +55978,23 @@ var render = function() {
             _vm._v(" "),
             !_vm.user
               ? _c("div", { staticClass: "font-sans mb-4 text-gray-400" }, [
-                  _vm._v("You must "),
+                  _vm._v(
+                    "\n                    You must\n                    "
+                  ),
                   _c(
                     "a",
                     { staticClass: "underline", attrs: { href: "/login" } },
                     [_vm._v("Login")]
                   ),
-                  _vm._v(" or "),
+                  _vm._v("\n                    or\n                    "),
                   _c(
                     "a",
                     { staticClass: "underline", attrs: { href: "/register" } },
                     [_vm._v("Register")]
                   ),
-                  _vm._v(" before you can leave a comment. ")
+                  _vm._v(
+                    "\n                    before you can leave a comment.\n                "
+                  )
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -56088,7 +56115,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm._l(_vm.localComments.data, function(comment) {
+            _vm._l(_vm.localComments.data, function(comment, i) {
               return _c(
                 "div",
                 {},
@@ -56168,13 +56195,29 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      comment.liked === 0
-                                        ? _c("like-empty-heart", {
-                                            staticClass: "text-black"
-                                          })
-                                        : _c("like-red-heart", {
-                                            staticClass: "text-black"
-                                          }),
+                                      _vm.user
+                                        ? _c(
+                                            "div",
+                                            [
+                                              comment.liked === 0
+                                                ? _c("like-empty-heart", {
+                                                    staticClass: "text-black"
+                                                  })
+                                                : _c("like-red-heart", {
+                                                    staticClass: "text-black"
+                                                  })
+                                            ],
+                                            1
+                                          )
+                                        : _c(
+                                            "div",
+                                            [
+                                              _c("like-empty-heart", {
+                                                staticClass: "text-black"
+                                              })
+                                            ],
+                                            1
+                                          ),
                                       _vm._v(" "),
                                       comment.likes_count === 1
                                         ? _c(
@@ -56205,8 +56248,7 @@ var render = function() {
                                               )
                                             ]
                                           )
-                                    ],
-                                    1
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -56255,11 +56297,11 @@ var render = function() {
                                                   : "Reply..."
                                             },
                                             model: {
-                                              value: _vm.reply.text,
+                                              value: _vm.reply.text[i],
                                               callback: function($$v) {
-                                                _vm.$set(_vm.reply, "text", $$v)
+                                                _vm.$set(_vm.reply.text, i, $$v)
                                               },
-                                              expression: "reply.text"
+                                              expression: "reply.text[i]"
                                             }
                                           })
                                         ],
@@ -56296,7 +56338,10 @@ var render = function() {
                                               on: {
                                                 click: function($event) {
                                                   $event.preventDefault()
-                                                  return _vm.addComment($event)
+                                                  return _vm.addReply(
+                                                    i,
+                                                    comment.id
+                                                  )
                                                 }
                                               }
                                             },
@@ -56466,13 +56511,29 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      reply.liked === 0
-                                        ? _c("like-empty-heart", {
-                                            staticClass: "text-black"
-                                          })
-                                        : _c("like-red-heart", {
-                                            staticClass: "text-black"
-                                          }),
+                                      _vm.user
+                                        ? _c(
+                                            "div",
+                                            [
+                                              reply.liked === 0
+                                                ? _c("like-empty-heart", {
+                                                    staticClass: "text-black"
+                                                  })
+                                                : _c("like-red-heart", {
+                                                    staticClass: "text-black"
+                                                  })
+                                            ],
+                                            1
+                                          )
+                                        : _c(
+                                            "div",
+                                            [
+                                              _c("like-empty-heart", {
+                                                staticClass: "text-black"
+                                              })
+                                            ],
+                                            1
+                                          ),
                                       _vm._v(" "),
                                       _c(
                                         "div",
@@ -56487,8 +56548,7 @@ var render = function() {
                                           )
                                         ]
                                       )
-                                    ],
-                                    1
+                                    ]
                                   )
                                 ])
                               ])

@@ -34,9 +34,14 @@ class Comment extends Model
         return $this;
     }
 
-    public function isLikedBy(User $user)
+    public function isAuthUserLikedPost()
     {
-//        $this->likes()->where('user_id', $user->id)->exists();
-        $user->likes()->where('comment_id', $this->id)->exists();
+        return $this->likes()->where('user_id',  auth()->id())->exists();
     }
+
+//    public function isLikedBy(User $user)
+//    {
+////        $this->likes()->where('user_id', $user->id)->exists();
+//        $user->likes()->where('comment_id', $this->id)->exists();
+//    }
 }

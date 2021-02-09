@@ -10,6 +10,7 @@ use App\Http\Controllers\LikePostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsByCategory;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -50,7 +51,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::get('/admin', [DashboardController::class, 'admin']);
     Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
     Route::resource('/users', UsersController::class);
-    Route::resource('comments', CommentsController::class);
+    Route::resource('/comments', CommentsController::class);
+    Route::post('/replies/{reply}', RepliesController::class);
 
 
     Route::middleware('redactor')->group(function () {
