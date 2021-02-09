@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use function PHPUnit\Framework\returnArgument;
 
 class PostController extends Controller
 {
@@ -29,7 +30,8 @@ class PostController extends Controller
             ->with('comment_replies.user')
             ->with('comment_replies.likes')
             ->withCount('likes')
-            ->with('user')->paginate(20);
+            ->with('user')
+            ->paginate(20);
 
         $commentReplies = CommentReply::query()->where('post_id', $post->id)->latest()
             ->withCount('likes')

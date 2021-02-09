@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             $table->string('text', 255);
             $table->boolean('active')->default(false);
+            $table->boolean('reply_field')->default(false);
             $table->boolean('liked')->default(false);
 
             $table->unsignedBigInteger('user_id')->index();

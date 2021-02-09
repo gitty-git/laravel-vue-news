@@ -6258,6 +6258,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6275,6 +6300,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       comment: {
         text: null,
         post_id: this.post.id
+      },
+      reply: {
+        text: null
       }
     };
   },
@@ -6282,8 +6310,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   methods: {
-    hideField: function hideField() {
+    hideAddCommentField: function hideAddCommentField() {
       this.addCommentFieldShowed = false;
+      this.cachedCommentText = this.comment.text;
+      this.comment.text = '';
+    },
+    hideAddReplyField: function hideAddReplyField(comment) {
+      comment.reply_field = 0;
       this.cachedCommentText = this.comment.text;
       this.comment.text = '';
     },
@@ -8477,7 +8510,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".post-width[data-v-9704806e] {\n  width: 900px;\n}\n\n/*.last-child-comment:last-child {*/\n\n/*    border-bottom: none;*/\n\n/*}*/\n", ""]);
+exports.push([module.i, ".post-width[data-v-9704806e] {\n  width: 900px;\n}\n.input-font-sans[data-v-9704806e]::-webkit-input-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-ms-input-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]:-moz-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n.input-font-sans[data-v-9704806e]::-moz-placeholder {\n  font-family: 'font-sans', Arial, Helvetica, sans-serif;\n}\n\n/*.last-child-comment:last-child {*/\n\n/*    border-bottom: none;*/\n\n/*}*/\n", ""]);
 
 // exports
 
@@ -55954,8 +55987,8 @@ var render = function() {
                             {
                               name: "click-outside",
                               rawName: "v-click-outside",
-                              value: _vm.hideField,
-                              expression: "hideField"
+                              value: _vm.hideAddCommentField,
+                              expression: "hideAddCommentField"
                             }
                           ],
                           staticClass: "w-3/4 h-auto",
@@ -55987,7 +56020,7 @@ var render = function() {
                         [
                           _c("textarea-autosize", {
                             staticClass:
-                              "outline-none py-1 border-b-2 border-white w-full",
+                              "outline-none py-1 border-b-2 border-white w-full input-font-sans",
                             class: {
                               "border-b-2 outline-none border-gray-400 duration-200":
                                 _vm.addCommentFieldShowed === true
@@ -56118,55 +56151,163 @@ var render = function() {
                                 "flex mt-2 w-full items-end justify-between"
                             },
                             [
-                              _c("div", { staticClass: "flex items-start" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "flex items-start cursor-pointer",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.setCommentLike(comment.id)
+                              _c(
+                                "div",
+                                { staticClass: "flex items-start w-full" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "flex items-start cursor-pointer",
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.setCommentLike(comment.id)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    comment.liked === 0
-                                      ? _c("like-empty-heart", {
-                                          staticClass: "text-black"
-                                        })
-                                      : _c("like-red-heart", {
-                                          staticClass: "text-black"
-                                        }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "font-sans ml-2 font-normal pr-2"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(comment.likes_count) + " likes"
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _vm.user
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "font-sans cursor-pointer font-normal border-l-2 pl-2"
-                                      },
-                                      [_vm._v("Reply")]
-                                    )
-                                  : _vm._e()
-                              ]),
+                                    },
+                                    [
+                                      comment.liked === 0
+                                        ? _c("like-empty-heart", {
+                                            staticClass: "text-black"
+                                          })
+                                        : _c("like-red-heart", {
+                                            staticClass: "text-black"
+                                          }),
+                                      _vm._v(" "),
+                                      comment.likes_count === 1
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "ml-2 flex font-normal pr-2 font-sans"
+                                            },
+                                            [
+                                              _c("div", [
+                                                _vm._v(
+                                                  _vm._s(comment.likes_count)
+                                                )
+                                              ]),
+                                              _c("div", [_vm._v(" like")])
+                                            ]
+                                          )
+                                        : _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "font-sans ml-2 font-normal pr-2"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(comment.likes_count) +
+                                                  " likes"
+                                              )
+                                            ]
+                                          )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "w-full mr-2 -mb-2 items-end flex"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "click-outside",
+                                              rawName: "v-click-outside",
+                                              value: (comment.reply_field = 0),
+                                              expression:
+                                                "comment.reply_field = 0"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          on: {
+                                            click: function($event) {
+                                              comment.reply_field = 1
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("textarea-autosize", {
+                                            ref: "reply",
+                                            refInFor: true,
+                                            staticClass:
+                                              "outline-none border-b-2 border-white w-full input-font-sans",
+                                            class: {
+                                              "border-b-2 outline-none border-gray-400 duration-200":
+                                                comment.reply_field === 1
+                                            },
+                                            attrs: {
+                                              type: "text",
+                                              "max-height": 300,
+                                              rows: "1",
+                                              placeholder:
+                                                comment.reply_field === 1
+                                                  ? ""
+                                                  : "Reply..."
+                                            },
+                                            model: {
+                                              value: _vm.reply.text,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.reply, "text", $$v)
+                                              },
+                                              expression: "reply.text"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex justify-center w-1/4"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "flex w-1/2 mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3",
+                                              on: {
+                                                click: function($event) {
+                                                  comment.reply_field = 0
+                                                  _vm.reply.text = null
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Cancel")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans",
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.addComment($event)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Reply")]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
                               comment.comment_replies.length > 0
                                 ? _c(
@@ -56184,13 +56325,13 @@ var render = function() {
                                     },
                                     [
                                       comment.comment_replies.length === 1
-                                        ? _c("div", [
+                                        ? _c("div", { staticClass: "flex " }, [
                                             comment.active === 1
                                               ? _c(
                                                   "div",
                                                   {
                                                     staticClass:
-                                                      "hover:text-gray-400 duration-200"
+                                                      "hover:text-gray-400 whitespace-no-wrap duration-200"
                                                   },
                                                   [
                                                     _vm._v(
@@ -56202,7 +56343,7 @@ var render = function() {
                                                   "div",
                                                   {
                                                     staticClass:
-                                                      "hover:text-gray-400 duration-200"
+                                                      "hover:text-gray-400 w-full whitespace-no-wrap duration-200"
                                                   },
                                                   [_vm._v("Show 1 reply")]
                                                 )
@@ -56213,7 +56354,7 @@ var render = function() {
                                                   "div",
                                                   {
                                                     staticClass:
-                                                      "hover:text-gray-400 duration-200"
+                                                      "hover:text-gray-400 duration-200 whitespace-no-wrap"
                                                   },
                                                   [
                                                     _vm._v(
@@ -56225,7 +56366,7 @@ var render = function() {
                                                   "div",
                                                   {
                                                     staticClass:
-                                                      "hover:text-gray-400 duration-200"
+                                                      "hover:text-gray-400 duration-200 whitespace-no-wrap"
                                                   },
                                                   [
                                                     _vm._v(

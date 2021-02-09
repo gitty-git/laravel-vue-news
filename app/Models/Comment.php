@@ -33,4 +33,10 @@ class Comment extends Model
         $this->liked= !$this->liked;
         return $this;
     }
+
+    public function isLikedBy(User $user)
+    {
+//        $this->likes()->where('user_id', $user->id)->exists();
+        $user->likes()->where('comment_id', $this->id)->exists();
+    }
 }

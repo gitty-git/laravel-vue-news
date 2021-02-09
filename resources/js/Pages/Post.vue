@@ -66,11 +66,11 @@
                     <div class="w-full items-end flex mb-4">
 <!--                        <div class="font-sans mb-4 text-gray-400">Leave a comment...</div>-->
                         <div @keyup.enter="addComment" class="w-3/4 h-auto"
-                             v-click-outside="hideField"
+                             v-click-outside="hideAddCommentField"
                              @focus="addCommentFieldShowed = false"
                              @click="addCommentFieldShowed = true; comment.text = cachedCommentText">
 
-                            <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full"
+                            <textarea-autosize class="outline-none py-1 border-b-2 border-white w-full input-font-sans"
                                                :class="{'border-b-2 outline-none border-gray-400 duration-200' : addCommentFieldShowed === true}"
                                                type="text" v-model="comment.text"
                                                :placeholder="addCommentFieldShowed === true ? '' : 'Leave a comment...'"
@@ -84,7 +84,6 @@
 
                             <div class="flex w-1/2 font-bold border items-center justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans"
                                     @click.prevent="addComment">Add Comment</div>
-
                         </div>
                     </div>
                 </div>
@@ -107,34 +106,60 @@
                                 </div>
 
                                 <div class="flex mt-2 w-full items-end justify-between">
-                                    <!--likes-->
-                                    <div class="flex items-start">
+                                    <div class="flex items-start w-full">
                                         <div class="flex items-start cursor-pointer" @click.prevent="setCommentLike(comment.id)">
                                             <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
                                             <like-red-heart v-else class="text-black"/>
-                                            <div class="font-sans ml-2 font-normal pr-2">{{ comment.likes_count }} likes</div>
+                                            <div v-if="comment.likes_count === 1" class="ml-2 flex font-normal pr-2 font-sans">
+                                                <div>{{ comment.likes_count }}</div><div>&nbsp;like</div>
+                                            </div>
+                                            <div v-else class="font-sans ml-2 font-normal pr-2">{{ comment.likes_count }} likes</div>
                                         </div>
 
-                                        <div v-if="user" class="font-sans cursor-pointer font-normal border-l-2 pl-2">Reply</div>
+<!--                                        <div v-if="comment.reply_field !== 1 && user" @click="comment.reply_field = 1"-->
+<!--                                             class="font-sans cursor-pointer font-normal border-l-2 pl-2"-->
+<!--                                             v-click-outside="hideAddReplyField(comment)"-->
+<!--                                        >Reply</div>-->
+
+                                        <!--REPLY FIELD-->
+                                        <div  class="w-full mr-2 -mb-2 items-end flex">
+                                            <div class="w-full" @click="comment.reply_field = 1" v-click-outside="comment.reply_field = 0">
+                                                <textarea-autosize class="outline-none border-b-2 border-white w-full input-font-sans"
+                                                                   :class="{'border-b-2 outline-none border-gray-400 duration-200' : comment.reply_field === 1}"
+                                                                   type="text" v-model="reply.text"
+                                                                   :max-height="300"
+                                                                   rows="1" ref="reply"
+                                                                   :placeholder="comment.reply_field === 1 ? '' :'Reply...'"
+                                                />
+                                            </div>
+
+                                            <div class="flex justify-center w-1/4" >
+                                                <div class="flex w-1/2 mb-2 justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 uppercase text-xs font-sans px-3"
+                                                     @click="comment.reply_field = 0; reply.text = null">Cancel</div>
+
+                                                <div class="flex w-1/2 mb-2 font-bold border justify-center text-gray-700 duration-200 cursor-pointer hover:text-gray-400 rounded uppercase text-xs font-sans"
+                                                     @click.prevent="addComment">Reply</div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <!--show replies button-->
+<!--                                    show replies button-->
                                     <div v-if="comment.comment_replies.length > 0"
                                          @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
                                          class="cursor-pointer font-sans flex justify-end"
                                     >
-                                        <div v-if="comment.comment_replies.length === 1">
-                                            <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">
+                                        <div class="flex " v-if="comment.comment_replies.length === 1">
+                                            <div class="hover:text-gray-400 whitespace-no-wrap duration-200" v-if="comment.active === 1">
                                                 Hide reply
                                             </div>
-                                            <div class="hover:text-gray-400 duration-200" v-else>Show 1 reply</div>
+                                            <div v-else class="hover:text-gray-400 w-full whitespace-no-wrap duration-200">Show 1 reply</div>
                                         </div>
 
                                         <div v-else>
-                                            <div class="hover:text-gray-400 duration-200" v-if="comment.active === 1">
+                                            <div class="hover:text-gray-400 duration-200 whitespace-no-wrap" v-if="comment.active === 1">
                                                 Hide replies
                                             </div>
-                                            <div class="hover:text-gray-400 duration-200" v-else>Show
+                                            <div class="hover:text-gray-400 duration-200 whitespace-no-wrap" v-else>Show
                                                 {{ comment.comment_replies.length }} replies
                                             </div>
                                         </div>
@@ -208,6 +233,9 @@ export default {
                 text: null,
                 post_id: this.post.id,
             },
+            reply: {
+                text: null,
+            }
         }
     },
 
@@ -216,8 +244,14 @@ export default {
     },
 
     methods: {
-        hideField () {
+        hideAddCommentField () {
             this.addCommentFieldShowed = false
+            this.cachedCommentText = this.comment.text
+            this.comment.text = ''
+        },
+
+        hideAddReplyField (comment) {
+            comment.reply_field = 0
             this.cachedCommentText = this.comment.text
             this.comment.text = ''
         },
@@ -332,6 +366,22 @@ export default {
 <style scoped>
 .post-width {
     width: 900px;
+}
+
+.input-font-sans::-webkit-input-placeholder {
+    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+}
+
+.input-font-sans:-ms-input-placeholder {
+    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+}
+
+.input-font-sans:-moz-placeholder {
+    font-family: 'font-sans', Arial, Helvetica, sans-serif;
+}
+
+.input-font-sans::-moz-placeholder {
+    font-family: 'font-sans', Arial, Helvetica, sans-serif;
 }
 /*.last-child-comment:last-child {*/
 /*    border-bottom: none;*/
