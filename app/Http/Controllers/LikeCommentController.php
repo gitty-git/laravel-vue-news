@@ -22,6 +22,7 @@ class LikeCommentController extends Controller
         }
 
         $comment = Comment::where('id', $id)
+            ->with('likes')
             ->withCount('likes')->first();
 
         return response(compact( 'comment'));

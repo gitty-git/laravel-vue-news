@@ -98,6 +98,7 @@ class PostsController extends Controller
             'brief' => 'required|max:200',
             'image' => [$required, new ImageRatio, 'image', 'max:5000'],
             'image_description' => 'required|max:100',
+            'body' => 'max:500',
             'slug' => ['max:100', 'unique:posts,slug,' . $request->id],
             'is_published' => 'required',
             'type' => 'required',

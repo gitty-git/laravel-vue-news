@@ -6306,7 +6306,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -6360,9 +6359,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addCommentFieldShowed = false;
       this.post.comments_count += 1;
     },
-    // send() {
-    //     console.log(this.comment);
-    // },
     addReply: function addReply(i, comment) {
       var _this3 = this;
 
@@ -6386,8 +6382,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post("/comment-like/".concat(id)).then(function (res) {
         _this4.localComments.data.map(function (obj) {
           if (obj.id === res.data.comment.id) {
-            obj.liked = res.data.comment.liked;
             obj.likes_count = res.data.comment.likes_count;
+            obj.likes = res.data.comment.likes;
           }
         });
       });
@@ -6401,7 +6397,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.localComments.data.map(function (obj) {
           return obj.comment_replies.map(function (obj2) {
             if (obj2.id === res.data.commentReply.id) {
-              obj2.liked = res.data.commentReply.liked;
               obj2.likes = res.data.commentReply.likes;
             }
           });
@@ -55912,7 +55907,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "my-8" }, [
           _c("img", {
-            staticClass: "w-full h-1/3",
+            staticClass: "w-full mb-2 h-1/3",
             attrs: { src: "/storage/" + _vm.post.image, alt: "image" }
           }),
           _vm._v(" "),
@@ -56242,11 +56237,16 @@ var render = function() {
                                         ? _c(
                                             "div",
                                             [
-                                              comment.liked === 0
-                                                ? _c("like-empty-heart", {
+                                              comment.likes &&
+                                              comment.likes.find(function(
+                                                like
+                                              ) {
+                                                return like.id === _vm.user.id
+                                              })
+                                                ? _c("like-red-heart", {
                                                     staticClass: "text-black"
                                                   })
-                                                : _c("like-red-heart", {
+                                                : _c("like-empty-heart", {
                                                     staticClass: "text-black"
                                                   })
                                             ],
@@ -56379,7 +56379,6 @@ var render = function() {
                                                 ? _c(
                                                     "div",
                                                     {
-                                                      staticClass: "h-8",
                                                       on: {
                                                         click: function(
                                                           $event
@@ -56652,11 +56651,14 @@ var render = function() {
                                         ? _c(
                                             "div",
                                             [
-                                              reply.liked === 0
-                                                ? _c("like-empty-heart", {
+                                              reply.likes &&
+                                              reply.likes.find(function(like) {
+                                                return like.id === _vm.user.id
+                                              })
+                                                ? _c("like-red-heart", {
                                                     staticClass: "text-black"
                                                   })
-                                                : _c("like-red-heart", {
+                                                : _c("like-empty-heart", {
                                                     staticClass: "text-black"
                                                   })
                                             ],

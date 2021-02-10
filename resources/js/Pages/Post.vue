@@ -25,12 +25,11 @@
                             </inertia-link>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="my-8">
 <!--                    <img class="mb-2" :src="post.image" alt="">-->
-                    <img class="w-full h-1/3" :src="'/storage/' + post.image" alt="image"/>
+                    <img class="w-full mb-2 h-1/3" :src="'/storage/' + post.image" alt="image"/>
                     <div class="w-full font-serif text-xs text-gray-400 text-right">{{ post.image_description }}</div>
                 </div>
 
@@ -117,9 +116,10 @@
                                              :class="{'border-r-2 border-gray-400' : user}"
                                              @click.prevent="setCommentLike(comment.id)">
                                             <div v-if="user">
-                                                <like-empty-heart v-if="comment.liked === 0" class="text-black"/>
-                                                <like-red-heart v-else class="text-black"/>
+                                                <like-red-heart v-if="comment.likes && comment.likes.find(like => like.id === user.id)" class="text-black"/>
+                                                <like-empty-heart v-else class="text-black"/>
                                             </div>
+
                                             <div v-else>
                                                 <like-empty-heart class="text-black"/>
                                             </div>
@@ -138,7 +138,6 @@
                                                 <div class="font-sans text-green-500 h-8 duration-200" @click="comment.reply_field = 1" v-if="comment.reply_field === 3">Reply Added.</div>
 <!--                                                <div class="font-sans">Reply</div>-->
                                                 <div v-if="comment.reply_field !== 3"
-                                                     class="h-8"
                                                      @click="comment.reply_field = 1"
                                                      @focusout="comment.reply_field = 0; reply.text[i] = ''">
                                                     <textarea-autosize class="outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans"
@@ -209,8 +208,8 @@
                                     <!--likes-->
                                     <div class="flex items-start mt-2 cursor-pointer" @click="setCommentReplyLike(reply.id)">
                                         <div v-if="user">
-                                            <like-empty-heart v-if="reply.liked === 0" class="text-black"/>
-                                            <like-red-heart v-else class="text-black"/>
+                                            <like-red-heart v-if="reply.likes && reply.likes.find(like => like.id === user.id)" class="text-black"/>
+                                            <like-empty-heart v-else class="text-black"/>
                                         </div>
                                         <div v-else>
                                             <like-empty-heart class="text-black"/>
@@ -282,8 +281,6 @@ export default {
             })
         },
 
-
-
         addComment() {
             // this.comment = `${this.comment}\n`;
             axios.post(route('comments.store'), this.comment)
@@ -293,10 +290,6 @@ export default {
             this.addCommentFieldShowed = false
             this.post.comments_count += 1
         },
-
-        // send() {
-        //     console.log(this.comment);
-        // },
 
         addReply(i, comment) {
             this.reply.text[i] = `${this.reply.text[i]}\n`;
@@ -310,8 +303,8 @@ export default {
         setCommentLike(id) {
             axios.post(`/comment-like/${id}`).then((res) => {
                 this.localComments.data.map(obj => {if (obj.id === res.data.comment.id) {
-                    obj.liked = res.data.comment.liked
                     obj.likes_count = res.data.comment.likes_count
+                    obj.likes = res.data.comment.likes
                 }})
             })
         },
@@ -321,7 +314,6 @@ export default {
                 console.log(res.data.commentReply.id)
                 this.localComments.data.map(obj => obj.comment_replies.map(obj2 => {
                     if (obj2.id === res.data.commentReply.id) {
-                        obj2.liked = res.data.commentReply.liked
                         obj2.likes = res.data.commentReply.likes
                     }
                  })

@@ -29,6 +29,7 @@ class PostController extends Controller
             ->with('comment_replies')
             ->with('comment_replies.user')
             ->with('comment_replies.likes')
+            ->with('likes')
             ->withCount('likes')
             ->with('user')
             ->paginate(20);
