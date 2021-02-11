@@ -22,7 +22,7 @@ class RepliesController extends Controller
         ])->fresh();
 
         return CommentReply::query()
-            ->withCount('likes')
+            ->with('likes')
             ->with('user')
             ->find($commentReply->id);
     }

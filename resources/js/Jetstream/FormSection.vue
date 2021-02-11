@@ -1,20 +1,20 @@
 <template>
-    <div class="md:grid md:grid-cols-3 md:gap-6">
+    <div class="w-full justify-center">
         <jet-section-title>
             <template #title><slot name="title"></slot></template>
             <template #description><slot name="description"></slot></template>
         </jet-section-title>
 
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="w-full">
             <form @submit.prevent="$emit('submitted')">
-                <div class="shadow overflow-hidden sm:rounded-md">
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
+                <div class="">
+                    <div class="">
+                        <div class="">
                             <slot name="form"></slot>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6" v-if="hasActions">
+                    <div class="flex items-center justify-end pt-4 bg-gray-50 text-right" v-if="hasActions">
                         <slot name="actions"></slot>
                     </div>
                 </div>

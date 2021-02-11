@@ -29,7 +29,8 @@ return [
     */
 
     'features' => [
-         Features::profilePhotos(),
+        Features::profilePhotos(),
+//        Features::accountDeletion(),
         // Features::api(),
         // Features::teams(),
     ],

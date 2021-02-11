@@ -4,15 +4,14 @@ require('moment');
 
 import Vue from 'vue';
 
-import { App, plugin } from '@inertiajs/inertia-vue'
+import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue';
 import { InertiaForm } from 'laravel-jetstream';
 import {Inertia} from "@inertiajs/inertia";
 import TextareaAutosize from 'vue-textarea-autosize'
 import PortalVue from 'portal-vue';
 
 Vue.mixin({ methods: { route } });
-Vue.use(plugin)
-Vue.use(InertiaForm);
+Vue.use(InertiaPlugin);
 Vue.use(PortalVue);
 Vue.use(TextareaAutosize)
 
@@ -26,7 +25,7 @@ const app = document.getElementById('app');
 
 new Vue({
     render: (h) =>
-        h(App, {
+        h(InertiaApp, {
             props: {
                 initialPage: JSON.parse(app.dataset.page),
                 resolveComponent: (name) => require(`./Pages/${name}`).default,

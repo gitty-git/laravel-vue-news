@@ -91,6 +91,9 @@ import JetDropdownLink from "@/Jetstream/DropdownLink";
 export default {
     name: "TopMenu",
     components: {JetDropdownLink, JetDropdown},
+
+    props: ['name'],
+
     data: () => ({
         user: null,
         categories: null,

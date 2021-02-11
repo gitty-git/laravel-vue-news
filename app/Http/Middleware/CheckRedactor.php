@@ -23,8 +23,8 @@ class CheckRedactor
             return $next($request);
         }
         else {
-            return abort(403);
-//            return redirect('user/profile');
+//            return abort(403);
+            return redirect('user/profile');
         }
     }
 }

@@ -11,4 +11,9 @@ class UsersController extends Controller
     {
         return Auth::user();
     }
+
+    public function update(Request $request)
+    {
+
+    }
 }

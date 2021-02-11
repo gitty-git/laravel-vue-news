@@ -4,13 +4,13 @@
             Profile Information
         </template>
 
-        <template #description>
+        <template #description class="mb-4">
             Update your account's profile information and email address.
         </template>
 
-        <template #form>
+        <template #form >
             <!-- Profile Photo -->
-            <div class="col-span-6 sm:col-span-4" v-if="$page.jetstream.managesProfilePhotos">
+            <div class="my-4 flex justify-center flex-col" v-if="$page.props.jetstream.managesProfilePhotos">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
                        ref="photo"
@@ -19,45 +19,45 @@
                 <jet-label for="photo" value="Photo" />
 
                 <!-- Current Profile Photo -->
-                <div class="mt-2" v-show="! photoPreview">
-                    <img :src="user.profile_photo_url" alt="Current Profile Photo" class="rounded-full h-20 w-20 object-cover">
+                <div class="mb-4 flex justify-center" v-show="! photoPreview">
+                    <img :src="user.profile_photo_url" :alt="user.name" class="h-36 w-36 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
-                <div class="mt-2" v-show="photoPreview">
-                    <span class="block rounded-full w-20 h-20"
+                <div class="mb-4 flex justify-center" v-show="photoPreview">
+                    <span class="block h-36 w-36"
                           :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
                     </span>
                 </div>
 
-                <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewPhoto">
+                <jet-secondary-button class="mb-4" type="button" @click.native.prevent="selectNewPhoto">
                     Select A New Photo
                 </jet-secondary-button>
 
-                <jet-secondary-button type="button" class="mt-2" @click.native.prevent="deletePhoto" v-if="user.profile_photo_path">
+                <jet-secondary-button type="button" class="mb-4" @click.native.prevent="deletePhoto" v-if="user.profile_photo_path">
                     Remove Photo
                 </jet-secondary-button>
 
-                <jet-input-error :message="form.error('photo')" class="mt-2" />
+                <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
             <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="mb-4">
                 <jet-label for="name" value="Name" />
                 <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
-                <jet-input-error :message="form.error('name')" class="mt-2" />
+                <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
 
             <!-- Email -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="mb-4">
                 <jet-label for="email" value="Email" />
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
-                <jet-input-error :message="form.error('email')" class="mt-2" />
+                <jet-input-error :message="form.errors.email" class="mt-2" />
             </div>
         </template>
 
         <template #actions>
-            <jet-action-message :on="form.recentlySuccessful" class="mr-3">
+            <jet-action-message v-if="form.recentlySuccessful" :on="form.recentlySuccessful" class="mr-3">
                 Saved.
             </jet-action-message>
 
@@ -93,13 +93,10 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                '_method': 'PUT',
+                _method: 'PUT',
                 name: this.user.name,
                 email: this.user.email,
                 photo: null,
-            }, {
-                bag: 'updateProfileInformation',
-                resetOnSuccess: false,
             }),
 
             photoPreview: null,
@@ -113,6 +110,7 @@ export default {
             }
 
             this.form.post(route('user-profile-information.update'), {
+                errorBag: 'updateProfileInformation',
                 preserveScroll: true
             });
         },
@@ -134,8 +132,7 @@ export default {
         deletePhoto() {
             this.$inertia.delete(route('current-user-photo.destroy'), {
                 preserveScroll: true,
-            }).then(() => {
-                this.photoPreview = null
+                onSuccess: () => (this.photoPreview = null),
             });
         },
     },

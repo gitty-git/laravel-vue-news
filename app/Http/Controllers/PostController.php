@@ -34,9 +34,10 @@ class PostController extends Controller
             ->with('user')
             ->paginate(20);
 
-        $commentReplies = CommentReply::query()->where('post_id', $post->id)->latest()
-            ->withCount('likes')
-            ->with('user')->paginate(20);
+//        $commentReplies = CommentReply::query()->where('post_id', $post->id)
+//            ->latest()
+//            ->withCount('likes')
+//            ->with('user')->paginate(20);
 
         if ($request->wantsJson()) {
             return $comments;
@@ -44,7 +45,7 @@ class PostController extends Controller
 
         if ($post) {
             return Inertia::render('Post',
-                compact('post', 'comments', 'postLiked', 'commentReplies')
+                compact('post', 'comments', 'postLiked')
             );
         }
         else {

@@ -148,7 +148,7 @@
 import NewsLayout from "@/Layouts/NewsLayout";
 import ProfileLayout from "@/Layouts/ProfileLayout";
 export default {
-    layout: ProfileLayout,
+    layout: AdminSearching,
     props: ["posts", "comments", "postsCounted", "commentsCounted", "search"],
     name: "SearchPosts",
     data() {

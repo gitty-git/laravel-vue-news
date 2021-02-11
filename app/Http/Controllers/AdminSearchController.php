@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class DashboardSearchController extends Controller
+class AdminSearchController extends Controller
 {
     public function search(Request $request)
     {
@@ -44,7 +44,7 @@ class DashboardSearchController extends Controller
             }
         }
 
-        return Inertia::render('DashboardSearching',
+        return Inertia::render('AdminSearching',
             compact('posts', 'postsCounted', 'search', 'comments', 'commentsCounted')
         );
     }

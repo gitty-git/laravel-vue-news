@@ -22,6 +22,7 @@ class LikeCommentReplyController extends Controller
         }
 
         $commentReply = CommentReply::where('id', $id)
+            ->with('user')
             ->with('likes')->first();
 
         return response(compact( 'commentReply'));

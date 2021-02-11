@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikeCommentController;
 use App\Http\Controllers\LikeCommentReplyController;
 use App\Http\Controllers\MyActivityController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\DashboardSearchController;
+use App\Http\Controllers\AdminSearchController;
 use App\Http\Controllers\LikePostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsByCategory;
@@ -50,16 +51,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::get( '/user/profile', [DashboardController::class, 'user']);
 //    Route::get('/admin', [DashboardController::class, 'admin']);
     Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
-    Route::resource('/users', UsersController::class);
+    Route::resource('/users', UsersController::class)->only('get');
     Route::resource('/comments', CommentsController::class);
-    Route::post('/replies/{reply}', RepliesController::class);
+    Route::post('/replies/{reply}', [RepliesController::class, 'store']);
 
 
     Route::middleware('redactor')->group(function () {
         Route::resource('/posts', PostsController::class);
     });
-
-    // POSTS LIKES CONTROLLER
 
     Route::get( '/admin/edit-user/{id}', [MyActivityController::class, 'editUser']);
 
@@ -71,24 +70,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::delete('admin/delete-user/{id}', [MyActivityController::class, 'destroy']);
 
-//    Route::middleware('admin')->group(function () {
-//        Route::get( '/dashboard', [DashboardController::class, 'index']);
-//    });
-
     Route::post('/post-like/{id}', [LikePostController::class, 'store']);
     Route::post('/comment-like/{id}', [LikeCommentController::class, 'store']);
     Route::post('/comment-reply-like/{id}', [LikeCommentReplyController::class, 'store']);
+
+    Route::middleware('admin')->group(function () {
+        Route::get( '/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::resource('/users', UsersController::class)->except('get');
+    });
 });
 
 Route::resource('/user', UserController::class);
 
-//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//    return Inertia\Inertia::render('Dashboard');
-//})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia\Inertia::render('Dashboard');
+})->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/my-activity', [MyActivityController::class, 'index'])->name('my-activity.index');
-    Route::get('/user/profile/search', [DashboardSearchController::class, 'search']);
+    Route::get('/user/profile/search', [AdminSearchController::class, 'search']);
 //    Route::resource('/user/profile/post', PostsController::class);
 
 //    Route::middleware('admin')->group(function () {
