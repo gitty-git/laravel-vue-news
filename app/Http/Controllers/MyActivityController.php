@@ -30,7 +30,6 @@ class MyActivityController extends Controller
 //            ->withCount('comment_replies')->paginate($itemsCount, ['*'], 'comments');
 
         $comments = $this->moreComments(6);
-
         $likedPosts = Auth::user()->post_likes()->latest()->paginate(6, ['*'], 'post_likes');
 
         if ($request->wantsJson()) {

@@ -1,12 +1,6 @@
 <template>
     <div class="">
         <div class="uppercase mt-2 font-sans font-bold border-gray-20">
-            <inertia-link class="border-r-2 pr-2 mr-2 text-gray-400"
-                          :href="route('posts.create')">Create Post</inertia-link>
-
-            <inertia-link class="border-r-2 pr-2 mr-2 text-gray-400"
-                          :href="route('posts.index')">My Posts</inertia-link>
-
             <span class="pr-2 mr-2 text-black">Edit Post</span>
         </div>
         <div class="flex justify-center mt-2">
@@ -150,7 +144,7 @@
                         <div class="text-xs absolute -mt-6 duration-200">Are You Sure?</div>
                         <div class="items-center w-full justify-center flex">
                             <div class="border border-black hover:border-red-700 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs hover:text-white duration-200 rounded-full hover:bg-red-600 py-2"
-                                 @click="deletePost"
+                                 @click.prevent="deletePost"
                             >
                                 Yes
                             </div>
@@ -227,7 +221,9 @@ export default {
 
         deletePost() {
             axios.delete(route('posts.destroy', this.localPost))
-            window.location = '/posts';
+            // return this.localPost
+            window.history.back();
+            // window.location = '/posts';
         }
     }
 }

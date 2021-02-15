@@ -104,20 +104,94 @@
             </div>
         </div>
 
+        <div v-if="localComments.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
+
         <div id="likedPosts" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
                 <div v-if="localComments.data.length > 1"
-                     class="font-sans">My <span v-if="localCommentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments<span class="text-gray-400" v-if="localCommentsCounted !== localComments.data.length"> out of {{localCommentsCounted}}</span>
+                     class="font-sans">My <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} liked posts<span class="text-gray-400" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>
                 </div>
                 <div v-else-if="localComments.data.length === 1"
-                     class="mt-2 font-sans">My{{ localComments.data.length }} comment:
+                     class="mt-2 font-sans">My{{ localComments.data.length }} liked post:
                 </div>
                 <div v-else class="mt-2 font-sans font-bold">No comments</div>
             </div>
         </div>
 
-        <div v-for="posts in likedPosts">
+        <!--POSTS-->
+        <div class="my-4">
+            <div class="flex border-gray-200 font-serif">
+                <!--LEFT-->
+                <div class="w-1/2 mr-4">
+                    <div v-for="post in localPosts.data.filter((x, i) => (i % 2 === 0))"
+                         class="border-gray-200 border-b-2 py-4 first-child last-child"
+                    >
+                        <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
+                            <div class="flex">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
 
+                                <div class="flex w-2/3 flex-col">
+                                    <div class="font-bold mb-2">{{ post.title }}</div>
+
+                                    <div class="text-13 mb-2 text-gray-600">{{ post.brief }}</div>
+
+                                    <!--CREATED AT-->
+                                    <div class="flex h-full font-sans uppercase text-gray-400">
+                                        <div class="flex flex-wrap">
+                                            <div class="text-xs">
+                                                {{`
+                                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                                            ${new Date(post.created_at).getDate()},
+                                            ${new Date(post.created_at).getFullYear()}
+                                            ` }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </inertia-link>
+                    </div>
+                </div>
+
+                <!--RIGHT-->
+                <div :class="{'border-none' : likedPosts.data.length === 1}" class="w-1/2 pl-4 border-l-2 border-gray-200">
+                    <div v-for="post in localPosts.data.filter((x, i) => (i % 2 !== 0))"
+                         class="border-gray-200 border-b-2 py-4 first-child last-child">
+                        <inertia-link class="hover:text-gray-600 duration-200" :href="'/post/' + post.slug">
+                            <div class="flex">
+                                <img class="w-1/3 h-full mr-4 mb-4" :src="'/storage/' + post.image" alt="">
+                                <div class="flex w-2/3 flex-col">
+                                    <div class="font-bold mb-2">{{ post.title }}</div>
+
+                                    <div class="text-13 mb-2 text-gray-600">{{ post.brief }}</div>
+
+                                    <!--CREATED AT-->
+                                    <div class="flex h-full font-sans uppercase text-gray-400">
+                                        <div class="flex flex-wrap">
+                                            <div class="text-xs">
+                                                {{`
+                                            ${new Date(post.created_at).toLocaleString('default', {month: 'long'})}
+                                            ${new Date(post.created_at).getDate()},
+                                            ${new Date(post.created_at).getFullYear()}
+                                            ` }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </inertia-link>
+                    </div>
+                </div>
+            </div>
+
+            <!--LOAD MORE POSTS-->
+            <div class="mt-4 flex justify-center" v-if="localPosts.next_page_url">
+                <div class="font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded">
+                    <div @click="loadMorePosts">
+                        Load More Liked Posts
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -150,7 +224,7 @@
 
             loadMorePosts() {
                 if (this.localPosts.next_page_url) {
-                    axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
+                    axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'moreLikedPosts'}}).then(response => {
                         this.localPosts = {
                             ...response.data,
                             data: [...this.localPosts.data, ...response.data.data]

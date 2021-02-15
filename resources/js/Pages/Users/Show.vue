@@ -32,8 +32,8 @@
             </div>
         </div>
 
-<!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t-4 mt-4 border-gray-400 w-full"></div>-->
-<!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t mt-0.5 border-gray-200 w-full"></div>-->
+        <!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t-4 mt-4 border-gray-400 w-full"></div>-->
+        <!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t mt-0.5 border-gray-200 w-full"></div>-->
 
         <div v-if="localPosts.data.length > 0" class="font-sans mt-2 font-bold text-sm flex justify-between items-end">
             <div>
@@ -178,11 +178,11 @@
 </template>
 
 <script>
-import NewsLayout from "@/Layouts/NewsLayout";
+import ProfileLayout from "@/Layouts/ProfileLayout";
 export default {
-    name: "User",
-    layout: NewsLayout,
-    props: ["user", "categories", "posts", "comments", "postsCounted", "commentsCounted"],
+    name: "Show",
+    layout: ProfileLayout,
+    props: ["categories", "posts", "comments", "postsCounted", "commentsCounted"],
     data() {
         return {
             localPosts: this.posts,

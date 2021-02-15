@@ -92,11 +92,11 @@ class CommentsController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if (Auth::user()->isNot($comment->user)) {
-            abort(403);
+        if (Auth::user()->is($comment->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
+            $comment->delete();
+            return back();
         }
-
-        $comment->delete();
+        else abort(403);
     }
 
     private function validateRequest($request)

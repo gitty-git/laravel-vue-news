@@ -52,7 +52,7 @@
                         </template>
 
                         <template #content v-if="roles">
-                            <jet-dropdown-link v-if="roles.filter(o => o.role === 'admin').length > 0" :href="route('profile.show')">
+                            <jet-dropdown-link v-if="roles.filter(o => o.role === 'admin').length > 0" :href="route('admin.index')">
                                 Administration
                             </jet-dropdown-link>
 

@@ -50,30 +50,35 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        if (Auth::user()->isNot($post->user)) {
-            abort(403);
+        if (Auth::user()->is($post->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
+
+            $categories = Category::query()->get(['id', 'name']);
+            return Inertia::render('Posts/Edit', compact('categories', 'post'));
         }
-        $categories = Category::query()->get(['id', 'name']);
-        return Inertia::render('Posts/Edit', compact('categories', 'post'));
+        else abort(403);
     }
 
     public function update(Request $request, Post $post)
     {
-        if (Auth::user()->isNot($post->user)) {
-            abort(403);
+        if (Auth::user()->is($post->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
+            $post->update($this->validateRequest($request, $post->image));
+            $this->storeImage($post);
+            return back();
+//            return redirect()->back()->with('Updated');
+//            return Redirect::back();
         }
-        $post->update($this->validateRequest($request, $post->image));
-        $this->storeImage($post);
-        return redirect('posts')->with('Updated');
+        else abort(403);
+
     }
 
     public function destroy(Post $post)
     {
-        if (Auth::user()->isNot($post->user)) {
-            abort(403);
+        if (Auth::user()->is($post->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
+            $post->delete();
+//            return back();
+            return back()->with('Deleted', $post);
         }
-        $post->delete();
-        return redirect('/posts');
+        else abort(403);
     }
 
     protected function validateRequest($request, $post = null): array
