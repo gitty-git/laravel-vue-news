@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SearchController extends Controller
+class SearchingController extends Controller
 {
     public function search(Request $request)
     {

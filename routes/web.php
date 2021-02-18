@@ -13,7 +13,7 @@ use App\Http\Controllers\PostsByCategory;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SearchingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsersController;
@@ -40,7 +40,7 @@ Route::get('/categories', [CategoriesController::class, 'index'])->name('categor
 Route::get('/category/{slug}', [PostsByCategory::class, 'show']);
 
 Route::get('/post/{slug}', [PostController::class, 'show'])->name('post.show');
-Route::get('/search', [SearchController::class, 'search']);
+Route::get('/search', [SearchingController::class, 'search']);
 
 //Route::resource('/posts', PostsController::class);
 
@@ -62,13 +62,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get( '/admin/edit-user/{id}', [MyActivityController::class, 'editUser']);
 
-    Route::get('/admin/set-admin/{id}', [MyActivityController::class, 'setAdmin']);
-    Route::get('/admin/unset-admin/{id}', [MyActivityController::class, 'unsetAdmin']);
+    Route::get('/admin/set-admin/{id}', [AdminController::class, 'setAdmin']);
+    Route::get('/admin/unset-admin/{id}', [AdminController::class, 'unsetAdmin']);
 
-    Route::get('/admin/set-redactor/{id}', [MyActivityController::class, 'setRedactor']);
-    Route::get('/admin/unset-redactor/{id}', [MyActivityController::class, 'unsetRedactor']);
+    Route::get('/admin/set-redactor/{id}', [AdminController::class, 'setRedactor']);
+    Route::get('/admin/unset-redactor/{id}', [AdminController::class, 'unsetRedactor']);
 
-    Route::delete('admin/delete-user/{id}', [MyActivityController::class, 'destroy']);
+    Route::delete('admin/delete-user/{id}', [AdminController::class, 'destroy']);
 
     Route::post('/post-like/{id}', [LikePostController::class, 'store']);
     Route::post('/comment-like/{id}', [LikeCommentController::class, 'store']);
@@ -88,7 +88,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/my-activity', [MyActivityController::class, 'index'])->name('my-activity.index');
-    Route::get('/user/profile/search', [AdminSearchController::class, 'search']);
+    Route::get('/admin-search', [AdminSearchController::class, 'search'])->name('admin-search');
 //    Route::resource('/user/profile/post', PostsController::class);
 
 //    Route::middleware('admin')->group(function () {

@@ -64,7 +64,6 @@ class CommentsController extends Controller
     {
         dd(Comment::query()->where('post_id', $id)->get());
         return Comment::query()->where('post_id', $id)->get();
-
     }
 
     /**
@@ -90,10 +89,13 @@ class CommentsController extends Controller
         //
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment, Request $request)
     {
         if (Auth::user()->is($comment->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
-            $comment->delete();
+
+//            $comment->delete();
+            Comment::query()->where('id', $request->comment->id)->delete();
+//            return $comment;
             return back();
         }
         else abort(403);

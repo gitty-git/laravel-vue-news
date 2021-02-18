@@ -1,41 +1,48 @@
 <template>
     <div>
-        {{user.email}}
-        <div class="flex pt-4 items-center">
-            <img class="w-24 h-24" :src="user.profile_photo_url" alt="">
+        <div class="flex mb-2 mt-2 justify-between">
+            <div class="flex items-center">
+                <img class="w-24 h-24 mt-2" :src="user.profile_photo_url" alt="">
 
-            <div class="flex-col ml-4">
-                <div class="flex items-center">
-                    <div class="font-sans font-bold uppercase mr-2">{{user.name}}</div>
+                <div class="flex-col ml-4">
+                    <div class="flex items-center">
+                        <div class="font-serif font-bold mr-2">{{user.name}}</div>
 
-                    <div class="flex">
-                        <div v-for="role in user.roles">
-                            <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                                 v-if="role.role === 'admin' || role.role === 'redactor'">
-                                {{role.role}}
+                        <div class="flex">
+                            <div v-for="role in user.roles">
+                                <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
+                                     v-if="role.role === 'admin' || role.role === 'redactor'">
+                                    {{role.role}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="font-sans text-xs uppercase text-gray-400">
-                    <span v-if="postsCounted > 1">{{ postsCounted }} posts,</span>
-                    <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
-                    <span v-else>No posts,</span>
+                    <div class="font-sans text-xs uppercase text-gray-400">
+                        <span v-if="postsCounted > 1">{{ postsCounted }} posts,</span>
+                        <span v-else-if="postsCounted === 1">{{ postsCounted }} post,</span>
+                        <span v-else>No posts,</span>
 
-                    <span @click="scrollTo">
+                        <span @click="scrollTo">
                         <span class="underline cursor-pointer" v-if="commentsCounted > 1">{{ commentsCounted }} comments.</span>
                         <span class="underline cursor-pointer" v-else-if="commentsCounted === 1">{{ commentsCounted }} comment.</span>
                         <span class="underline cursor-pointer" v-else>No comments.</span>
                     </span>
+                    </div>
                 </div>
             </div>
+
+            <div>
+                <div class="text-sm underline cursor-pointer text-gray-400 font-normal normal-case" @click="cancel">Back to previous page</div>
+            </div>
         </div>
+
+
 
 <!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t-4 mt-4 border-gray-400 w-full"></div>-->
 <!--        <div v-if="localComments.data.length > 0 &&  localPosts.data.length > 0" class="border-t mt-0.5 border-gray-200 w-full"></div>-->
 
-        <div v-if="localPosts.data.length > 0" class="font-sans mt-2 font-bold text-sm flex justify-between items-end">
+        <div v-if="localPosts.data.length > 0" class="font-sans font-bold text-sm flex justify-between items-end">
             <div>
                 <div v-if="localPosts.data.length > 1"
                      class="mt-2"><span v-if="postsCounted !== localPosts.data.length">Last</span> {{ localPosts.data.length }} posts:
@@ -212,6 +219,10 @@ export default {
                     }
                 })
             }
+        },
+
+        cancel() {
+            window.history.back();
         }
     },
     computed: {

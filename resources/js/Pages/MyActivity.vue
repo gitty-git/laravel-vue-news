@@ -32,21 +32,21 @@
         </div>
 
         <!--COMMENTS-->
-        <div id="comments" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
+        <div id="comments" v-if="comments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
             <div>
-                <div v-if="localComments.data.length > 1"
-                     class="font-sans">My <span v-if="localCommentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} comments
-                    <span class="text-gray-400" v-if="localCommentsCounted !== localComments.data.length"> out of {{localCommentsCounted}}</span>
+                <div v-if="comments.data.length > 1"
+                     class="font-sans">My <span v-if="commentsCounted !== comments.data.length">latest</span> {{ comments.data.length }} comments
+                    <span class="text-gray-400" v-if="commentsCounted !== comments.data.length"> out of {{commentsCounted}}</span>
                 </div>
-                <div v-else-if="localComments.data.length === 1"
-                     class="mt-2 font-sans">My{{ localComments.data.length }} comment:
+                <div v-else-if="comments.data.length === 1"
+                     class="mt-2 font-sans">My {{ comments.data.length }} comment:
                 </div>
                 <div v-else class="mt-2 font-sans font-bold">No comments</div>
             </div>
         </div>
 
         <div>
-            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in localComments.data" :key="id">
+            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in comments.data" :key="id">
                 <div class="my-4 flex">
                     <div class="w-1/2 mr-4">
                         <div class="font-sans text-xs uppercase text-gray-400 mb-2">
@@ -96,25 +96,37 @@
         </div>
 
         <!--LOAD MORE COMMENTS-->
-        <div class="mt-4 flex justify-center" v-if="localComments.next_page_url">
-            <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
-                <div @click="loadMoreComments">
-                    Load More Comments
-                </div>
-            </div>
+        <div class="flex font-bold pb-4 justify-center capitalize flex-row">
+            <inertia-link
+                preserve-state
+                preserve-scroll
+                v-for="item in comments.links"
+                :key="item.id"
+                :href="item.url || '#'"
+            >
+                <div class="px-2" :class="{'bg-gray-200 rounded' : item.active === true}" v-html="item.label"/>
+            </inertia-link>
         </div>
 
-        <div v-if="localComments.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
+<!--        <div class="mt-4 flex justify-center" v-if="localComments.next_page_url">-->
+<!--            <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">-->
+<!--                <div @click="loadMoreComments">-->
+<!--                    Load More Comments-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div id="likedPosts" v-if="localComments.data.length > 0" class="flex pt-2 text-sm justify-between font-sans font-bold">
+        <div v-if="localPosts.data.length > 0" class="border-t-4 border-gray-400 w-full mb-2"></div>
+
+        <div id="likedPosts" v-if="localPosts.data.length > 0" class="flex text-sm justify-between font-sans font-bold">
             <div>
-                <div v-if="localComments.data.length > 1"
-                     class="font-sans">My <span v-if="commentsCounted !== localComments.data.length">last</span> {{ localComments.data.length }} liked posts<span class="text-gray-400" v-if="commentsCounted !== localComments.data.length"> out of {{commentsCounted}}</span>
+                <div v-if="localPosts.data.length > 1"
+                     class="font-sans">My <span v-if="localLikedPostsCounted !== localPosts.data.length">latest</span> {{ localPosts.data.length }} liked posts<span class="text-gray-400" v-if="localLikedPostsCounted !== localPosts.data.length"> out of {{localLikedPostsCounted}}</span>
                 </div>
-                <div v-else-if="localComments.data.length === 1"
-                     class="mt-2 font-sans">My{{ localComments.data.length }} liked post:
+                <div v-else-if="localPosts.data.length === 1"
+                     class="font-sans">My {{ localPosts.data.length }} liked post:
                 </div>
-                <div v-else class="mt-2 font-sans font-bold">No comments</div>
+                <div v-else class="font-sans font-bold">No posts</div>
             </div>
         </div>
 
@@ -200,6 +212,7 @@
     import ProfileLayout from '@/Layouts/ProfileLayout'
     import Welcome from '@/Jetstream/Welcome'
     import Button from "@/Jetstream/Button";
+    import {Inertia} from "@inertiajs/inertia";
 
     export default {
         layout: ProfileLayout,
@@ -213,6 +226,7 @@
                 localPosts: this.likedPosts,
                 localComments: this.comments,
                 localCommentsCounted: this.commentsCounted,
+                localLikedPostsCounted: this.likedPostsCounted,
                 itemsCount: 5
             }
         },
@@ -234,7 +248,6 @@
             },
 
             loadMoreComments() {
-                // console.log(itemsCount)
                 if (this.localComments.next_page_url) {
                     axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments', itemsCount: this.itemsCount}}).then(response => {
                         this.localComments = {
@@ -246,13 +259,15 @@
             },
 
             deleteComment(comment) {
-                axios.delete(route('comments.destroy', comment))
-                    .then(res => { if (res)
-                        this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
-                        this.localCommentsCounted -= 1
-                        this.itemsCount = 1
-                        this.loadMoreComments()
-                    })
+                Inertia.delete(route('comments.destroy', comment), {preserveScroll: true, preserveState: true})
+                // this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
+                // this.localCommentsCounted -= 1
+                    // .then(res => { if (res)
+                    //
+                    //     this.localCommentsCounted -= 1
+                    //     this.itemsCount = 1
+                    //     this.loadMoreComments()
+                    // })
             }
         }
     }

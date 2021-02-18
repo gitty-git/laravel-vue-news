@@ -1,9 +1,13 @@
 <template>
     <div class="">
         <div class="uppercase mt-2 font-sans font-bold border-gray-20">
-            <span class="pr-2 mr-2 text-black">Edit Post</span>
+            <span class="pr-2 mr-2 text-black border-r-2">Edit Post</span>
+            <span>
+                <span class="text-sm underline cursor-pointer text-gray-400 font-normal normal-case" @click="cancel">Back to previous page</span>
+            </span>
         </div>
-        <div class="flex justify-center mt-2">
+
+        <div class="flex justify-center mt-4">
             <form @submit.prevent="storePost" class="flex flex-col create-width">
                 <!--Category-->
                 <div class="mb-4">
@@ -220,10 +224,15 @@ export default {
         },
 
         deletePost() {
-            axios.delete(route('posts.destroy', this.localPost))
+            // axios.delete(route('posts.destroy', this.localPost))
+            Inertia.delete(route('posts.destroy', this.localPost))
             // return this.localPost
-            window.history.back();
+            // window.history.back();
             // window.location = '/posts';
+        },
+
+        cancel() {
+            window.history.back();
         }
     }
 }

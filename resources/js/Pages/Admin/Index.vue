@@ -1,7 +1,24 @@
 <template>
     <div>
+        <div class="mt-2 flex justify-between">
+            <span class="font-bold border-gray-200">
+                ADMINISTRATION
+            </span>
+
+            <form method="get" :action="route('admin-search')">
+                <input required name="search"
+                       class="duration-200 px-2 py-1 bg-gray-100 text-sm hover:border-black hover:border-b-2 outline-none"
+                       autocomplete="off"
+                       placeholder="Search" type="text">
+                <!--                    <div v-if="searchInput.length > 0">></div>-->
+            </form>
+        </div>
+
+
+
         <!--POSTS-->
         <div class="my-4">
+            <div class="mb-2 text-sm font-bold">Latest posts:</div>
             <div class="flex border-gray-200 font-serif">
                 <!--LEFT-->
                 <div class="w-1/2 mr-4">
@@ -67,7 +84,7 @@
             </div>
 
             <!--LOAD MORE POSTS-->
-            <div class="mt-4 flex justify-center" v-if="localPosts.next_page_url">
+            <div class="mt-4 flex justify-center">
                 <div class="font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded">
                     <div @click="loadMorePosts">
                         Load More Posts
@@ -76,43 +93,64 @@
             </div>
         </div>
 
+        <div v-if="posts.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
+
         <!--USERS-->
+        <div class="mt-2 mb-2 text-sm font-bold">Latest registered users:</div>
         <div class="flex flex-wrap">
-            <div v-for="user in users.data" class="font-serif flex mt-4 w-1/2">
-                <div class="flex pt-4 items-center">
+            <div v-for="(user, id) in users.data" class="font-serif flex mt-2 w-1/2">
+                <div class="flex mb-4 items-center">
                     <img class="w-20 h-20" :src="user.profile_photo_url" alt="">
 
                     <div class="flex-col ml-4">
-                        <div class="flex items-center">
-                            <inertia-link :href="route('users.show', user)" class="font-sans font-bold uppercase mr-2">{{user.name}}</inertia-link>
+                        <div class="flex">
+                            <inertia-link :href="route('user.show', user)" class="font-serif hover:text-gray-400 duration-200 font-bold font-sm mr-2">{{user.name}}</inertia-link>
 
-                            <div class="flex font-sans">
-                                <div v-for="role in user.roles">
-                                    <div class="bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                                         v-if="role.role === 'admin' || role.role === 'redactor'">
-                                        {{role.role}}
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="rl-2 pl-2 border-l-2 font-sans text-xs uppercase text-gray-400 flex items-center">{{user.email}}</div>
                         </div>
 
-                        <div class="font-sans text-xs uppercase text-gray-400">
+                        <div class="font-sans text-xs mt-1 uppercase text-gray-400">
                             <span v-if="user.posts_count > 1">{{ user.posts_count }} posts,</span>
                             <span v-else-if="user.posts_count === 1">{{ user.posts_count }} post,</span>
                             <span v-else>No posts,</span>
                             <span v-if="user.comments_count > 1">{{ user.comments_count }} comments.</span>
                             <span v-else-if="user.comments_count === 1">{{ user.comments_count }} comment.</span>
                             <span v-else>No comments.</span>
-                            <div class="flex font-bold items-center text-black">
-                                <div v-if="showSure === false" class="cursor-pointer border-red-600 text-red-600 text-white hover:text-white hover:bg-red-600 mt-2 hover:bg-white rounded border px-3 py-1" @click="showSure = true" >Delete User</div>
-                                <div v-if="showSure !== false" class="cursor-pointer mt-2 mr-2 py-1" @click="showSure = true" >Sure?</div>
 
-                                <div class="flex" v-if="showSure === true">
-                                    <div class="cursor-pointer border-red-600 mr-2 text-red-600 text-white hover:text-white hover:bg-red-600 mt-2 hover:bg-white rounded border px-3 py-1"
-                                         @click="deleteUser(user)">Yes</div>
-                                    <div class="cursor-pointer mr-2 cursor-pointer mt-2 hover:border-red-200 rounded border px-3 py-1"
-                                         @click="showSure = false">No</div>
+                            <div class="font-sans text-xs mt-2 uppercase text-black">
+                                <div class="flex font-sans">
+                                    <inertia-link class="hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" preserve-state preserve-scroll :href="`/admin/unset-redactor/${user.id}`" v-if="user.roles.find(a => a.role === 'redactor')">
+                                        Unset as a redactor
+                                    </inertia-link>
+
+                                    <inertia-link class="hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" preserve-state preserve-scroll :href="`/admin/set-redactor/${user.id}`" v-else-if="user.roles.find(a => a.role !== 'redactor') || user.roles.length === 0">
+                                        Set as a redactor
+                                    </inertia-link>
+
+                                    <inertia-link class="hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" preserve-state preserve-scroll :href="`/admin/unset-admin/${user.id}`" v-if="user.roles.find(a => a.role === 'admin')">
+                                        Unset as an admin
+                                    </inertia-link>
+
+                                    <inertia-link class="hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full" preserve-state preserve-scroll :href="`/admin/set-admin/${user.id}`" v-else-if="user.roles.find(a => a.role !== 'admin') || user.roles.length === 0">
+                                        Set as an admin
+                                    </inertia-link>
+
+                                    <span class="border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full" v-if="id !== sureDeleteUser"
+                                          @click="sureDeleteUser = id">
+                                        Delete User
+                                    </span>
+
+                                    <span v-else class="border border-white">
+                                        <span class="mr-2">Sure?</span>
+
+                                        <span class="pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500"
+                                              @click="deleteUser(user); sureDeleteUser = null">Yes</span>
+
+                                        <span class="cursor-pointer duration-200 hover:text-gray-700" @click="sureDeleteUser = null">No</span>
+                                    </span>
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -120,15 +158,32 @@
             </div>
         </div>
 
+        <!--PAGINATION-->
+        <div class="flex font-bold pt-4 justify-center capitalize flex-row">
+            <inertia-link
+                preserve-state
+                preserve-scroll
+                v-for="item in users.links"
+                :key="item.id"
+                :href="item.url || '#'"
+            >
+                <div class="px-2" :class="{'bg-gray-200 rounded' : item.active === true}" v-html="item.label"/>
+            </inertia-link>
+        </div>
+
+        <div v-if="users.data.length > 0" class="border-t-4 border-gray-400 w-full mt-4 mb-2"></div>
+
 <!--        <div v-for="post in posts">-->
 
 <!--        </div>-->
         <!--COMMENTS-->
         <div>
-            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in localComments.data" :key="id">
+            <div class="mb-2 text-sm font-bold">Latest comments:</div>
+            <div class="border-gray-200 border-b-2 last-border-none mt-4" v-for="(comment, id) in comments.data">
                 <div class="my-4 flex">
                     <div class="w-1/2 mr-4">
                         <div class="font-sans text-xs uppercase text-gray-400 mb-2">
+                            {{comment.id}}
                             <span class="pr-2 mr-2 border-r-2">
                                 {{`
                                     ${new Date(comment.created_at).toLocaleString('default', {month: 'long'})}
@@ -145,16 +200,16 @@
                                 <span v-else>{{comment.likes_count}} likes</span>
                             </span>
 
-                            <span class="cursor-pointer duration-200 hover:text-gray-700" v-if="comment.active === 0"
-                                  @click="comment.active = 1">
+                            <span class="cursor-pointer duration-200 hover:text-gray-700" v-if="id !== sureActive"
+                                  @click="sureActive = id">
                                 Delete
                             </span>
 
                             <span v-else>
                                 <span class="mr-2">Sure?</span>
                                 <span class="pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500"
-                                      @click="deleteComment(comment)">Yes</span>
-                                <span class="cursor-pointer duration-200 hover:text-gray-700" @click="comment.active = 0">No</span>
+                                      @click="deleteComment(comment); sureActive = null">Yes</span>
+                                <span class="cursor-pointer duration-200 hover:text-gray-700" @click="sureActive = null">No</span>
                             </span>
                         </div>
 
@@ -174,20 +229,18 @@
             </div>
         </div>
 
-        <!--LOAD MORE COMMENTS-->
-        <div class="mt-4 flex justify-center" v-if="localComments.next_page_url">
-            <div class="font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded">
-                <div @click="loadMoreComments">
-                    Load More Comments
-                </div>
-            </div>
+        <!--PAGINATION-->
+        <div class="flex font-bold pt-4 justify-center capitalize flex-row">
+            <inertia-link
+                preserve-state
+                preserve-scroll
+                v-for="item in comments.links"
+                :key="item.id"
+                :href="item.url || '#'"
+            >
+                <div class="px-2" :class="{'bg-gray-200 rounded' : item.active === true}" v-html="item.label"/>
+            </inertia-link>
         </div>
-
-<!--        <div v-for="comment in comments.data">-->
-<!--            <div @click="deleteComment(comment)">{{comment.text}}</div>-->
-<!--        </div>-->
-
-        <div v-if="localComments.data.length > 0" class="border-t-4 border-gray-400 w-full"></div>
     </div>
 </template>
 
@@ -196,26 +249,25 @@ import {Inertia} from "@inertiajs/inertia";
 import ProfileLayout from "@/Layouts/ProfileLayout";
 
 export default {
-    name: "Admin",
+    name: "Index",
 
     layout: ProfileLayout,
     props: ['posts', 'users', 'comments'],
     data() {
         return {
-            localComments: this.comments,
+            sureDeleteUser: {},
+            sureActive: {},
             localPosts: this.posts,
             itemsCount: 6,
             showSure: false,
         }
     },
 
-    mounted() {
-    },
-
     methods: {
         loadMorePosts() {
             if (this.localPosts.next_page_url) {
                 axios.get(this.localPosts.next_page_url, {params: {loadMoreType: 'morePosts'}}).then(response => {
+                    console.log(response)
                     this.localPosts = {
                         ...response.data,
                         data: [...this.localPosts.data, ...response.data.data]
@@ -230,7 +282,9 @@ export default {
 
         loadMoreComments() {
             if (this.localComments.next_page_url) {
-                axios.get(this.localComments.next_page_url, {params: {loadMoreType: 'moreComments', itemsCount: this.itemsCount}}).then(response => {
+                axios.get(this.localComments.next_page_url,
+                    {params: {loadMoreType: 'moreComments', itemsCount: 1}})
+                    .then(response => {
                     this.localComments = {
                         ...response.data,
                         data: [...this.localComments.data, ...response.data.data]
@@ -240,14 +294,7 @@ export default {
         },
 
         deleteComment(comment) {
-            Inertia.delete(route('comments.destroy', comment), { preserveScroll: true })
-            // return this.posts
-                // .then(res => { if (res)
-                //     this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
-                //     // this.localCommentsCounted -= 1
-                //     // this.itemsCount = 1
-                //     // this.loadMoreComments()
-                // })
+            Inertia.delete(route('comments.destroy', comment), {preserveScroll: true, preserveState: true})
         }
     }
 }

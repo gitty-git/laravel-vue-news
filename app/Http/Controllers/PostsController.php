@@ -75,8 +75,8 @@ class PostsController extends Controller
     {
         if (Auth::user()->is($post->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
             $post->delete();
-//            return back();
-            return back()->with('Deleted', $post);
+            return back();
+//            return back()->with('Deleted', $post);
         }
         else abort(403);
     }

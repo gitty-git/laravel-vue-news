@@ -5202,21 +5202,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Admin",
+  name: "Index",
   layout: _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_1__["default"],
   props: ['posts', 'users', 'comments'],
   data: function data() {
     return {
-      localComments: this.comments,
+      sureDeleteUser: {},
+      sureActive: {},
       localPosts: this.posts,
       itemsCount: 6,
       showSure: false
     };
   },
-  mounted: function mounted() {},
   methods: {
     loadMorePosts: function loadMorePosts() {
       var _this = this;
@@ -5227,6 +5280,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             loadMoreType: 'morePosts'
           }
         }).then(function (response) {
+          console.log(response);
           _this.localPosts = _objectSpread(_objectSpread({}, response.data), {}, {
             data: [].concat(_toConsumableArray(_this.localPosts.data), _toConsumableArray(response.data.data))
           });
@@ -5245,7 +5299,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         axios.get(this.localComments.next_page_url, {
           params: {
             loadMoreType: 'moreComments',
-            itemsCount: this.itemsCount
+            itemsCount: 1
           }
         }).then(function (response) {
           _this2.localComments = _objectSpread(_objectSpread({}, response.data), {}, {
@@ -5256,14 +5310,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     deleteComment: function deleteComment(comment) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"]["delete"](route('comments.destroy', comment), {
-        preserveScroll: true
-      }); // return this.posts
-      // .then(res => { if (res)
-      //     this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
-      //     // this.localCommentsCounted -= 1
-      //     // this.itemsCount = 1
-      //     // this.loadMoreComments()
-      // })
+        preserveScroll: true,
+        preserveState: true
+      });
     }
   }
 });
@@ -5281,6 +5330,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_NewsLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/NewsLayout */ "./resources/js/Layouts/NewsLayout.vue");
 /* harmony import */ var _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/ProfileLayout */ "./resources/js/Layouts/ProfileLayout.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5445,19 +5496,152 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  layout: AdminSearching,
-  props: ["posts", "comments", "postsCounted", "commentsCounted", "search"],
-  name: "SearchPosts",
+  layout: _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: ["posts", "comments", "postsCounted", "commentsCounted", "search", 'users', "usersCounted"],
+  name: "Searching",
   data: function data() {
     return {
       localPosts: this.posts,
-      localComments: this.comments
+      localComments: this.comments,
+      localUsers: this.users,
+      sureDeleteUser: {},
+      sureActive: {}
     };
   },
   methods: {
+    scrollTo: function scrollTo(id) {
+      document.getElementById(id).scrollIntoView();
+    },
     loadMorePosts: function loadMorePosts() {
       var _this = this;
 
@@ -5489,6 +5673,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       }
+    },
+    deleteUser: function deleteUser(user) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"]["delete"](route('users.destroy', user), {
+        preserveScroll: true
+      });
+    },
+    deleteComment: function deleteComment(comment) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"]["delete"](route('comments.destroy', comment), {
+        preserveScroll: true,
+        preserveState: true
+      });
     }
   }
 });
@@ -6111,6 +6306,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/ProfileLayout */ "./resources/js/Layouts/ProfileLayout.vue");
 /* harmony import */ var _Jetstream_Welcome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Welcome */ "./resources/js/Jetstream/Welcome.vue");
 /* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6327,6 +6524,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -6342,6 +6552,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       localPosts: this.likedPosts,
       localComments: this.comments,
       localCommentsCounted: this.commentsCounted,
+      localLikedPostsCounted: this.likedPostsCounted,
       itemsCount: 5
     };
   },
@@ -6367,7 +6578,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     loadMoreComments: function loadMoreComments() {
       var _this2 = this;
 
-      // console.log(itemsCount)
       if (this.localComments.next_page_url) {
         axios.get(this.localComments.next_page_url, {
           params: {
@@ -6382,17 +6592,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     deleteComment: function deleteComment(comment) {
-      var _this3 = this;
-
-      axios["delete"](route('comments.destroy', comment)).then(function (res) {
-        if (res) _this3.localComments.data.splice(_this3.localComments.data.map(function (item) {
-          return item.id;
-        }).indexOf(comment.id), 1);
-        _this3.localCommentsCounted -= 1;
-        _this3.itemsCount = 1;
-
-        _this3.loadMoreComments();
-      });
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__["Inertia"]["delete"](route('comments.destroy', comment), {
+        preserveScroll: true,
+        preserveState: true
+      }); // this.localComments.data.splice(this.localComments.data.map(item => item.id).indexOf(comment.id), 1)
+      // this.localCommentsCounted -= 1
+      // .then(res => { if (res)
+      //
+      //     this.localCommentsCounted -= 1
+      //     this.itemsCount = 1
+      //     this.loadMoreComments()
+      // })
     }
   }
 });
@@ -7244,6 +7454,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -7308,9 +7522,13 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(this.$refs.image.files[0]);
     },
     deletePost: function deletePost() {
-      axios["delete"](route('posts.destroy', this.localPost)); // return this.localPost
-
-      window.history.back(); // window.location = '/posts';
+      // axios.delete(route('posts.destroy', this.localPost))
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__["Inertia"]["delete"](route('posts.destroy', this.localPost)); // return this.localPost
+      // window.history.back();
+      // window.location = '/posts';
+    },
+    cancel: function cancel() {
+      window.history.back();
     }
   }
 });
@@ -8708,6 +8926,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "User",
@@ -8752,6 +8977,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       }
+    },
+    cancel: function cancel() {
+      window.history.back();
     }
   },
   computed: {
@@ -8759,24 +8987,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.comments;
     }
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "UserProfile"
 });
 
 /***/ }),
@@ -54563,7 +54773,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "mt-2 flex justify-between" }, [
+      _c("span", { staticClass: "font-bold border-gray-200" }, [
+        _vm._v("\n                ADMINISTRATION\n            ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "form",
+        { attrs: { method: "get", action: _vm.route("admin-search") } },
+        [
+          _c("input", {
+            staticClass:
+              "duration-200 px-2 py-1 bg-gray-100 text-sm hover:border-black hover:border-b-2 outline-none",
+            attrs: {
+              required: "",
+              name: "search",
+              autocomplete: "off",
+              placeholder: "Search",
+              type: "text"
+            }
+          })
+        ]
+      )
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "my-4" }, [
+      _c("div", { staticClass: "mb-2 text-sm font-bold" }, [
+        _vm._v("Latest posts:")
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
         _c(
           "div",
@@ -54735,32 +54973,38 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.localPosts.next_page_url
-        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
-              },
-              [
-                _c("div", { on: { click: _vm.loadMorePosts } }, [
-                  _vm._v(
-                    "\n                        Load More Posts\n                    "
-                  )
-                ])
-              ]
-            )
-          ])
-        : _vm._e()
+      _c("div", { staticClass: "mt-4 flex justify-center" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
+          },
+          [
+            _c("div", { on: { click: _vm.loadMorePosts } }, [
+              _vm._v(
+                "\n                        Load More Posts\n                    "
+              )
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.posts.data.length > 0
+      ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-2 mb-2 text-sm font-bold" }, [
+      _vm._v("Latest registered users:")
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "flex flex-wrap" },
-      _vm._l(_vm.users.data, function(user) {
-        return _c("div", { staticClass: "font-serif flex mt-4 w-1/2" }, [
-          _c("div", { staticClass: "flex pt-4 items-center" }, [
+      _vm._l(_vm.users.data, function(user, id) {
+        return _c("div", { staticClass: "font-serif flex mt-2 w-1/2" }, [
+          _c("div", { staticClass: "flex mb-4 items-center" }, [
             _c("img", {
               staticClass: "w-20 h-20",
               attrs: { src: user.profile_photo_url, alt: "" }
@@ -54769,41 +55013,25 @@ var render = function() {
             _c("div", { staticClass: "flex-col ml-4" }, [
               _c(
                 "div",
-                { staticClass: "flex items-center" },
+                { staticClass: "flex" },
                 [
                   _c(
                     "inertia-link",
                     {
-                      staticClass: "font-sans font-bold uppercase mr-2",
-                      attrs: { href: _vm.route("users.show", user) }
+                      staticClass:
+                        "font-serif hover:text-gray-400 duration-200 font-bold font-sm mr-2",
+                      attrs: { href: _vm.route("user.show", user) }
                     },
                     [_vm._v(_vm._s(user.name))]
                   ),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "flex font-sans" },
-                    _vm._l(user.roles, function(role) {
-                      return _c("div", [
-                        role.role === "admin" || role.role === "redactor"
-                          ? _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(role.role) +
-                                    "\n                                    "
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ])
-                    }),
-                    0
+                    {
+                      staticClass:
+                        "rl-2 pl-2 border-l-2 font-sans text-xs uppercase text-gray-400 flex items-center"
+                    },
+                    [_vm._v(_vm._s(user.email))]
                   )
                 ],
                 1
@@ -54811,7 +55039,9 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "font-sans text-xs uppercase text-gray-400" },
+                {
+                  staticClass: "font-sans text-xs mt-1 uppercase text-gray-400"
+                },
                 [
                   user.posts_count > 1
                     ? _c("span", [_vm._v(_vm._s(user.posts_count) + " posts,")])
@@ -54831,70 +55061,157 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "flex font-bold items-center text-black" },
+                    {
+                      staticClass: "font-sans text-xs mt-2 uppercase text-black"
+                    },
                     [
-                      _vm.showSure === false
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                "cursor-pointer border-red-600 text-red-600 text-white hover:text-white hover:bg-red-600 mt-2 hover:bg-white rounded border px-3 py-1",
-                              on: {
-                                click: function($event) {
-                                  _vm.showSure = true
-                                }
-                              }
-                            },
-                            [_vm._v("Delete User")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.showSure !== false
-                        ? _c(
-                            "div",
-                            {
-                              staticClass: "cursor-pointer mt-2 mr-2 py-1",
-                              on: {
-                                click: function($event) {
-                                  _vm.showSure = true
-                                }
-                              }
-                            },
-                            [_vm._v("Sure?")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.showSure === true
-                        ? _c("div", { staticClass: "flex" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "cursor-pointer border-red-600 mr-2 text-red-600 text-white hover:text-white hover:bg-red-600 mt-2 hover:bg-white rounded border px-3 py-1",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteUser(user)
+                      _c(
+                        "div",
+                        { staticClass: "flex font-sans" },
+                        [
+                          user.roles.find(function(a) {
+                            return a.role === "redactor"
+                          })
+                            ? _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: {
+                                    "preserve-state": "",
+                                    "preserve-scroll": "",
+                                    href: "/admin/unset-redactor/" + user.id
                                   }
-                                }
-                              },
-                              [_vm._v("Yes")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "cursor-pointer mr-2 cursor-pointer mt-2 hover:border-red-200 rounded border px-3 py-1",
-                                on: {
-                                  click: function($event) {
-                                    _vm.showSure = false
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Unset as a redactor\n                                    "
+                                  )
+                                ]
+                              )
+                            : user.roles.find(function(a) {
+                                return a.role !== "redactor"
+                              }) || user.roles.length === 0
+                            ? _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: {
+                                    "preserve-state": "",
+                                    "preserve-scroll": "",
+                                    href: "/admin/set-redactor/" + user.id
                                   }
-                                }
-                              },
-                              [_vm._v("No")]
-                            )
-                          ])
-                        : _vm._e()
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Set as a redactor\n                                    "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          user.roles.find(function(a) {
+                            return a.role === "admin"
+                          })
+                            ? _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: {
+                                    "preserve-state": "",
+                                    "preserve-scroll": "",
+                                    href: "/admin/unset-admin/" + user.id
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Unset as an admin\n                                    "
+                                  )
+                                ]
+                              )
+                            : user.roles.find(function(a) {
+                                return a.role !== "admin"
+                              }) || user.roles.length === 0
+                            ? _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: {
+                                    "preserve-state": "",
+                                    "preserve-scroll": "",
+                                    href: "/admin/set-admin/" + user.id
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Set as an admin\n                                    "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          id !== _vm.sureDeleteUser
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.sureDeleteUser = id
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Delete User\n                                    "
+                                  )
+                                ]
+                              )
+                            : _c(
+                                "span",
+                                { staticClass: "border border-white" },
+                                [
+                                  _c("span", { staticClass: "mr-2" }, [
+                                    _vm._v("Sure?")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.deleteUser(user)
+                                          _vm.sureDeleteUser = null
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Yes")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "cursor-pointer duration-200 hover:text-gray-700",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sureDeleteUser = null
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("No")]
+                                  )
+                                ]
+                              )
+                        ],
+                        1
+                      )
                     ]
                   )
                 ]
@@ -54908,193 +55225,238 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      _vm._l(_vm.localComments.data, function(comment, id) {
+      { staticClass: "flex font-bold pt-4 justify-center capitalize flex-row" },
+      _vm._l(_vm.users.links, function(item) {
         return _c(
-          "div",
+          "inertia-link",
           {
-            key: id,
-            staticClass: "border-gray-200 border-b-2 last-border-none mt-4"
+            key: item.id,
+            attrs: {
+              "preserve-state": "",
+              "preserve-scroll": "",
+              href: item.url || "#"
+            }
           },
           [
-            _c("div", { staticClass: "my-4 flex" }, [
-              _c("div", { staticClass: "w-1/2 mr-4" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "font-sans text-xs uppercase text-gray-400 mb-2"
-                  },
-                  [
-                    _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+            _c("div", {
+              staticClass: "px-2",
+              class: { "bg-gray-200 rounded": item.active === true },
+              domProps: { innerHTML: _vm._s(item.label) }
+            })
+          ]
+        )
+      }),
+      1
+    ),
+    _vm._v(" "),
+    _vm.users.data.length > 0
+      ? _c("div", {
+          staticClass: "border-t-4 border-gray-400 w-full mt-4 mb-2"
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c("div", { staticClass: "mb-2 text-sm font-bold" }, [
+          _vm._v("Latest comments:")
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.comments.data, function(comment, id) {
+          return _c(
+            "div",
+            { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
+            [
+              _c("div", { staticClass: "my-4 flex" }, [
+                _c("div", { staticClass: "w-1/2 mr-4" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "font-sans text-xs uppercase text-gray-400 mb-2"
+                    },
+                    [
                       _vm._v(
-                        "\n                                " +
-                          _vm._s(
-                            "\n                                    " +
-                              new Date(
-                                comment.created_at
-                              ).toLocaleString("default", { month: "long" }) +
-                              "\n                                    " +
-                              new Date(comment.created_at).getDate() +
-                              ", " +
-                              new Date(comment.created_at).getFullYear() +
-                              "\n                                "
-                          ) +
+                        "\n                            " +
+                          _vm._s(comment.id) +
                           "\n                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
-                      comment.comment_replies_count === 1
-                        ? _c("span", [
-                            _vm._v(
-                              _vm._s(comment.comment_replies_count) + " reply"
-                            )
-                          ])
-                        : _c("span", [
-                            _vm._v(
-                              _vm._s(comment.comment_replies_count) + " replies"
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
-                      comment.likes_count === 1
-                        ? _c("span", [
-                            _vm._v(_vm._s(comment.likes_count) + " like")
-                          ])
-                        : _c("span", [
-                            _vm._v(_vm._s(comment.likes_count) + " likes")
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    comment.active === 0
-                      ? _c(
-                          "span",
-                          {
-                            staticClass:
-                              "cursor-pointer duration-200 hover:text-gray-700",
-                            on: {
-                              click: function($event) {
-                                comment.active = 1
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Delete\n                            "
-                            )
-                          ]
+                      ),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(
+                              "\n                                    " +
+                                new Date(
+                                  comment.created_at
+                                ).toLocaleString("default", { month: "long" }) +
+                                "\n                                    " +
+                                new Date(comment.created_at).getDate() +
+                                ", " +
+                                new Date(comment.created_at).getFullYear() +
+                                "\n                                "
+                            ) +
+                            "\n                            "
                         )
-                      : _c("span", [
-                          _c("span", { staticClass: "mr-2" }, [
-                            _vm._v("Sure?")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteComment(comment)
-                                }
-                              }
-                            },
-                            [_vm._v("Yes")]
-                          ),
-                          _vm._v(" "),
-                          _c(
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.comment_replies_count === 1
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) + " reply"
+                              )
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) +
+                                  " replies"
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.likes_count === 1
+                          ? _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " like")
+                            ])
+                          : _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " likes")
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      id !== _vm.sureActive
+                        ? _c(
                             "span",
                             {
                               staticClass:
                                 "cursor-pointer duration-200 hover:text-gray-700",
                               on: {
                                 click: function($event) {
-                                  comment.active = 0
+                                  _vm.sureActive = id
                                 }
                               }
                             },
-                            [_vm._v("No")]
+                            [
+                              _vm._v(
+                                "\n                                Delete\n                            "
+                              )
+                            ]
+                          )
+                        : _c("span", [
+                            _c("span", { staticClass: "mr-2" }, [
+                              _vm._v("Sure?")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteComment(comment)
+                                    _vm.sureActive = null
+                                  }
+                                }
+                              },
+                              [_vm._v("Yes")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "cursor-pointer duration-200 hover:text-gray-700",
+                                on: {
+                                  click: function($event) {
+                                    _vm.sureActive = null
+                                  }
+                                }
+                              },
+                              [_vm._v("No")]
+                            )
+                          ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-2 font-serif" }, [
+                    _vm._v('"' + _vm._s(comment.text) + '"')
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass: "flex hover:text-gray-600 duration-200",
+                        attrs: { href: "/post/" + comment.post.slug }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "w-1/4 mr-4",
+                          attrs: {
+                            src: "/storage/" + comment.post.image,
+                            alt: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "font-serif font-bold mb-2" },
+                            [_vm._v(_vm._s(comment.post.title))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans text-xs uppercase text-gray-400"
+                            },
+                            [_vm._v("by " + _vm._s(comment.post.user.name))]
                           )
                         ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-2 font-serif" }, [
-                  _vm._v('"' + _vm._s(comment.text) + '"')
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "flex hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + comment.post.slug }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "w-1/4 mr-4",
-                        attrs: {
-                          src: "/storage/" + comment.post.image,
-                          alt: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "font-serif font-bold mb-2" },
-                          [_vm._v(_vm._s(comment.post.title))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "font-sans text-xs uppercase text-gray-400"
-                          },
-                          [_vm._v("by " + _vm._s(comment.post.user.name))]
-                        )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            ])
-          ]
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _vm.localComments.next_page_url
-      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
-            },
-            [
-              _c("div", { on: { click: _vm.loadMoreComments } }, [
-                _vm._v(
-                  "\n                    Load More Comments\n                "
+                      ]
+                    )
+                  ],
+                  1
                 )
               ])
             ]
           )
-        ])
-      : _vm._e(),
+        })
+      ],
+      2
+    ),
     _vm._v(" "),
-    _vm.localComments.data.length > 0
-      ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
-      : _vm._e()
+    _c(
+      "div",
+      { staticClass: "flex font-bold pt-4 justify-center capitalize flex-row" },
+      _vm._l(_vm.comments.links, function(item) {
+        return _c(
+          "inertia-link",
+          {
+            key: item.id,
+            attrs: {
+              "preserve-state": "",
+              "preserve-scroll": "",
+              href: item.url || "#"
+            }
+          },
+          [
+            _c("div", {
+              staticClass: "px-2",
+              class: { "bg-gray-200 rounded": item.active === true },
+              domProps: { innerHTML: _vm._s(item.label) }
+            })
+          ]
+        )
+      }),
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -55119,372 +55481,818 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "uppercase mt-2 font-bold flex justify-between" },
-      [
-        _vm.usersCounted > 0 || _vm.postsCounted > 0
-          ? _c("span", [
-              _vm._v(
-                '\n            By request "' +
-                  _vm._s(_vm.search) +
-                  '" found ' +
-                  _vm._s(_vm.postsCounted) +
-                  "\n            "
-              ),
-              _vm.postsCounted === 1
-                ? _c("span", [_vm._v("post")])
-                : _c("span", [_vm._v("posts")]),
-              _vm._v(
-                "\n            and " +
-                  _vm._s(_vm.commentsCounted) +
-                  "\n            "
-              ),
-              _vm.usersCounted === 1
-                ? _c("span", [_vm._v("comment")])
-                : _c("span", [_vm._v("comments")]),
-              _vm._v(" in your records\n        ")
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { staticClass: "mt-2 font-bold flex justify-between border-gray-200" },
+        [
+          _vm.usersCounted > 0 ||
+          _vm.postsCounted > 0 ||
+          _vm.commentsCounted > 0
+            ? _c("span", { staticClass: "flex items-center" }, [
+                _c("span", { staticClass: "uppercase" }, [
+                  _vm._v('By request "' + _vm._s(_vm.search) + '" found')
+                ]),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "font-sans text-xs uppercase text-gray-400 border-l-2 ml-2 pl-2"
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.postsCounted) +
+                        "\n                "
+                    ),
+                    _vm.postsCounted === 1
+                      ? _c("span", [_vm._v("post")])
+                      : _c("span", [_vm._v("posts")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "font-sans text-xs uppercase text-gray-400 border-l-2 ml-2 pl-2",
+                    class: { "underline cursor-pointer": _vm.usersCounted > 0 },
+                    on: {
+                      click: function($event) {
+                        return _vm.scrollTo("users")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.usersCounted) +
+                        "\n                "
+                    ),
+                    _vm.usersCounted === 1
+                      ? _c("span", [_vm._v("user")])
+                      : _c("span", [_vm._v("users")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "font-sans text-xs uppercase text-gray-400 border-l-2 ml-2 pl-2",
+                    class: {
+                      "underline cursor-pointer": _vm.commentsCounted > 0
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.scrollTo("comments")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.commentsCounted) +
+                        "\n                "
+                    ),
+                    _vm.usersCounted === 1
+                      ? _c("span", [_vm._v("comment")])
+                      : _c("span", [_vm._v("comments")])
+                  ]
+                )
+              ])
+            : _c("div", [
+                _vm._v(
+                  'By Request "' +
+                    _vm._s(_vm.search) +
+                    '" Nothing Found in your records'
+                )
+              ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "inertia-link",
+        {
+          staticClass:
+            "text-sm underline text-gray-400 font-normal normal-case",
+          attrs: { href: "/admin" }
+        },
+        [_vm._v("Back to previous page")]
+      ),
+      _vm._v(" "),
+      _vm.localPosts.data.length > 0
+        ? _c("div", { staticClass: "mt-4 font-bold text-sm" }, [
+            _vm.localPosts.data.length === 1
+              ? _c("div", [_vm._v("Post:")])
+              : _c("div", [_vm._v("Found posts:")])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "my-4" }, [
+        _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
+          _c(
+            "div",
+            { staticClass: "w-1/2 mr-4" },
+            _vm._l(
+              _vm.localPosts.data.filter(function(x, i) {
+                return i % 2 === 0
+              }),
+              function(post) {
+                return _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-gray-200 border-b-2 py-4 first-child last-child"
+                  },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass: "hover:text-gray-600 duration-200",
+                        attrs: { href: _vm.route("posts.edit", post.id) }
+                      },
+                      [
+                        _c("div", { staticClass: "flex" }, [
+                          _c("img", {
+                            staticClass: "w-1/3 h-full mr-4 mb-4",
+                            attrs: { src: "/storage/" + post.image, alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                            _c("div", { staticClass: "font-bold mb-2" }, [
+                              _vm._v(_vm._s(post.title))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "text-13 mb-2 text-gray-600" },
+                              [_vm._v(_vm._s(post.brief))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex h-full font-sans uppercase text-gray-400"
+                              },
+                              [
+                                _c("div", { staticClass: "flex flex-wrap" }, [
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(
+                                          "\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).toLocaleString("default", {
+                                              month: "long"
+                                            }) +
+                                            "\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).getDate() +
+                                            ",\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).getFullYear() +
+                                            "\n                                        "
+                                        ) +
+                                        "\n                                        "
+                                    )
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              }
+            ),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-1/2 pl-4 border-l-2 border-gray-200",
+              class: { "border-none": _vm.posts.data.length === 1 }
+            },
+            _vm._l(
+              _vm.localPosts.data.filter(function(x, i) {
+                return i % 2 !== 0
+              }),
+              function(post) {
+                return _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-gray-200 border-b-2 py-4 first-child last-child"
+                  },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass: "hover:text-gray-600 duration-200",
+                        attrs: { href: _vm.route("posts.edit", post.id) }
+                      },
+                      [
+                        _c("div", { staticClass: "flex" }, [
+                          _c("img", {
+                            staticClass: "w-1/3 h-full mr-4 mb-4",
+                            attrs: { src: "/storage/" + post.image, alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "flex w-2/3 flex-col" }, [
+                            _c("div", { staticClass: "font-bold mb-2" }, [
+                              _vm._v(_vm._s(post.title))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "text-13 mb-2 text-gray-600" },
+                              [_vm._v(_vm._s(post.brief))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex h-full font-sans uppercase text-gray-400"
+                              },
+                              [
+                                _c("div", { staticClass: "flex flex-wrap" }, [
+                                  _c("div", { staticClass: "text-xs" }, [
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(
+                                          "\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).toLocaleString("default", {
+                                              month: "long"
+                                            }) +
+                                            "\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).getDate() +
+                                            ",\n                                        " +
+                                            new Date(
+                                              post.created_at
+                                            ).getFullYear() +
+                                            "\n                                        "
+                                        ) +
+                                        "\n                                        "
+                                    )
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              }
+            ),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm.users.links[2].url
+          ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
+                },
+                [
+                  _c("div", { on: { click: _vm.loadMorePosts } }, [
+                    _vm._v(
+                      "\n                    Show More Posts\n                "
+                    )
+                  ])
+                ]
+              )
             ])
-          : _c("div", [
-              _vm._v(
-                'By Request "' +
-                  _vm._s(_vm.search) +
-                  '" Nothing Found in your records'
-              )
-            ]),
-        _vm._v(" "),
-        _c(
-          "inertia-link",
-          {
-            staticClass:
-              "ml-1 text-sm underline text-gray-400 font-normal normal-case",
-            attrs: { href: "/dashboard" }
-          },
-          [_vm._v("Back to previous page")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm.localPosts.data.length > 0
-      ? _c("div", { staticClass: "mt-4 font-bold text-sm" }, [
-          _vm.localPosts.data.length === 1
-            ? _c("div", [_vm._v("Post:")])
-            : _c("div", [_vm._v("Posts:")])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "my-4" }, [
-      _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
-        _c(
-          "div",
-          { staticClass: "w-1/2 mr-4" },
-          _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
-              return i % 2 === 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + post.slug }
-                    },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full font-sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(
-                                        "\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                        " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                        "
-                                      ) +
-                                      "\n                                        "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "w-1/2 pl-4 border-l-2 border-gray-200",
-            class: { "border-none": _vm.posts.data.length === 1 }
-          },
-          _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
-              return i % 2 !== 0
-            }),
-            function(post) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "border-gray-200 border-b-2 py-4 first-child last-child"
-                },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + post.slug }
-                    },
-                    [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("img", {
-                          staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
-                            _vm._v(_vm._s(post.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-13 mb-2 text-gray-600" },
-                            [_vm._v(_vm._s(post.brief))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex h-full font-sans uppercase text-gray-400"
-                            },
-                            [
-                              _c("div", { staticClass: "flex flex-wrap" }, [
-                                _c("div", { staticClass: "text-xs" }, [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(
-                                        "\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).toLocaleString("default", {
-                                            month: "long"
-                                          }) +
-                                          "\n                                        " +
-                                          new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
-                                          new Date(
-                                            post.created_at
-                                          ).getFullYear() +
-                                          "\n                                        "
-                                      ) +
-                                      "\n                                        "
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            }
-          ),
-          0
-        )
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _vm.localPosts.next_page_url
-        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
-              },
-              [
-                _c("div", { on: { click: _vm.loadMorePosts } }, [
-                  _vm._v(
-                    "\n                    Show More Posts\n                "
-                  )
-                ])
-              ]
-            )
+      _vm.localUsers.data.length > 0
+        ? _c("div", { attrs: { id: "users" } }, [
+            _vm.localUsers.data.length !== 0
+              ? _c("div", {
+                  staticClass: "border-t-4 mb-2 border-gray-400 w-full"
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(0)
           ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _vm.localComments.data.length > 0
-      ? _c("div", [
-          _vm.localPosts.data.length !== 0
-            ? _c("div", {
-                staticClass: "border-t-4 mb-2 border-gray-400 w-full"
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "font-bold mb-4 text-sm" }, [
-            _vm.localComments.data.length === 1
-              ? _c("div", [_vm._v("User:")])
-              : _c("div", [_vm._v("Comments:")])
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      _vm._l(_vm.localComments.data, function(comment) {
-        return _c(
-          "div",
-          { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
-          [
-            _c("div", { staticClass: "my-4 flex" }, [
-              _c("div", { staticClass: "w-1/2 mr-4" }, [
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex flex-wrap" },
+        _vm._l(_vm.users.data, function(user, id) {
+          return _c("div", { staticClass: "font-serif flex mt-2 w-1/2" }, [
+            _c("div", { staticClass: "flex mb-4 items-center" }, [
+              _c("img", {
+                staticClass: "w-20 h-20",
+                attrs: { src: user.profile_photo_url, alt: "" }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex-col ml-4" }, [
+                _c(
+                  "div",
+                  { staticClass: "flex" },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass:
+                          "font-serif hover:text-gray-400 duration-200 font-bold font-sm mr-2",
+                        attrs: { href: _vm.route("user.show", user) }
+                      },
+                      [_vm._v(_vm._s(user.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "rl-2 pl-2 border-l-2 font-sans text-xs uppercase text-gray-400 flex items-center"
+                      },
+                      [_vm._v(_vm._s(user.email))]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
                 _c(
                   "div",
                   {
                     staticClass:
-                      "font-sans text-xs uppercase text-gray-400 mb-2"
+                      "font-sans text-xs mt-1 uppercase text-gray-400"
                   },
                   [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(
-                          "\n                    " +
-                            new Date(
-                              comment.created_at
-                            ).toLocaleString("default", { month: "long" }) +
-                            "\n                    " +
-                            new Date(comment.created_at).getDate() +
-                            ", " +
-                            new Date(comment.created_at).getFullYear() +
-                            "\n                    "
-                        ) +
-                        "\n                        comment:\n                    "
+                    user.posts_count > 1
+                      ? _c("span", [
+                          _vm._v(_vm._s(user.posts_count) + " posts,")
+                        ])
+                      : user.posts_count === 1
+                      ? _c("span", [
+                          _vm._v(_vm._s(user.posts_count) + " post,")
+                        ])
+                      : _c("span", [_vm._v("No posts,")]),
+                    _vm._v(" "),
+                    user.comments_count > 1
+                      ? _c("span", [
+                          _vm._v(_vm._s(user.comments_count) + " comments.")
+                        ])
+                      : user.comments_count === 1
+                      ? _c("span", [
+                          _vm._v(_vm._s(user.comments_count) + " comment.")
+                        ])
+                      : _c("span", [_vm._v("No comments.")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "font-sans text-xs mt-2 uppercase text-black"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "flex font-sans" },
+                          [
+                            user.roles.find(function(a) {
+                              return a.role === "redactor"
+                            })
+                              ? _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      "preserve-state": "",
+                                      "preserve-scroll": "",
+                                      href: "/admin/unset-redactor/" + user.id
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Unset as a redactor\n                                "
+                                    )
+                                  ]
+                                )
+                              : user.roles.find(function(a) {
+                                  return a.role !== "redactor"
+                                }) || user.roles.length === 0
+                              ? _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      "preserve-state": "",
+                                      "preserve-scroll": "",
+                                      href: "/admin/set-redactor/" + user.id
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Set as a redactor\n                                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            user.roles.find(function(a) {
+                              return a.role === "admin"
+                            })
+                              ? _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      "preserve-state": "",
+                                      "preserve-scroll": "",
+                                      href: "/admin/unset-admin/" + user.id
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Unset as an admin\n                                "
+                                    )
+                                  ]
+                                )
+                              : user.roles.find(function(a) {
+                                  return a.role !== "admin"
+                                }) || user.roles.length === 0
+                              ? _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      "preserve-state": "",
+                                      "preserve-scroll": "",
+                                      href: "/admin/set-admin/" + user.id
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Set as an admin\n                                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            id !== _vm.sureDeleteUser
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.sureDeleteUser = id
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Delete User\n                                "
+                                    )
+                                  ]
+                                )
+                              : _c(
+                                  "span",
+                                  { staticClass: "border border-white" },
+                                  [
+                                    _c("span", { staticClass: "mr-2" }, [
+                                      _vm._v("Sure?")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.deleteUser(user)
+                                            _vm.sureDeleteUser = null
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Yes")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "cursor-pointer duration-200 hover:text-gray-700",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.sureDeleteUser = null
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("No")]
+                                    )
+                                  ]
+                                )
+                          ],
+                          1
+                        )
+                      ]
                     )
                   ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-2 font-serif" }, [
-                  _vm._v('"' + _vm._s(comment.text) + '"')
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass: "flex hover:text-gray-600 duration-200",
-                      attrs: { href: "/post/" + comment.post.slug }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "w-1/4 mr-4",
-                        attrs: { src: comment.post.image, alt: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "font-serif font-bold mb-2" },
-                          [_vm._v(_vm._s(comment.post.title))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "font-sans text-xs uppercase text-gray-400"
-                          },
-                          [_vm._v("by " + _vm._s(comment.post.user.name))]
-                        )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
+                )
+              ])
             ])
-          ]
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    this.localComments.next_page_url
-      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-          _c(
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm.users.links[2].url
+        ? _c(
             "div",
             {
               staticClass:
-                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
+                "flex font-bold my-4 justify-center capitalize flex-row"
             },
+            _vm._l(_vm.users.links, function(item) {
+              return _c(
+                "inertia-link",
+                {
+                  key: item.id,
+                  attrs: {
+                    "preserve-state": "",
+                    "preserve-scroll": "",
+                    href: item.url || "#"
+                  }
+                },
+                [
+                  _c("div", {
+                    staticClass: "px-2",
+                    class: { "bg-gray-200 rounded": item.active === true },
+                    domProps: { innerHTML: _vm._s(item.label) }
+                  })
+                ]
+              )
+            }),
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.localComments.data.length > 0
+        ? _c("div", { attrs: { id: "comments" } }, [
+            _vm.localComments.data.length !== 0
+              ? _c("div", {
+                  staticClass: "border-t-4 mb-2 border-gray-400 w-full"
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._l(_vm.comments.data, function(comment, id) {
+          return _c(
+            "div",
+            { staticClass: "border-gray-200 border-b-2 last-border-none mt-4" },
             [
-              _c("div", { on: { click: _vm.loadMoreComments } }, [
-                _vm._v("\n                Show More Comments\n            ")
+              _c("div", { staticClass: "my-4 flex" }, [
+                _c("div", { staticClass: "w-1/2 mr-4" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "font-sans text-xs uppercase text-gray-400 mb-2"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(comment.id) +
+                          "\n                        "
+                      ),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(
+                              "\n                                " +
+                                new Date(
+                                  comment.created_at
+                                ).toLocaleString("default", { month: "long" }) +
+                                "\n                                " +
+                                new Date(comment.created_at).getDate() +
+                                ", " +
+                                new Date(comment.created_at).getFullYear() +
+                                "\n                            "
+                            ) +
+                            "\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.comment_replies_count === 1
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) + " reply"
+                              )
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                _vm._s(comment.comment_replies_count) +
+                                  " replies"
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
+                        comment.likes_count === 1
+                          ? _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " like")
+                            ])
+                          : _c("span", [
+                              _vm._v(_vm._s(comment.likes_count) + " likes")
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      id !== _vm.sureActive
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "cursor-pointer duration-200 hover:text-gray-700",
+                              on: {
+                                click: function($event) {
+                                  _vm.sureActive = id
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Delete\n                        "
+                              )
+                            ]
+                          )
+                        : _c("span", [
+                            _c("span", { staticClass: "mr-2" }, [
+                              _vm._v("Sure?")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteComment(comment)
+                                    _vm.sureActive = null
+                                  }
+                                }
+                              },
+                              [_vm._v("Yes")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "cursor-pointer duration-200 hover:text-gray-700",
+                                on: {
+                                  click: function($event) {
+                                    _vm.sureActive = null
+                                  }
+                                }
+                              },
+                              [_vm._v("No")]
+                            )
+                          ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-2 font-serif" }, [
+                    _vm._v('"' + _vm._s(comment.text) + '"')
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-1/2 pl-4 border-l-2 border-gray-200" },
+                  [
+                    _c(
+                      "inertia-link",
+                      {
+                        staticClass: "flex hover:text-gray-600 duration-200",
+                        attrs: { href: "/post/" + comment.post.slug }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "w-1/4 mr-4",
+                          attrs: {
+                            src: "/storage/" + comment.post.image,
+                            alt: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "font-serif font-bold mb-2" },
+                            [_vm._v(_vm._s(comment.post.title))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans text-xs uppercase text-gray-400"
+                            },
+                            [_vm._v("by " + _vm._s(comment.post.user.name))]
+                          )
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
               ])
             ]
           )
-        ])
-      : _vm._e()
-  ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "flex font-bold pt-4 justify-center capitalize flex-row"
+        },
+        _vm._l(_vm.comments.links, function(item) {
+          return _c(
+            "inertia-link",
+            {
+              key: item.id,
+              attrs: {
+                "preserve-state": "",
+                "preserve-scroll": "",
+                href: item.url || "#"
+              }
+            },
+            [
+              _c("div", {
+                staticClass: "px-2",
+                class: { "bg-gray-200 rounded": item.active === true },
+                domProps: { innerHTML: _vm._s(item.label) }
+              })
+            ]
+          )
+        }),
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "font-bold mb-4 text-sm" }, [
+      _c("div", [_vm._v("Found users:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "font-bold mb-4 text-sm" }, [
+      _c("div", [_vm._v("Found comments:")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -56689,7 +57497,7 @@ var render = function() {
         _c(
           "span",
           { staticClass: "font-bold mr-2 pr-2 border-r-2 border-gray-200" },
-          [_vm._v("\n                MY ACTIVITY\n            ")]
+          [_vm._v("\n                    MY ACTIVITY\n                ")]
         ),
         _vm._v(" "),
         _c(
@@ -56739,7 +57547,7 @@ var render = function() {
       _vm._m(0)
     ]),
     _vm._v(" "),
-    _vm.localComments.data.length > 0
+    _vm.comments.data.length > 0
       ? _c(
           "div",
           {
@@ -56749,29 +57557,29 @@ var render = function() {
           },
           [
             _c("div", [
-              _vm.localComments.data.length > 1
+              _vm.comments.data.length > 1
                 ? _c("div", { staticClass: "font-sans" }, [
                     _vm._v("My "),
-                    _vm.localCommentsCounted !== _vm.localComments.data.length
-                      ? _c("span", [_vm._v("last")])
+                    _vm.commentsCounted !== _vm.comments.data.length
+                      ? _c("span", [_vm._v("latest")])
                       : _vm._e(),
                     _vm._v(
                       " " +
-                        _vm._s(_vm.localComments.data.length) +
-                        " comments\n                "
+                        _vm._s(_vm.comments.data.length) +
+                        " comments\n                    "
                     ),
-                    _vm.localCommentsCounted !== _vm.localComments.data.length
+                    _vm.commentsCounted !== _vm.comments.data.length
                       ? _c("span", { staticClass: "text-gray-400" }, [
-                          _vm._v(" out of " + _vm._s(_vm.localCommentsCounted))
+                          _vm._v(" out of " + _vm._s(_vm.commentsCounted))
                         ])
                       : _vm._e()
                   ])
-                : _vm.localComments.data.length === 1
+                : _vm.comments.data.length === 1
                 ? _c("div", { staticClass: "mt-2 font-sans" }, [
                     _vm._v(
-                      "My" +
-                        _vm._s(_vm.localComments.data.length) +
-                        " comment:\n            "
+                      "My " +
+                        _vm._s(_vm.comments.data.length) +
+                        " comment:\n                "
                     )
                   ])
                 : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
@@ -56784,7 +57592,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      _vm._l(_vm.localComments.data, function(comment, id) {
+      _vm._l(_vm.comments.data, function(comment, id) {
         return _c(
           "div",
           {
@@ -56803,19 +57611,19 @@ var render = function() {
                   [
                     _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
                       _vm._v(
-                        "\n                            " +
+                        "\n                                " +
                           _vm._s(
-                            "\n                                " +
+                            "\n                                    " +
                               new Date(
                                 comment.created_at
                               ).toLocaleString("default", { month: "long" }) +
-                              "\n                                " +
+                              "\n                                    " +
                               new Date(comment.created_at).getDate() +
                               ", " +
                               new Date(comment.created_at).getFullYear() +
-                              "\n                            "
+                              "\n                                "
                           ) +
-                          "\n                        "
+                          "\n                            "
                       )
                     ]),
                     _vm._v(" "),
@@ -56857,7 +57665,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            Delete\n                        "
+                              "\n                                Delete\n                            "
                             )
                           ]
                         )
@@ -56949,64 +57757,72 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm.localComments.next_page_url
-      ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "font-sans cursor-pointer text-xs font-bold uppercase mb-4 bg-gray-200 px-3 py-1 rounded"
-            },
-            [
-              _c("div", { on: { click: _vm.loadMoreComments } }, [
-                _vm._v("\n                Load More Comments\n            ")
-              ])
-            ]
-          )
-        ])
+    _c(
+      "div",
+      { staticClass: "flex font-bold pb-4 justify-center capitalize flex-row" },
+      _vm._l(_vm.comments.links, function(item) {
+        return _c(
+          "inertia-link",
+          {
+            key: item.id,
+            attrs: {
+              "preserve-state": "",
+              "preserve-scroll": "",
+              href: item.url || "#"
+            }
+          },
+          [
+            _c("div", {
+              staticClass: "px-2",
+              class: { "bg-gray-200 rounded": item.active === true },
+              domProps: { innerHTML: _vm._s(item.label) }
+            })
+          ]
+        )
+      }),
+      1
+    ),
+    _vm._v(" "),
+    _vm.localPosts.data.length > 0
+      ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full mb-2" })
       : _vm._e(),
     _vm._v(" "),
-    _vm.localComments.data.length > 0
-      ? _c("div", { staticClass: "border-t-4 border-gray-400 w-full" })
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.localComments.data.length > 0
+    _vm.localPosts.data.length > 0
       ? _c(
           "div",
           {
-            staticClass:
-              "flex pt-2 text-sm justify-between font-sans font-bold",
+            staticClass: "flex text-sm justify-between font-sans font-bold",
             attrs: { id: "likedPosts" }
           },
           [
             _c("div", [
-              _vm.localComments.data.length > 1
+              _vm.localPosts.data.length > 1
                 ? _c("div", { staticClass: "font-sans" }, [
                     _vm._v("My "),
-                    _vm.commentsCounted !== _vm.localComments.data.length
-                      ? _c("span", [_vm._v("last")])
+                    _vm.localLikedPostsCounted !== _vm.localPosts.data.length
+                      ? _c("span", [_vm._v("latest")])
                       : _vm._e(),
                     _vm._v(
-                      " " +
-                        _vm._s(_vm.localComments.data.length) +
-                        " liked posts"
+                      " " + _vm._s(_vm.localPosts.data.length) + " liked posts"
                     ),
-                    _vm.commentsCounted !== _vm.localComments.data.length
+                    _vm.localLikedPostsCounted !== _vm.localPosts.data.length
                       ? _c("span", { staticClass: "text-gray-400" }, [
-                          _vm._v(" out of " + _vm._s(_vm.commentsCounted))
+                          _vm._v(
+                            " out of " + _vm._s(_vm.localLikedPostsCounted)
+                          )
                         ])
                       : _vm._e()
                   ])
-                : _vm.localComments.data.length === 1
-                ? _c("div", { staticClass: "mt-2 font-sans" }, [
+                : _vm.localPosts.data.length === 1
+                ? _c("div", { staticClass: "font-sans" }, [
                     _vm._v(
-                      "My" +
-                        _vm._s(_vm.localComments.data.length) +
-                        " liked post:\n            "
+                      "My " +
+                        _vm._s(_vm.localPosts.data.length) +
+                        " liked post:\n                "
                     )
                   ])
-                : _c("div", { staticClass: "mt-2 font-sans font-bold" }, [
-                    _vm._v("No comments")
+                : _c("div", { staticClass: "font-sans font-bold" }, [
+                    _vm._v("No posts")
                   ])
             ])
           ]
@@ -57064,23 +57880,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                            " +
+                                    "\n                                                " +
                                       _vm._s(
-                                        "\n                                        " +
+                                        "\n                                            " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                        " +
+                                          "\n                                            " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
+                                          ",\n                                            " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                        "
+                                          "\n                                            "
                                       ) +
-                                      "\n                                        "
+                                      "\n                                            "
                                   )
                                 ])
                               ])
@@ -57150,23 +57966,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                            " +
+                                    "\n                                                " +
                                       _vm._s(
-                                        "\n                                        " +
+                                        "\n                                            " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                        " +
+                                          "\n                                            " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                        " +
+                                          ",\n                                            " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                        "
+                                          "\n                                            "
                                       ) +
-                                      "\n                                        "
+                                      "\n                                            "
                                   )
                                 ])
                               ])
@@ -57196,7 +58012,7 @@ var render = function() {
               [
                 _c("div", { on: { click: _vm.loadMorePosts } }, [
                   _vm._v(
-                    "\n                    Load More Liked Posts\n                "
+                    "\n                        Load More Liked Posts\n                    "
                   )
                 ])
               ]
@@ -58670,9 +59486,29 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _vm._m(0),
+    _c(
+      "div",
+      { staticClass: "uppercase mt-2 font-sans font-bold border-gray-20" },
+      [
+        _c("span", { staticClass: "pr-2 mr-2 text-black border-r-2" }, [
+          _vm._v("Edit Post")
+        ]),
+        _vm._v(" "),
+        _c("span", [
+          _c(
+            "span",
+            {
+              staticClass:
+                "text-sm underline cursor-pointer text-gray-400 font-normal normal-case",
+              on: { click: _vm.cancel }
+            },
+            [_vm._v("Back to previous page")]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
-    _c("div", { staticClass: "flex justify-center mt-2" }, [
+    _c("div", { staticClass: "flex justify-center mt-4" }, [
       _c(
         "form",
         {
@@ -59219,22 +60055,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uppercase mt-2 font-sans font-bold border-gray-20" },
-      [
-        _c("span", { staticClass: "pr-2 mr-2 text-black" }, [
-          _vm._v("Edit Post")
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60821,7 +61642,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -60907,7 +61728,7 @@ var render = function() {
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
                           staticClass: "w-1/3 h-full mr-4 mb-4",
-                          attrs: { src: post.image, alt: "" }
+                          attrs: { src: "/storage/" + post.image, alt: "" }
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
@@ -61117,70 +61938,83 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._v("\n        " + _vm._s(_vm.user.email) + "\n        "),
-    _c("div", { staticClass: "flex pt-4 items-center" }, [
-      _c("img", {
-        staticClass: "w-24 h-24",
-        attrs: { src: _vm.user.profile_photo_url, alt: "" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex-col ml-4" }, [
-        _c("div", { staticClass: "flex items-center" }, [
-          _c("div", { staticClass: "font-sans font-bold uppercase mr-2" }, [
-            _vm._v(_vm._s(_vm.user.name))
+    _c("div", { staticClass: "flex mb-2 mt-2 justify-between" }, [
+      _c("div", { staticClass: "flex items-center" }, [
+        _c("img", {
+          staticClass: "w-24 h-24 mt-2",
+          attrs: { src: _vm.user.profile_photo_url, alt: "" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex-col ml-4" }, [
+          _c("div", { staticClass: "flex items-center" }, [
+            _c("div", { staticClass: "font-serif font-bold mr-2" }, [
+              _vm._v(_vm._s(_vm.user.name))
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "flex" },
+              _vm._l(_vm.user.roles, function(role) {
+                return _c("div", [
+                  role.role === "admin" || role.role === "redactor"
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(role.role) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              }),
+              0
+            )
           ]),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "flex" },
-            _vm._l(_vm.user.roles, function(role) {
-              return _c("div", [
-                role.role === "admin" || role.role === "redactor"
-                  ? _c(
-                      "div",
-                      {
-                        staticClass:
-                          "bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full"
-                      },
-                      [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(role.role) +
-                            "\n                            "
-                        )
-                      ]
-                    )
-                  : _vm._e()
+            { staticClass: "font-sans text-xs uppercase text-gray-400" },
+            [
+              _vm.postsCounted > 1
+                ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
+                : _vm.postsCounted === 1
+                ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
+                : _c("span", [_vm._v("No posts,")]),
+              _vm._v(" "),
+              _c("span", { on: { click: _vm.scrollTo } }, [
+                _vm.commentsCounted > 1
+                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v(_vm._s(_vm.commentsCounted) + " comments.")
+                    ])
+                  : _vm.commentsCounted === 1
+                  ? _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v(_vm._s(_vm.commentsCounted) + " comment.")
+                    ])
+                  : _c("span", { staticClass: "underline cursor-pointer" }, [
+                      _vm._v("No comments.")
+                    ])
               ])
-            }),
-            0
+            ]
           )
-        ]),
-        _vm._v(" "),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", [
         _c(
           "div",
-          { staticClass: "font-sans text-xs uppercase text-gray-400" },
-          [
-            _vm.postsCounted > 1
-              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " posts,")])
-              : _vm.postsCounted === 1
-              ? _c("span", [_vm._v(_vm._s(_vm.postsCounted) + " post,")])
-              : _c("span", [_vm._v("No posts,")]),
-            _vm._v(" "),
-            _c("span", { on: { click: _vm.scrollTo } }, [
-              _vm.commentsCounted > 1
-                ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v(_vm._s(_vm.commentsCounted) + " comments.")
-                  ])
-                : _vm.commentsCounted === 1
-                ? _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v(_vm._s(_vm.commentsCounted) + " comment.")
-                  ])
-                : _c("span", { staticClass: "underline cursor-pointer" }, [
-                    _vm._v("No comments.")
-                  ])
-            ])
-          ]
+          {
+            staticClass:
+              "text-sm underline cursor-pointer text-gray-400 font-normal normal-case",
+            on: { click: _vm.cancel }
+          },
+          [_vm._v("Back to previous page")]
         )
       ])
     ]),
@@ -61190,7 +62024,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "font-sans mt-2 font-bold text-sm flex justify-between items-end"
+              "font-sans font-bold text-sm flex justify-between items-end"
           },
           [
             _c("div", [
@@ -61557,30 +62391,6 @@ var render = function() {
         ])
       : _vm._e()
   ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76587,8 +77397,6 @@ var map = {
 	"./Searching.vue": "./resources/js/Pages/Searching.vue",
 	"./User": "./resources/js/Pages/User.vue",
 	"./User.vue": "./resources/js/Pages/User.vue",
-	"./UserProfile": "./resources/js/Pages/UserProfile.vue",
-	"./UserProfile.vue": "./resources/js/Pages/UserProfile.vue",
 	"./Users/Show": "./resources/js/Pages/Users/Show.vue",
 	"./Users/Show.vue": "./resources/js/Pages/Users/Show.vue"
 };
@@ -78239,75 +79047,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_User_vue_vue_type_template_id_777c8574_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_User_vue_vue_type_template_id_777c8574_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/Pages/UserProfile.vue":
-/*!********************************************!*\
-  !*** ./resources/js/Pages/UserProfile.vue ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=template&id=71873576&scoped=true& */ "./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&");
-/* harmony import */ var _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=script&lang=js& */ "./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "71873576",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/Pages/UserProfile.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&":
-/*!*********************************************************************!*\
-  !*** ./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true& ***!
-  \***************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=template&id=71873576&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/UserProfile.vue?vue&type=template&id=71873576&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_71873576_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
