@@ -17,7 +17,7 @@ class CreateCommentRepliesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('text');
-            $table->boolean('liked')->default(false);
+//            $table->boolean('liked')->default(false);
 
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

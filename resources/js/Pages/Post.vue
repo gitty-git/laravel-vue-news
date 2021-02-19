@@ -131,14 +131,13 @@
 
                                         <!--REPLY FIELD-->
                                         <div v-if="user" class="w-full -mb-4 mr-2 items-end flex duration-200">
-                                            <div @keyup.enter="addReply(i, comment); activeItem = null" @click="activeItem = i; getComment(i)"
-                                                 v-click-outside="hideAddReplyField"
+                                            <div @keyup.enter="addReply(i, comment); activeItem = null" @click="activeItem = i; showReplyAdded = null"
                                                  class="w-full" @keydown.enter.exact.prevent>
                                                 <div class="font-sans text-green-500 h-8 duration-200"
-                                                     v-if="comment.reply_field === 3">Reply Added.
+                                                     v-if="showReplyAdded === i">Reply Added.
                                                 </div>
 
-                                                <div v-show="comment.reply_field !== 3" >
+                                                <div v-else>
                                                     <textarea-autosize class="outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans"
                                                                        :class="{'border-b-2 outline-none border-gray-400 duration-200' : i === activeItem}"
                                                                        type="text" v-model="reply.text[i]"
@@ -161,18 +160,18 @@
 
 <!--                                    show replies button-->
                                     <div v-if="comment.comment_replies.length > 0"
-                                         @click="comment.active === 1 ? comment.active = 0 : comment.active = 1"
+                                         @click="showReplies(i)"
                                          class="cursor-pointer ml-2 font-sans flex justify-end"
                                     >
                                         <div class="flex " v-if="comment.comment_replies.length === 1">
-                                            <div class="hover:text-gray-400 whitespace-no-wrap duration-200" v-if="comment.active === 1">
+                                            <div class="hover:text-gray-400 whitespace-no-wrap duration-200" v-if="comment.active">
                                                 Hide reply
                                             </div>
                                             <div v-else class="hover:text-gray-400 w-full whitespace-no-wrap duration-200">Show 1 reply</div>
                                         </div>
 
                                         <div v-else>
-                                            <div class="hover:text-gray-400 duration-200 whitespace-no-wrap" v-if="comment.active === 1">
+                                            <div class="hover:text-gray-400 duration-200 whitespace-no-wrap" v-if="comment.active">
                                                 Hide replies
                                             </div>
                                             <div class="hover:text-gray-400 duration-200 whitespace-no-wrap" v-else>Show
@@ -186,7 +185,7 @@
                     </div>
 
                     <!--COMMENT'S REPLIES-->
-                    <div v-if="comment.active === 1" class="ml-12" v-for="reply in comment.comment_replies">
+                    <div v-if="comment.active" class="ml-12" v-for="reply in comment.comment_replies">
                         <div class="py-4 border-t-2 border-gray-200"
                              :class="{'' : comment.comment_replies.length === 1}"
                         >
@@ -250,6 +249,8 @@ export default {
     data() {
         return {
             activeItem: {},
+            showReplyAdded: null,
+            showReply: null,
             localComment: null,
             cachedCommentText: null,
             addCommentFieldShowed: false,
@@ -268,6 +269,12 @@ export default {
     },
 
     methods: {
+        showReplies(i) {
+            let comment = this.localComments.data[i];
+            comment.active = !comment.active;
+            this.$set(this.localComments, i, comment);
+        },
+
         hideAddCommentField () {
             this.addCommentFieldShowed = false
             this.cachedCommentText = this.comment.text
@@ -275,11 +282,8 @@ export default {
         },
 
         hideAddReplyField() {
+            this.activeItem = null
             console.log(this.getComment())
-        },
-
-        getComment(i) {
-            return i;
         },
 
         setPostLike() {
@@ -297,16 +301,18 @@ export default {
             this.cachedCommentText = ''
             this.addCommentFieldShowed = false
             this.post.comments_count += 1
+            this.activeItem = null
         },
 
         addReply(i, comment) {
-            axios.post(route('replies.store'), {text: this.reply.text[i], comment_id: comment.id, post_id: this.post.id})
+            axios.post(route('replies.store', comment), {text: this.reply.text[i], comment_id: comment.id, post_id: this.post.id})
                 .then(res => {
                     this.localComments.data[i].comment_replies.unshift(res.data)
                     if (res.status === 200)
                     this.reply.text[i] = ''
-                    comment.reply_field = 3
-                    setTimeout(() => comment.reply_field = 0,2000);
+
+                    this.showReplyAdded = i;
+                    setTimeout(() => this.showReplyAdded = false,2000);
                 })
 
         },

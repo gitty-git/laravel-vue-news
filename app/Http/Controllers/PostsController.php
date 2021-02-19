@@ -63,7 +63,7 @@ class PostsController extends Controller
         if (Auth::user()->is($post->user) || Auth::user()->roles->pluck('role')->contains('admin')) {
             $post->update($this->validateRequest($request, $post->image));
             $this->storeImage($post);
-            return back();
+            return back()->with('msg', 'OK');
 //            return redirect()->back()->with('Updated');
 //            return Redirect::back();
         }

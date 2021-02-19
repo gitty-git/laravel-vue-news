@@ -53,7 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
     Route::resource('/users', UsersController::class)->only('get');
     Route::resource('/comments', CommentsController::class);
-    Route::post('/replies/{reply}', [RepliesController::class, 'store']);
+    Route::post('/replies/{reply}', [RepliesController::class, 'store'])->name('replies.store');
 
 
     Route::middleware('redactor')->group(function () {

@@ -4649,6 +4649,13 @@ __webpack_require__.r(__webpack_exports__);
     axios.get(route('roles.index')).then(function (res) {
       return _this.roles = res.data;
     });
+  },
+  methods: {
+    logout: function logout() {
+      axios.post(route('logout')).then(function (response) {
+        window.location = '/';
+      });
+    }
   }
 });
 
@@ -5255,6 +5262,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5267,7 +5324,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sureActive: {},
       localPosts: this.posts,
       itemsCount: 6,
-      showSure: false
+      showSure: false,
+      sureDeletePost: {},
+      sureDeletePost2: {}
     };
   },
   methods: {
@@ -5312,6 +5371,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"]["delete"](route('comments.destroy', comment), {
         preserveScroll: true,
         preserveState: true
+      });
+    },
+    deletePost: function deletePost(post) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"]["delete"](route('posts.destroy', post), {
+        preserveState: true,
+        preserveScroll: true
       });
     }
   }
@@ -5622,6 +5687,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5635,7 +5755,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       localComments: this.comments,
       localUsers: this.users,
       sureDeleteUser: {},
-      sureActive: {}
+      sureActive: {},
+      sureDeletePost: {},
+      sureDeletePost2: {}
     };
   },
   methods: {
@@ -5676,13 +5798,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     deleteUser: function deleteUser(user) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"]["delete"](route('users.destroy', user), {
-        preserveScroll: true
+        preserveScroll: true,
+        preserveState: true
       });
     },
     deleteComment: function deleteComment(comment) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"]["delete"](route('comments.destroy', comment), {
         preserveScroll: true,
         preserveState: true
+      });
+    },
+    deletePost: function deletePost(post) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__["Inertia"]["delete"](route('posts.destroy', post), {
+        preserveState: true,
+        preserveScroll: true
       });
     }
   }
@@ -6879,7 +7008,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -6893,6 +7021,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       activeItem: {},
+      showReplyAdded: null,
+      showReply: null,
       localComment: null,
       cachedCommentText: null,
       addCommentFieldShowed: false,
@@ -6910,16 +7040,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    showReplies: function showReplies(i) {
+      var comment = this.localComments.data[i];
+      comment.active = !comment.active;
+      this.$set(this.localComments, i, comment);
+    },
     hideAddCommentField: function hideAddCommentField() {
       this.addCommentFieldShowed = false;
       this.cachedCommentText = this.comment.text;
       this.comment.text = '';
     },
     hideAddReplyField: function hideAddReplyField() {
+      this.activeItem = null;
       console.log(this.getComment());
-    },
-    getComment: function getComment(i) {
-      return i;
     },
     setPostLike: function setPostLike() {
       var _this = this;
@@ -6940,11 +7073,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.cachedCommentText = '';
       this.addCommentFieldShowed = false;
       this.post.comments_count += 1;
+      this.activeItem = null;
     },
     addReply: function addReply(i, comment) {
       var _this3 = this;
 
-      axios.post(route('replies.store'), {
+      axios.post(route('replies.store', comment), {
         text: this.reply.text[i],
         comment_id: comment.id,
         post_id: this.post.id
@@ -6952,9 +7086,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.localComments.data[i].comment_replies.unshift(res.data);
 
         if (res.status === 200) _this3.reply.text[i] = '';
-        comment.reply_field = 3;
+        _this3.showReplyAdded = i;
         setTimeout(function () {
-          return comment.reply_field = 0;
+          return _this3.showReplyAdded = false;
         }, 2000);
       });
     },
@@ -7433,31 +7567,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7495,37 +7604,47 @@ __webpack_require__.r(__webpack_exports__);
         category_id: this.post.category_id
       },
       photoPreview: null,
-      imagePreview: null
+      imagePreview: null,
+      msg: null
     };
   },
   methods: {
-    storePost: function storePost() {
+    updatePost: function updatePost() {
+      var _this = this;
+
       if (this.$refs.image) {
         this.localPost.image = this.$refs.image.files[0];
       }
 
-      console.log(this.localPost.brief);
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__["Inertia"].post(route('posts.update', this.localPost.id), this.localPost);
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__["Inertia"].post(route('posts.update', this.localPost.id), this.localPost, {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          _this.msg = "Updated!";
+          setTimeout(function () {
+            return _this.msg = null;
+          }, 2000);
+        },
+        onError: function onError() {
+          _this.msg = "Not updated! Check for errors!";
+          setTimeout(function () {
+            return _this.msg = null;
+          }, 2000);
+        }
+      });
     },
     selectNewImage: function selectNewImage() {
       this.$refs.image.click();
     },
     updateImagePreview: function updateImagePreview() {
-      var _this = this;
+      var _this2 = this;
 
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this.imagePreview = e.target.result;
+        _this2.imagePreview = e.target.result;
       };
 
       reader.readAsDataURL(this.$refs.image.files[0]);
-    },
-    deletePost: function deletePost() {
-      // axios.delete(route('posts.destroy', this.localPost))
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__["Inertia"]["delete"](route('posts.destroy', this.localPost)); // return this.localPost
-      // window.history.back();
-      // window.location = '/posts';
     },
     cancel: function cancel() {
       window.history.back();
@@ -7545,6 +7664,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_ProfileLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/ProfileLayout */ "./resources/js/Layouts/ProfileLayout.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7660,6 +7781,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Index",
@@ -7667,7 +7843,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['posts', 'postsCounted'],
   data: function data() {
     return {
-      localPosts: this.posts
+      localPosts: this.posts,
+      sureDeletePost: {},
+      sureDeletePost2: {}
     };
   },
   methods: {
@@ -7686,6 +7864,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       }
+    },
+    deletePost: function deletePost(post) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__["Inertia"]["delete"](route('posts.destroy', post), {
+        preserveState: true,
+        preserveScroll: true
+      });
     }
   }
 });
@@ -8747,6 +8931,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -54775,7 +54960,7 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "mt-2 flex justify-between" }, [
       _c("span", { staticClass: "font-bold border-gray-200" }, [
-        _vm._v("\n                ADMINISTRATION\n            ")
+        _vm._v("\n            ADMINISTRATION\n        ")
       ]),
       _vm._v(" "),
       _c(
@@ -54798,19 +54983,15 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "my-4" }, [
-      _c("div", { staticClass: "mb-2 text-sm font-bold" }, [
-        _vm._v("Latest posts:")
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "flex border-gray-200 font-serif" }, [
         _c(
           "div",
           { staticClass: "w-1/2 mr-4" },
           _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
+            _vm.posts.data.filter(function(x, i) {
               return i % 2 === 0
             }),
-            function(post) {
+            function(post, id) {
               return _c(
                 "div",
                 {
@@ -54819,11 +55000,8 @@ var render = function() {
                 },
                 [
                   _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: _vm.route("posts.edit", post.id) }
-                    },
+                    "div",
+                    { staticClass: "hover:text-gray-600 duration-200" },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -54832,7 +55010,89 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans uppercase text-xs flex mb-2"
+                            },
+                            [
+                              _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: { href: _vm.route("posts.edit", post) }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Edit Post\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              id !== _vm.sureDeletePost
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sureDeletePost = id
+                                          _vm.sureDeletePost2 = null
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    Delete Post\n                                "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "border border-white" },
+                                    [
+                                      _c("span", { staticClass: "mr-2" }, [
+                                        _vm._v("Sure?")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deletePost(post)
+                                              _vm.sureDeletePost = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Yes")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "cursor-pointer duration-200 hover:text-gray-700",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.sureDeletePost = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("No")]
+                                      )
+                                    ]
+                                  )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "font-bold mb-2" }, [
                             _vm._v(_vm._s(post.title))
                           ]),
                           _vm._v(" "),
@@ -54852,23 +55112,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                                " +
+                                    "\n                                            " +
                                       _vm._s(
-                                        "\n                                            " +
+                                        "\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                            " +
+                                          "\n                                        " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                            " +
+                                          ",\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                            "
+                                          "\n                                        "
                                       ) +
-                                      "\n                                            "
+                                      "\n                                        "
                                   )
                                 ])
                               ])
@@ -54878,8 +55138,7 @@ var render = function() {
                       ])
                     ]
                   )
-                ],
-                1
+                ]
               )
             }
           ),
@@ -54890,13 +55149,13 @@ var render = function() {
           "div",
           {
             staticClass: "w-1/2 pl-4 border-l-2 border-gray-200",
-            class: { "border-none": _vm.localPosts.data.length === 1 }
+            class: { "border-none": _vm.posts.data.length === 1 }
           },
           _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
+            _vm.posts.data.filter(function(x, i) {
               return i % 2 !== 0
             }),
-            function(post) {
+            function(post, id2) {
               return _c(
                 "div",
                 {
@@ -54905,11 +55164,8 @@ var render = function() {
                 },
                 [
                   _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: _vm.route("posts.edit", post.id) }
-                    },
+                    "div",
+                    { staticClass: "hover:text-gray-600 duration-200" },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -54918,7 +55174,89 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans uppercase text-xs flex mb-2"
+                            },
+                            [
+                              _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: { href: _vm.route("posts.edit", post) }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Edit Post\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              id2 !== _vm.sureDeletePost2
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sureDeletePost2 = id2
+                                          _vm.sureDeletePost = null
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    Delete Post\n                                "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "border border-white" },
+                                    [
+                                      _c("span", { staticClass: "mr-2" }, [
+                                        _vm._v("Sure?")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deletePost(post)
+                                              _vm.sureDeletePost2 = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Yes")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "cursor-pointer duration-200 hover:text-gray-700",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.sureDeletePost2 = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("No")]
+                                      )
+                                    ]
+                                  )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "font-bold mb-2" }, [
                             _vm._v(_vm._s(post.title))
                           ]),
                           _vm._v(" "),
@@ -54938,23 +55276,23 @@ var render = function() {
                               _c("div", { staticClass: "flex flex-wrap" }, [
                                 _c("div", { staticClass: "text-xs" }, [
                                   _vm._v(
-                                    "\n                                                " +
+                                    "\n                                            " +
                                       _vm._s(
-                                        "\n                                            " +
+                                        "\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).toLocaleString("default", {
                                             month: "long"
                                           }) +
-                                          "\n                                            " +
+                                          "\n                                        " +
                                           new Date(post.created_at).getDate() +
-                                          ",\n                                            " +
+                                          ",\n                                        " +
                                           new Date(
                                             post.created_at
                                           ).getFullYear() +
-                                          "\n                                            "
+                                          "\n                                        "
                                       ) +
-                                      "\n                                            "
+                                      "\n                                        "
                                   )
                                 ])
                               ])
@@ -54964,8 +55302,7 @@ var render = function() {
                       ])
                     ]
                   )
-                ],
-                1
+                ]
               )
             }
           ),
@@ -54973,22 +55310,36 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "mt-4 flex justify-center" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
-          },
-          [
-            _c("div", { on: { click: _vm.loadMorePosts } }, [
-              _vm._v(
-                "\n                        Load More Posts\n                    "
+      _vm.posts.links[2].url
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "flex font-bold pb-4 justify-center capitalize flex-row"
+            },
+            _vm._l(_vm.posts.links, function(item) {
+              return _c(
+                "inertia-link",
+                {
+                  key: item.id,
+                  attrs: {
+                    "preserve-state": "",
+                    "preserve-scroll": "",
+                    href: item.url || "#"
+                  }
+                },
+                [
+                  _c("div", {
+                    staticClass: "px-2",
+                    class: { "bg-gray-200 rounded": item.active === true },
+                    domProps: { innerHTML: _vm._s(item.label) }
+                  })
+                ]
               )
-            ])
-          ]
-        )
-      ])
+            }),
+            1
+          )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _vm.posts.data.length > 0
@@ -55085,7 +55436,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Unset as a redactor\n                                    "
+                                    "\n                                    Unset as a redactor\n                                "
                                   )
                                 ]
                               )
@@ -55105,7 +55456,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Set as a redactor\n                                    "
+                                    "\n                                    Set as a redactor\n                                "
                                   )
                                 ]
                               )
@@ -55127,7 +55478,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Unset as an admin\n                                    "
+                                    "\n                                    Unset as an admin\n                                "
                                   )
                                 ]
                               )
@@ -55147,7 +55498,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Set as an admin\n                                    "
+                                    "\n                                    Set as an admin\n                                "
                                   )
                                 ]
                               )
@@ -55167,7 +55518,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Delete User\n                                    "
+                                    "\n                                    Delete User\n                                "
                                   )
                                 ]
                               )
@@ -55277,25 +55628,25 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            " +
+                        "\n                        " +
                           _vm._s(comment.id) +
-                          "\n                            "
+                          "\n                        "
                       ),
                       _c("span", { staticClass: "pr-2 mr-2 border-r-2" }, [
                         _vm._v(
-                          "\n                                " +
+                          "\n                            " +
                             _vm._s(
-                              "\n                                    " +
+                              "\n                                " +
                                 new Date(
                                   comment.created_at
                                 ).toLocaleString("default", { month: "long" }) +
-                                "\n                                    " +
+                                "\n                                " +
                                 new Date(comment.created_at).getDate() +
                                 ", " +
                                 new Date(comment.created_at).getFullYear() +
-                                "\n                                "
+                                "\n                            "
                             ) +
-                            "\n                            "
+                            "\n                        "
                         )
                       ]),
                       _vm._v(" "),
@@ -55338,7 +55689,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                Delete\n                            "
+                                "\n                            Delete\n                        "
                               )
                             ]
                           )
@@ -55598,10 +55949,10 @@ var render = function() {
             "div",
             { staticClass: "w-1/2 mr-4" },
             _vm._l(
-              _vm.localPosts.data.filter(function(x, i) {
+              _vm.posts.data.filter(function(x, i) {
                 return i % 2 === 0
               }),
-              function(post) {
+              function(post, id) {
                 return _c(
                   "div",
                   {
@@ -55610,11 +55961,8 @@ var render = function() {
                   },
                   [
                     _c(
-                      "inertia-link",
-                      {
-                        staticClass: "hover:text-gray-600 duration-200",
-                        attrs: { href: _vm.route("posts.edit", post.id) }
-                      },
+                      "div",
+                      { staticClass: "hover:text-gray-600 duration-200" },
                       [
                         _c("div", { staticClass: "flex" }, [
                           _c("img", {
@@ -55623,7 +55971,91 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                            _c("div", { staticClass: "font-bold mb-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "font-sans uppercase text-xs flex mb-2"
+                              },
+                              [
+                                _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      href: _vm.route("posts.edit", post)
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Edit Post\n                                    "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                id !== _vm.sureDeletePost
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.sureDeletePost = id
+                                            _vm.sureDeletePost2 = null
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    Delete Post\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _c(
+                                      "span",
+                                      { staticClass: "border border-white" },
+                                      [
+                                        _c("span", { staticClass: "mr-2" }, [
+                                          _vm._v("Sure?")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.deletePost(post)
+                                                _vm.sureDeletePost = null
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Yes")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "cursor-pointer duration-200 hover:text-gray-700",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.sureDeletePost = null
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("No")]
+                                        )
+                                      ]
+                                    )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "font-bold mb-2" }, [
                               _vm._v(_vm._s(post.title))
                             ]),
                             _vm._v(" "),
@@ -55671,8 +56103,7 @@ var render = function() {
                         ])
                       ]
                     )
-                  ],
-                  1
+                  ]
                 )
               }
             ),
@@ -55686,10 +56117,10 @@ var render = function() {
               class: { "border-none": _vm.posts.data.length === 1 }
             },
             _vm._l(
-              _vm.localPosts.data.filter(function(x, i) {
+              _vm.posts.data.filter(function(x, i) {
                 return i % 2 !== 0
               }),
-              function(post) {
+              function(post, id2) {
                 return _c(
                   "div",
                   {
@@ -55698,11 +56129,8 @@ var render = function() {
                   },
                   [
                     _c(
-                      "inertia-link",
-                      {
-                        staticClass: "hover:text-gray-600 duration-200",
-                        attrs: { href: _vm.route("posts.edit", post.id) }
-                      },
+                      "div",
+                      { staticClass: "hover:text-gray-600 duration-200" },
                       [
                         _c("div", { staticClass: "flex" }, [
                           _c("img", {
@@ -55711,7 +56139,91 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                            _c("div", { staticClass: "font-bold mb-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "font-sans uppercase text-xs flex mb-2"
+                              },
+                              [
+                                _c(
+                                  "inertia-link",
+                                  {
+                                    staticClass:
+                                      "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                    attrs: {
+                                      href: _vm.route("posts.edit", post)
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Edit Post\n                                    "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                id2 !== _vm.sureDeletePost2
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.sureDeletePost2 = id2
+                                            _vm.sureDeletePost = null
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    Delete Post\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _c(
+                                      "span",
+                                      { staticClass: "border border-white" },
+                                      [
+                                        _c("span", { staticClass: "mr-2" }, [
+                                          _vm._v("Sure?")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.deletePost(post)
+                                                _vm.sureDeletePost2 = null
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Yes")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "cursor-pointer duration-200 hover:text-gray-700",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.sureDeletePost2 = null
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("No")]
+                                        )
+                                      ]
+                                    )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "font-bold mb-2" }, [
                               _vm._v(_vm._s(post.title))
                             ]),
                             _vm._v(" "),
@@ -55759,8 +56271,7 @@ var render = function() {
                         ])
                       ]
                     )
-                  ],
-                  1
+                  ]
                 )
               }
             ),
@@ -55768,23 +56279,35 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm.users.links[2].url
-          ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
-                },
-                [
-                  _c("div", { on: { click: _vm.loadMorePosts } }, [
-                    _vm._v(
-                      "\n                    Show More Posts\n                "
-                    )
-                  ])
-                ]
-              )
-            ])
+        _vm.posts.links[2].url
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "flex font-bold pb-4 justify-center capitalize flex-row"
+              },
+              _vm._l(_vm.posts.links, function(item) {
+                return _c(
+                  "inertia-link",
+                  {
+                    key: item.id,
+                    attrs: {
+                      "preserve-state": "",
+                      "preserve-scroll": "",
+                      href: item.url || "#"
+                    }
+                  },
+                  [
+                    _c("div", {
+                      staticClass: "px-2",
+                      class: { "bg-gray-200 rounded": item.active === true },
+                      domProps: { innerHTML: _vm._s(item.label) }
+                    })
+                  ]
+                )
+              }),
+              1
+            )
           : _vm._e()
       ]),
       _vm._v(" "),
@@ -58533,15 +59056,6 @@ var render = function() {
                                           _c(
                                             "div",
                                             {
-                                              directives: [
-                                                {
-                                                  name: "click-outside",
-                                                  rawName: "v-click-outside",
-                                                  value: _vm.hideAddReplyField,
-                                                  expression:
-                                                    "hideAddReplyField"
-                                                }
-                                              ],
                                               staticClass: "w-full",
                                               on: {
                                                 keyup: function($event) {
@@ -58564,7 +59078,7 @@ var render = function() {
                                                 },
                                                 click: function($event) {
                                                   _vm.activeItem = i
-                                                  _vm.getComment(i)
+                                                  _vm.showReplyAdded = null
                                                 },
                                                 keydown: function($event) {
                                                   if (
@@ -58594,7 +59108,7 @@ var render = function() {
                                               }
                                             },
                                             [
-                                              comment.reply_field === 3
+                                              _vm.showReplyAdded === i
                                                 ? _c(
                                                     "div",
                                                     {
@@ -58607,58 +59121,46 @@ var render = function() {
                                                       )
                                                     ]
                                                   )
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                {
-                                                  directives: [
-                                                    {
-                                                      name: "show",
-                                                      rawName: "v-show",
-                                                      value:
-                                                        comment.reply_field !==
-                                                        3,
-                                                      expression:
-                                                        "comment.reply_field !== 3"
-                                                    }
-                                                  ]
-                                                },
-                                                [
-                                                  _c("textarea-autosize", {
-                                                    ref: "reply",
-                                                    refInFor: true,
-                                                    staticClass:
-                                                      "outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans",
-                                                    class: {
-                                                      "border-b-2 outline-none border-gray-400 duration-200":
-                                                        i === _vm.activeItem
-                                                    },
-                                                    attrs: {
-                                                      type: "text",
-                                                      "max-height": 300,
-                                                      rows: "1",
-                                                      placeholder:
-                                                        i === _vm.activeItem
-                                                          ? ""
-                                                          : "Reply"
-                                                    },
-                                                    model: {
-                                                      value: _vm.reply.text[i],
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.reply.text,
-                                                          i,
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "reply.text[i]"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              )
+                                                : _c(
+                                                    "div",
+                                                    [
+                                                      _c("textarea-autosize", {
+                                                        ref: "reply",
+                                                        refInFor: true,
+                                                        staticClass:
+                                                          "outline-none duration-200 placeholder-gray-600 cursor-pointer border-white w-full input-font-sans",
+                                                        class: {
+                                                          "border-b-2 outline-none border-gray-400 duration-200":
+                                                            i === _vm.activeItem
+                                                        },
+                                                        attrs: {
+                                                          type: "text",
+                                                          "max-height": 300,
+                                                          rows: "1",
+                                                          placeholder:
+                                                            i === _vm.activeItem
+                                                              ? ""
+                                                              : "Reply"
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.reply.text[i],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.reply.text,
+                                                              i,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "reply.text[i]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
                                             ]
                                           ),
                                           _vm._v(" "),
@@ -58725,16 +59227,14 @@ var render = function() {
                                         "cursor-pointer ml-2 font-sans flex justify-end",
                                       on: {
                                         click: function($event) {
-                                          comment.active === 1
-                                            ? (comment.active = 0)
-                                            : (comment.active = 1)
+                                          return _vm.showReplies(i)
                                         }
                                       }
                                     },
                                     [
                                       comment.comment_replies.length === 1
                                         ? _c("div", { staticClass: "flex " }, [
-                                            comment.active === 1
+                                            comment.active
                                               ? _c(
                                                   "div",
                                                   {
@@ -58757,7 +59257,7 @@ var render = function() {
                                                 )
                                           ])
                                         : _c("div", [
-                                            comment.active === 1
+                                            comment.active
                                               ? _c(
                                                   "div",
                                                   {
@@ -58800,7 +59300,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _vm._l(comment.comment_replies, function(reply) {
-                    return comment.active === 1
+                    return comment.active
                       ? _c("div", { staticClass: "ml-12" }, [
                           _c(
                             "div",
@@ -59516,7 +60016,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.storePost($event)
+              return _vm.updatePost($event)
             }
           }
         },
@@ -59968,89 +60468,16 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "flex" },
+            "jet-button",
+            { staticClass: "mb-4 mr-2", attrs: { type: "submit" } },
             [
-              _c(
-                "jet-button",
-                { staticClass: "mb-4 w-3/4 mr-2", attrs: { type: "submit" } },
-                [_vm._v("Update")]
-              ),
-              _vm._v(" "),
-              _vm.deleteShowed === false
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "mb-4 w-1/4",
-                      on: {
-                        click: function($event) {
-                          _vm.deleteShowed = true
-                        }
-                      }
-                    },
-                    [
-                      _c("jet-danger-button", { staticClass: "w-full" }, [
-                        _vm._v("delete")
-                      ])
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.deleteShowed === true
-                ? _c("div", { staticClass: "w-1/4 mb-4 flex justify-center" }, [
-                    _c(
-                      "div",
-                      { staticClass: "text-xs absolute -mt-6 duration-200" },
-                      [_vm._v("Are You Sure?")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "items-center w-full justify-center flex"
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "border border-black hover:border-red-700 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs hover:text-white duration-200 rounded-full hover:bg-red-600 py-2",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deletePost($event)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Yes\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "border border-black hover:border-gray-400 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs duration-200 rounded-full hover:text-gray-500 py-2",
-                            on: {
-                              click: function($event) {
-                                _vm.deleteShowed = false
-                              }
-                            }
-                          },
-                          [_vm._v("No\n                        ")]
-                        )
-                      ]
-                    )
-                  ])
-                : _vm._e()
-            ],
-            1
+              _vm.msg
+                ? _c("span", [_vm._v(_vm._s(_vm.msg))])
+                : _c("span", [_vm._v("Update")])
+            ]
           )
-        ]
+        ],
+        1
       )
     ])
   ])
@@ -60122,11 +60549,7 @@ var render = function() {
                       " post:\n            "
                   )
                 ])
-              : _c("div", [_vm._v("No posts")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "ml-1 text-gray-400 font-normal" }, [
-              _vm._v("- Select a post to edit / delete")
-            ])
+              : _c("div", [_vm._v("No posts")])
           ]
         )
       : _vm._e(),
@@ -60137,10 +60560,10 @@ var render = function() {
           "div",
           { staticClass: "w-1/2 mr-4" },
           _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
+            _vm.posts.data.filter(function(x, i) {
               return i % 2 === 0
             }),
-            function(post) {
+            function(post, id) {
               return _c(
                 "div",
                 {
@@ -60149,11 +60572,8 @@ var render = function() {
                 },
                 [
                   _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: _vm.route("posts.edit", post) }
-                    },
+                    "div",
+                    { staticClass: "hover:text-gray-600 duration-200" },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -60162,7 +60582,89 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans uppercase text-xs flex mb-2"
+                            },
+                            [
+                              _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: { href: _vm.route("posts.edit", post) }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                            Edit Post\n                                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              id !== _vm.sureDeletePost
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sureDeletePost = id
+                                          _vm.sureDeletePost2 = null
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Delete Post\n                                    "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "border border-white" },
+                                    [
+                                      _c("span", { staticClass: "mr-2" }, [
+                                        _vm._v("Sure?")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deletePost(post)
+                                              _vm.sureDeletePost = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Yes")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "cursor-pointer duration-200 hover:text-gray-700",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.sureDeletePost = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("No")]
+                                      )
+                                    ]
+                                  )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "font-bold mb-2" }, [
                             _vm._v(_vm._s(post.title))
                           ]),
                           _vm._v(" "),
@@ -60208,8 +60710,7 @@ var render = function() {
                       ])
                     ]
                   )
-                ],
-                1
+                ]
               )
             }
           ),
@@ -60223,10 +60724,10 @@ var render = function() {
             class: { "border-none": _vm.posts.data.length === 1 }
           },
           _vm._l(
-            _vm.localPosts.data.filter(function(x, i) {
+            _vm.posts.data.filter(function(x, i) {
               return i % 2 !== 0
             }),
-            function(post) {
+            function(post, id2) {
               return _c(
                 "div",
                 {
@@ -60235,11 +60736,8 @@ var render = function() {
                 },
                 [
                   _c(
-                    "inertia-link",
-                    {
-                      staticClass: "hover:text-gray-600 duration-200",
-                      attrs: { href: _vm.route("posts.edit", post) }
-                    },
+                    "div",
+                    { staticClass: "hover:text-gray-600 duration-200" },
                     [
                       _c("div", { staticClass: "flex" }, [
                         _c("img", {
@@ -60248,7 +60746,89 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "flex w-2/3 flex-col" }, [
-                          _c("div", { staticClass: "font-bold mb-2" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "font-sans uppercase text-xs flex mb-2"
+                            },
+                            [
+                              _c(
+                                "inertia-link",
+                                {
+                                  staticClass:
+                                    "hover:bg-gray-100 duration-200 flex items-center bg-gray-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                  attrs: { href: _vm.route("posts.edit", post) }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                            Edit Post\n                                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              id2 !== _vm.sureDeletePost2
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "border border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white duration-200 mr-2 px-2 uppercase text-xs rounded-full",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sureDeletePost2 = id2
+                                          _vm.sureDeletePost = null
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Delete Post\n                                    "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "border border-white" },
+                                    [
+                                      _c("span", { staticClass: "mr-2" }, [
+                                        _vm._v("Sure?")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "pr-2 mr-2 border-r-2 cursor-pointer duration-200 hover:text-red-400 text-red-500",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deletePost(post)
+                                              _vm.sureDeletePost2 = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Yes")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "cursor-pointer duration-200 hover:text-gray-700",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.sureDeletePost2 = null
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("No")]
+                                      )
+                                    ]
+                                  )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "font-bold mb-2" }, [
                             _vm._v(_vm._s(post.title))
                           ]),
                           _vm._v(" "),
@@ -60294,8 +60874,7 @@ var render = function() {
                       ])
                     ]
                   )
-                ],
-                1
+                ]
               )
             }
           ),
@@ -60303,23 +60882,35 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.localPosts.next_page_url
-        ? _c("div", { staticClass: "mt-4 flex justify-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "font-sans cursor-pointer text-xs font-bold uppercase bg-gray-200 px-3 py-1 rounded"
-              },
-              [
-                _c("div", { on: { click: _vm.loadMorePosts } }, [
-                  _vm._v(
-                    "\n                        Show More Posts\n                    "
-                  )
-                ])
-              ]
-            )
-          ])
+      _vm.posts.links[2].url
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "flex font-bold pb-4 justify-center capitalize flex-row"
+            },
+            _vm._l(_vm.posts.links, function(item) {
+              return _c(
+                "inertia-link",
+                {
+                  key: item.id,
+                  attrs: {
+                    "preserve-state": "",
+                    "preserve-scroll": "",
+                    href: item.url || "#"
+                  }
+                },
+                [
+                  _c("div", {
+                    staticClass: "px-2",
+                    class: { "bg-gray-200 rounded": item.active === true },
+                    domProps: { innerHTML: _vm._s(item.label) }
+                  })
+                ]
+              )
+            }),
+            1
+          )
         : _vm._e()
     ])
   ])
@@ -61938,6 +62529,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._v("\n        " + _vm._s(_vm.user.email) + "\n        "),
     _c("div", { staticClass: "flex mb-2 mt-2 justify-between" }, [
       _c("div", { staticClass: "flex items-center" }, [
         _c("img", {

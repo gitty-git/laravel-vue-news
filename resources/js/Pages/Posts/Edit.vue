@@ -8,7 +8,7 @@
         </div>
 
         <div class="flex justify-center mt-4">
-            <form @submit.prevent="storePost" class="flex flex-col create-width">
+            <form @submit.prevent="updatePost" class="flex flex-col create-width">
                 <!--Category-->
                 <div class="mb-4">
                     <jet-dropdown align="left">
@@ -129,35 +129,10 @@
                     <jet-input-error :message="errors.type" class="mt-1" />
                 </div>
 
-                <!--                {{ errors.title }}-->
-
-                <!--                <div v-if="errors" class="text-red-600">-->
-                <!--                    <div class="ml-4 text-sm" v-for="error in errors">-->
-                <!--                        - {{error}}-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-                <div class="flex">
-                    <jet-button class="mb-4 w-3/4 mr-2" type="submit">Update</jet-button>
-
-                    <div class="mb-4 w-1/4" v-if="deleteShowed === false" @click="deleteShowed = true">
-                        <jet-danger-button class="w-full">delete</jet-danger-button>
-                    </div>
-
-                    <div class="w-1/4 mb-4 flex justify-center" v-if="deleteShowed === true">
-                        <div class="text-xs absolute -mt-6 duration-200">Are You Sure?</div>
-                        <div class="items-center w-full justify-center flex">
-                            <div class="border border-black hover:border-red-700 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs hover:text-white duration-200 rounded-full hover:bg-red-600 py-2"
-                                 @click.prevent="deletePost"
-                            >
-                                Yes
-                            </div>
-                            <div class="border border-black hover:border-gray-400 w-1/2 text-center mx-2 cursor-pointer font-bold uppercase text-xs duration-200 rounded-full hover:text-gray-500 py-2"
-                                 @click="deleteShowed = false">No
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <jet-button class="mb-4 mr-2" type="submit">
+                    <span v-if="msg">{{msg}}</span>
+                    <span v-else>Update</span>
+                </jet-button>
             </form>
         </div>
     </div>
@@ -196,17 +171,27 @@ export default {
             },
             photoPreview: null,
             imagePreview: null,
+            msg: null
         }
     },
     methods: {
-        storePost() {
+        updatePost() {
             if (this.$refs.image) {
                 this.localPost.image = this.$refs.image.files[0]
             }
 
-            console.log(this.localPost.brief)
+            Inertia.post(route('posts.update', this.localPost.id), this.localPost, {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.msg = "Updated!"
+                    setTimeout(() => this.msg = null,2000);
+                },
+                onError: () => {
+                    this.msg = "Not updated! Check for errors!"
+                    setTimeout(() => this.msg = null,2000);
+                }
+            })
 
-            Inertia.post(route('posts.update', this.localPost.id), this.localPost)
         },
 
         selectNewImage() {
@@ -221,14 +206,6 @@ export default {
             };
 
             reader.readAsDataURL(this.$refs.image.files[0])
-        },
-
-        deletePost() {
-            // axios.delete(route('posts.destroy', this.localPost))
-            Inertia.delete(route('posts.destroy', this.localPost))
-            // return this.localPost
-            // window.history.back();
-            // window.location = '/posts';
         },
 
         cancel() {

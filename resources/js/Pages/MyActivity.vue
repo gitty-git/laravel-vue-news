@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <!--LOAD MORE COMMENTS-->
+        <!--PAGINATION COMMENTS-->
         <div class="flex font-bold pb-4 justify-center capitalize flex-row">
             <inertia-link
                 preserve-state

@@ -140,6 +140,13 @@ export default {
         // axios.get(route('users.index')).then(res => this.user = res.data)
         axios.get(route('roles.index')).then(res => this.roles = res.data)
     },
+    methods: {
+        logout() {
+            axios.post(route('logout')).then(response => {
+                window.location = '/';
+            })
+        },
+    }
 }
 </script>
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{user.email}}
         <div class="flex mb-2 mt-2 justify-between">
             <div class="flex items-center">
                 <img class="w-24 h-24 mt-2" :src="user.profile_photo_url" alt="">
